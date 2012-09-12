@@ -4,16 +4,28 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:b="clr-namespace:WeiZhi3.Behaviours"
-        mc:Ignorable="d"
+        xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:Parts="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <i:Interaction.Behaviors>
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="{StaticResource MetroColorFeatureFadeBrush}">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ContentPresenter/>
+                    <Parts:WindowTitleBar />
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
+        <i:Interaction.Behaviors>
         <b:WindowBorderlessBehavior/>
         <b:WindowDragMoveBehavior/>
         <b:WindowChangeStateBehavior/>
         <b:WindowSettingsBehavior/>
     </i:Interaction.Behaviors>
     <Grid>
-        
     </Grid>
 </Window>
