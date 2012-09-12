@@ -1,13 +1,13 @@
-﻿<Window x:Class="WeiZhi3.MainWindow"
+﻿<NavigationWindow x:Class="WeiZhi3.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:Parts="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Window.Template>
-        <ControlTemplate TargetType="Window">
+        Title="唯致" Height="350" Width="525">
+    <NavigationWindow.Template>
+        <ControlTemplate TargetType="NavigationWindow">
             <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="{StaticResource MetroColorFeatureFadeBrush}">
                 <Grid >
                     <Grid.RowDefinitions>
@@ -19,13 +19,12 @@
                 </Grid>
             </Border>
         </ControlTemplate>
-    </Window.Template>
+    </NavigationWindow.Template>
         <i:Interaction.Behaviors>
         <b:WindowBorderlessBehavior/>
         <b:WindowDragMoveBehavior/>
         <b:WindowChangeStateBehavior/>
         <b:WindowSettingsBehavior/>
     </i:Interaction.Behaviors>
-    <Grid>
-    </Grid>
-</Window>
+
+</NavigationWindow>
