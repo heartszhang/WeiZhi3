@@ -28,7 +28,11 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-
+    <Style x:Key="ButtonWindowCommandStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template" Value="{StaticResource ButtonWindowCommandTemplate}"/>
+    </Style>
+    
     <!-- window restore/maximize button template-->
     <ControlTemplate TargetType="ToggleButton" x:Key="ButtonRestoreWindowTemplate">
         <Border Background="{TemplateBinding Background}">
@@ -61,4 +65,8 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <Style TargetType="ToggleButton" x:Key="ButtonRestoreWindowStyle">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template" Value="{StaticResource ButtonRestoreWindowTemplate}"/>
+    </Style>
 </ResourceDictionary>
