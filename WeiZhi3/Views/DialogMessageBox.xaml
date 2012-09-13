@@ -1,0 +1,130 @@
+﻿<Window x:Class="WeiZhi3.Views.DialogMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:l="clr-namespace:WeiZhi3.Design"
+        mc:Ignorable="d"
+        WindowStyle="None" MinHeight="160" MinWidth="400"
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        BorderBrush="{StaticResource MetroColorFeatureFadeBrush}"
+        DataContext ="{Binding RelativeSource={RelativeSource Self}}" d:DataContext="{d:DesignInstance l:DesignDialogMessageBox,IsDesignTimeCreatable=True}"
+        BorderThickness="1"
+        Title="Message" >
+    <Window.Resources>
+        <SolidColorBrush x:Key="MetroButtonStroke" Color="#FF666666"  />
+        <SolidColorBrush x:Key="MetroButtonNormal" Color="#FFEEEEEE"  />
+        <SolidColorBrush x:Key="MetroButtonText" Color="#FF000000"  />
+        <Color x:Key="MetroButtonHover" >#FF333333</Color>
+        <Color x:Key="MetroButtonHoverText">#FFFFFFFF</Color>
+        <Color x:Key="MetroButtonPressed">#FF666666</Color>
+        <SolidColorBrush x:Key="MetroSelectColor" Color="{StaticResource MetroColorFeatureFade}"  />
+        <Style x:Key="MetroButton" TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="metrobutton">
+                            <Rectangle x:Name="button" Stroke="{DynamicResource MetroButtonStroke}" StrokeThickness="2" Fill="{DynamicResource MetroButtonNormal}" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <ContentPresenter x:Name="text" TextBlock.FontSize="13pt" TextBlock.FontWeight="SemiBold" Margin="0,-2,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource MetroButtonText}" RecognizesAccessKey="True"/>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                                                <DiscreteColorKeyFrame Value="{StaticResource MetroColorFeature}" KeyTime="0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(Rectangle.Stroke).(SolidColorBrush.Color)">
+                                                <DiscreteColorKeyFrame Value="{StaticResource MetroColorFeature}" KeyTime="0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="text" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
+                                                <DiscreteColorKeyFrame Value="{StaticResource MetroButtonHoverText}" KeyTime="0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <Storyboard>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                                                    <DiscreteColorKeyFrame Value="{DynamicResource MetroButtonPressed}" KeyTime="0"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(Rectangle.Stroke).(SolidColorBrush.Color)">
+                                                    <DiscreteColorKeyFrame Value="{DynamicResource MetroButtonPressed}" KeyTime="0"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="text" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
+                                                    <DiscreteColorKeyFrame Value="{DynamicResource MetroButtonHoverText}" KeyTime="0"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.05" Value="0.95">
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.05" Value="0.95">
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="metrobutton">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                                                <DiscreteColorKeyFrame Value="{StaticResource MetroButtonHover}" KeyTime="0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(Rectangle.Stroke).(SolidColorBrush.Color)">
+                                                <DiscreteColorKeyFrame Value="{StaticResource MetroButtonHover}" KeyTime="0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="text" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
+                                                <DiscreteColorKeyFrame Value="{StaticResource MetroButtonHoverText}" KeyTime="0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefault" Value="True">
+                                <Setter TargetName="button" Property="Stroke" Value="{StaticResource MetroSelectColor}" />
+                                <Setter TargetName="button" Property="StrokeThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <DockPanel LastChildFill="True" Margin="20,10,20,20" RenderOptions.ClearTypeHint="Enabled">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            <Button Name="_ok" Content="_ok" Visibility="Collapsed" Width="140" Margin="5,0,0,0" Click="OnOkClick" Style="{StaticResource MetroButton}"/>
+            <Button Name="_yes" Content="_yes" Visibility="Collapsed" Width="140" Margin="5,0,0,0" Click="OnYesClick" Style="{StaticResource MetroButton}"/>
+            <Button Name="_no" Content="_no" Visibility="Collapsed" Width="100" Margin="5,0,0,0" Click="OnNoClick"  Style="{StaticResource MetroButton}"/>
+            <Button Name="_cancel" Content="_cancel" Visibility="Collapsed"  Width="100" Margin="5,0,0,0" Click="OnCancelClick" Style="{StaticResource MetroButton}"/>
+
+        </StackPanel>
+        <Path Name="_image" DockPanel.Dock="Left" Visibility="Collapsed" Margin="0,10,0,0" Width="24" Height="24" VerticalAlignment="Top" Stretch="Fill" Fill="#FF333333" Data="F1M142.612,122.375L148.462,122.375 148.462,116.524 150.824,116.524 150.824,122.375 156.674,122.375 156.674,124.736 150.824,124.736 150.824,130.587 148.462,130.587 148.462,124.736 142.612,124.736 142.612,122.375z" />
+        <TextBlock DockPanel.Dock="Top" Text="{Binding Title,Mode=OneWay}" FontSize="24pt" FontWeight="Light" TextTrimming="CharacterEllipsis" Margin="0,0,0,5"/>
+        <TextBlock Text="{Binding Message,Mode=OneWay}" Margin="0,0,0,5" TextWrapping="Wrap" FontSize="13pt"/>
+    </DockPanel>
+</Window>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cvt="clr-namespace:WeiZhi3.Converters" mc:Ignorable="d" 
+             VerticalAlignment="Top"
              Height="24" d:DesignWidth="600">
     <UserControl.Resources>
         <cvt:WindowMaximzedStateToBooleanConverter x:Key="ws2b"/>
