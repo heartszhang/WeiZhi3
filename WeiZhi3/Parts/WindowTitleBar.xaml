@@ -15,8 +15,8 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Horizontal"></StackPanel>
-        <Grid Grid.Column="1" x:Name="Title"></Grid>
-        <StackPanel Grid.Column="2" Orientation="Horizontal" x:Name="WinCommands">
+        <Grid Grid.Column="1" x:Name="_title"></Grid>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" x:Name="_win_commands">
             <Button Template="{StaticResource ButtonWindowCommandTemplate}" >
                 <Path Stretch="Uniform" Margin="12,6" Data="{StaticResource PathRestore}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Button}}}" />
             </Button>

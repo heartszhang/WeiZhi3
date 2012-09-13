@@ -44,7 +44,7 @@
                     <VisualState x:Name="Unchecked"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <Path x:Name="path" Stretch="Uniform" Margin="12,7" Data="{StaticResource PathMaximize}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}}" />
+            <Path x:Name="_path" Stretch="Uniform" Margin="12,7" Data="{StaticResource PathMaximize}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}}" />
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -55,7 +55,7 @@
                 <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Data" TargetName="path" Value="{StaticResource PathRestore}">
+                <Setter Property="Data" TargetName="_path" Value="{StaticResource PathRestore}">
                 </Setter>
             </Trigger>
         </ControlTemplate.Triggers>
