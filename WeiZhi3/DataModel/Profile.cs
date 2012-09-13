@@ -37,12 +37,13 @@ namespace WeiZhi3.DataModel
             return Accounts == null || Accounts.Length == 0;
         }
 
-        public void Add(string token, long expired)
+        public void Add(string token, long expiredseconds,long uid)
         {
             var als = new List<Account>();
             if (Accounts != null)
                 als.AddRange(Accounts);
-            als.Add(new Account {AccessToken = token, Expired = expired});
+            
+            als.Add(new Account {AccessToken = token, Expired = DateTime.Now.UnixTimestamp() +expiredseconds,Id = uid});
             Accounts = als.ToArray();
         }
 

@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
+    <Compile Include="DataModel\AuthroizeResult.cs" />
     <Compile Include="DataModel\DateTimeHelper.cs" />
     <Compile Include="DataModel\Profile.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />

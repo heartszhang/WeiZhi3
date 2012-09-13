@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using WeiZhi3.DataModel;
 using WeiZhi3.ViewModel;
@@ -39,7 +40,7 @@ namespace WeiZhi3
                 {
                     var rlt = MessageBoxResult.No;
                     var r = ExtractAccessToken(msg.Content);
-                    if (string.IsNullOrEmpty(r.AccessToken))//application error or user denied
+                    if (r.Id == 0)//application error or user denied
                     {
                         rlt = DialogMessageBox.Show(string.Format("原因 {0} : {1}. {2}\r\n是：重新请求授权；否：返回", r.ErrorCode, r.Error, r.ErrorDescription)
                             , "重新尝试一次？", MessageBoxButton.YesNo, MessageBoxResult.No);
@@ -49,6 +50,14 @@ namespace WeiZhi3
                                 GoBack();
                             else Navigate(new Uri("/Pages/PageBootstrap.xaml", UriKind.Relative));
                         }
+                    }
+                    else
+                    {
+                        var l = (ViewModelLocator)FindResource("Locator");
+                        l.Profile.Add(r.AccessToken, r.ExpiresIn, r.Id);
+                        l.Profile.Save();
+                        //如果直接跳转页面会导致，回调页面在ie中打开
+                        Navigate(new Uri("/Pages/PageHome.xaml", UriKind.Relative));
                     }
                     msg.ProcessCallback(rlt);
                 });
@@ -85,18 +94,11 @@ namespace WeiZhi3
                     rtn.ExpiresIn = DateTime.Now.AddSeconds(int.Parse(val)).UnixTimestamp();
                 else if (namev[0] == "remind_in")
                     rtn.RemindIn = DateTime.Now.AddSeconds(int.Parse(val)).UnixTimestamp();
+                else if (namev[0] == "uid")
+                    rtn.Id = long.Parse(val);
             }
 
             return rtn;
         }
-    }
-    internal struct AuthroizeResult
-    {
-        public string AccessToken;
-        public long RemindIn;
-        public long ExpiresIn;
-        public int ErrorCode;
-        public string Error;
-        public string ErrorDescription;
     }
 }

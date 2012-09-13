@@ -72,7 +72,9 @@ namespace WeiZhi3.Behaviours
                                            }
                                            else//成功认证，或者程序退出
                                            {
+                                               e.Cancel = true;
                                                wb.Navigating -= OnWebNavigating;
+                                               wb.NavigateToString("<html/>");
                                            }
                                        }), "authorize");
         }
