@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiZhi3", "WeiZhi3\WeiZhi3.csproj", "{000ACCF0-97C6-403F-ADBC-4E5DF250BC70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weibo.DataModel", "Weibo.DataModel\Weibo.DataModel.csproj", "{393970FB-DE51-42D0-B79C-C6BA5B95C946}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weibo.Apis", "Weibo.Apis\Weibo.Apis.csproj", "{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{000ACCF0-97C6-403F-ADBC-4E5DF250BC70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{000ACCF0-97C6-403F-ADBC-4E5DF250BC70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{000ACCF0-97C6-403F-ADBC-4E5DF250BC70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{393970FB-DE51-42D0-B79C-C6BA5B95C946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393970FB-DE51-42D0-B79C-C6BA5B95C946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393970FB-DE51-42D0-B79C-C6BA5B95C946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393970FB-DE51-42D0-B79C-C6BA5B95C946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

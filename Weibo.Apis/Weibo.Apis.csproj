@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Weibo.Apis</RootNamespace>
+    <AssemblyName>Weibo.Apis</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>..\bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>..\bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>core.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\WeiZhiAssemblyInfo.cs">
+      <Link>Properties\WeiZhiAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="FlowDocumentHelper.cs" />
+    <Compile Include="Net\RestResultBase.cs" />
+    <Compile Include="Net\WebClient2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StatusRender\CharHelper.cs" />
+    <Compile Include="StatusRender\Sentences.cs" />
+    <Compile Include="StatusRender\Token.cs" />
+    <Compile Include="StatusRender\WeiboTextTokenTypes.cs" />
+    <Compile Include="V2\SuggestionsHotType.cs" />
+    <Compile Include="V2\V2GeoApi.cs" />
+    <Compile Include="Net\RestResult.cs" />
+    <Compile Include="Net\RetryUtility.cs" />
+    <Compile Include="StatusRender\StreamlinzingHelper.cs" />
+    <Compile Include="Net\UrlDownloader.cs" />
+    <Compile Include="V2\V2CommentsApi.cs" />
+    <Compile Include="DesString.cs" />
+    <Compile Include="Net\ResponseParser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="V2\V2FriendshipApi.cs" />
+    <Compile Include="V2\V2FriendsTimelineApi.cs" />
+    <Compile Include="V2\V2RepostsTimelineApi.cs" />
+    <Compile Include="V2\V2UserApi.cs" />
+    <Compile Include="StatusRender\WeiboStatusTextParser.cs" />
+    <Compile Include="V2\V2StatusApi.cs" />
+    <Compile Include="WeiZhiDirectories.cs" />
+    <Compile Include="V2\V2WeiZhiApi.cs" />
+    <Compile Include="V2\V2HotSearch.cs" />
+    <Compile Include="V2\V2WeiZhiApiUrl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="core.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Misc\" />
+    <Folder Include="V1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weibo.DataModel\Weibo.DataModel.csproj">
+      <Project>{393970fb-de51-42d0-b79c-c6ba5b95c946}</Project>
+      <Name>Weibo.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
