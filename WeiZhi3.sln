@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weibo.DataModel", "Weibo.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weibo.Apis", "Weibo.Apis\Weibo.Apis.csproj", "{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weibo.Api2", "Weibo.Api2\Weibo.Api2.csproj", "{F150567B-1A4B-47DC-B1C1-DFB523EE639C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F150567B-1A4B-47DC-B1C1-DFB523EE639C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F150567B-1A4B-47DC-B1C1-DFB523EE639C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F150567B-1A4B-47DC-B1C1-DFB523EE639C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F150567B-1A4B-47DC-B1C1-DFB523EE639C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
