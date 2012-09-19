@@ -99,6 +99,9 @@ status             */
             province = data.province;
             city = data.city;
             location = data.location;
+
+            if (data.status != null)
+                status_id = data.status.id;
         }
     }
 }

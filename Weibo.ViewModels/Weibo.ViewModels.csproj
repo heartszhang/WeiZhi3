@@ -51,12 +51,14 @@
     <Compile Include="DataModels\DateTimeHelper.cs" />
     <Compile Include="DataModels\Profile.cs" />
     <Compile Include="ObservableObjectExt.cs" />
+    <Compile Include="PageHomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusRender\CharHelper.cs" />
     <Compile Include="StatusRender\Token.cs" />
     <Compile Include="StatusRender\WeiboParser.cs" />
     <Compile Include="StatusRender\WeiboTokenTypes.cs" />
     <Compile Include="UserExt.cs" />
+    <Compile Include="ViewModelBase2.cs" />
     <Compile Include="WeiboStatus.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -64,9 +64,10 @@ screen_name	false	string	需要查询的用户昵称。
         {
             dynamic paras = new ExpandoObject();
             paras.access_token = access_token;
-            if (uid == 0)
-                paras.screen_name = screen_name;
-            else paras.uid = uid;
+            if (uid != 0)
+                paras.uid = uid;
+            else if (!string.IsNullOrEmpty(screen_name))
+                paras.screen_name = screen_name;            
 
             return await WeiboClientInternal.WeiboGet(new WeiboRequestHandler("users/show.json", paras), WeiboSources.Sina);
         }

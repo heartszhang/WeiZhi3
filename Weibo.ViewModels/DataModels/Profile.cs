@@ -52,6 +52,9 @@ namespace Weibo.ViewModels.DataModels
                                 Messenger.Default.Send(new NotificationMessage(err),"rate_limit_status");//user-name required
                                 
                                 a1.Id = 0;
+                            }else
+                            {
+                                Debug.WriteLine("{0} reset-time : {1}",a1.Id,t.Result.Result.reset_time as string);
                             }
                         });
             }
@@ -60,8 +63,10 @@ namespace Weibo.ViewModels.DataModels
             //Messenger.Default.Send(wrs,"rate_limit_status");
             return;
         }
-        public long Id()
+        public long Id(long hint)
         {
+            if (hint != 0)
+                return hint;
             if (Accounts == null || Accounts.Length == 0)
                 return 0;
             return Accounts[0].Id;
@@ -82,9 +87,9 @@ namespace Weibo.ViewModels.DataModels
                     {
                         a.Expired = DateTime.Now.UnixTimestamp() + expiredseconds;
                         a.AccessToken = token;
+                        return;
                     }
                 }
-                return;
             }
             var als = new List<Account>();
             if (Accounts != null)

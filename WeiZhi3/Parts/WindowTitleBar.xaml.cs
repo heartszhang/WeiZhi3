@@ -18,11 +18,19 @@ namespace WeiZhi3.Parts
     /// <summary>
     /// Interaction logic for WindowTitleBar.xaml
     /// </summary>
-    public partial class WindowTitleBar : UserControl
+    public partial class WindowTitleBar
     {
+        public static DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof (string), typeof (WindowTitleBar), new PropertyMetadata(default(string)));
+
         public WindowTitleBar()
         {
             InitializeComponent();
+        }
+
+        public string Title
+        {
+            get { return (string) GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
         }
 
         private void ButtonCloseClick(object sender, RoutedEventArgs e)

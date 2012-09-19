@@ -37,6 +37,8 @@ namespace WeiZhi3
 
         private async void NavigationWindowLoaded(object sender, RoutedEventArgs e)
         {
+            /*
+             处理授权页面发出的消息，*/
             Messenger.Default.Register<DialogMessage>(
                 this, "authorize",
                 msg =>
@@ -60,19 +62,23 @@ namespace WeiZhi3
                         l.Profile.Add(r.AccessToken, r.ExpiresIn, r.Id);
                         l.Profile.Save();
                         //如果直接跳转页面会导致，回调页面在ie中打开
-                        Navigate(new Uri("/Pages/PageHome.xaml", UriKind.Relative), r.Id);
+                        Navigate(new Uri("/Pages/PageHome.xaml?id=" +r.Id , UriKind.Relative), r.Id);
                     }
                     msg.ProcessCallback(rlt);
                 });
 
+            /*检验授权是否有效*/
             var locator = (ViewModelLocator)FindResource("Locator");
             Debug.Assert(locator != null);
-            await locator.Profile.VerifyAccounts();
-            Dispatcher.Invoke(
-                DispatcherPriority.SystemIdle
-                , (Action) (() => Navigate(locator.Profile.IsEmpty()
-                                               ? new Uri("/Pages/PageAuthorizing.xaml", UriKind.Relative)
-                                               : new Uri("/Pages/PageHome.xaml", UriKind.Relative))));
+            await locator.Profile.VerifyAccounts().ContinueWith(
+                (t)=>
+                    {
+                        Dispatcher.Invoke(
+                            DispatcherPriority.SystemIdle
+                            , (Action)(() => Navigate(locator.Profile.IsEmpty()
+                                                           ? new Uri("/Pages/PageAuthorizing.xaml", UriKind.Relative)
+                                                           : new Uri("/Pages/PageHome.xaml", UriKind.Relative))));
+                    });
         }
 
         private static AuthroizeResult ExtractAccessToken(string namevalues)

@@ -3,11 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:cvt="clr-namespace:WeiZhi3.Converters" mc:Ignorable="d" 
+             xmlns:cvt="clr-namespace:WeiZhi3.Converters" 
+             mc:Ignorable="d" x:Name="_this"
              VerticalAlignment="Top"
              Height="24" d:DesignWidth="600">
     <UserControl.Resources>
         <cvt:WindowMaximzedStateToBooleanConverter x:Key="ws2b"/>
+        <Color x:Key="TextColor" >#FF000000</Color>
+        <Color x:Key="TextLightColor" >#FF666666</Color>
+        <SolidColorBrush x:Key="MetroText" Color="{StaticResource TextColor}"  />
+        <SolidColorBrush x:Key="MetroTextLight" Color="{StaticResource TextLightColor}"  />
+        <Style x:Key="TitleTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Light, Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="{StaticResource MetroTextLight}"/>
+        </Style>
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Semilight, Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
+            <Setter Property="FontSize" Value="26.667" />
+            <Setter Property="Margin" Value="0,0,0,25" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,7 +30,10 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Horizontal"></StackPanel>
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+            <Grid Width="{Binding ActualHeight,RelativeSource={RelativeSource Self}}"/>
+            <TextBlock Text="{Binding Title,ElementName=_this,Mode=OneWay,FallbackValue=WeiZhi}" Style="{StaticResource TitleTextStyle}" VerticalAlignment="Bottom"/>
+        </StackPanel>
         <Grid Grid.Column="1" x:Name="_title"></Grid>
         <StackPanel Grid.Column="2" Orientation="Horizontal" x:Name="_win_commands">
             <Button Style="{StaticResource ButtonWindowCommandStyle}">

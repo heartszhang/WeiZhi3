@@ -7,7 +7,7 @@
       xmlns:b="clr-namespace:WeiZhi3.Behaviours"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-	Title="PageAuthorizing">
+	WindowTitle="请求授权">
 
     <Grid>
         <i:Interaction.Behaviors>
