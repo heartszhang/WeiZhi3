@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Weibo.Apis.StatusRender
+namespace Weibo.ViewModels.StatusRender
 {
-    public static class WeiboStatusTextParser
+    public static class WeiboParser
     {
-        public static List<Token> Parse(this Sentences sentences, string text)
+        public static List<Token> Parse(this string text)
         {
-            var sent = new List<Token>();
-
             var rtn = new List<Token>();
             var begin = 0;
             var end = text.Length;
-            var last = new Token { tag = WeiboTextTokenTypes.FirstSentence };
+            var last = new Token();
+
             while (begin < end)
             {
                 Token t = null;
@@ -39,7 +38,7 @@ namespace Weibo.Apis.StatusRender
                     case '【':
                     case '《':
                     case '『':
-                        t = eat_topic(text, ref b, end);
+                        t = eat_topic(text, ref b, end, c);
                         break;
                     case '[':
                         t = eat_emotion(text, ref b, end);
@@ -50,19 +49,23 @@ namespace Weibo.Apis.StatusRender
                     case '？':
                     case '。':
                     case '!':
+                    case '！':
                     case '~':
                     case '，':
                     case ',':
                     case '；':
                     case '：':
                     case ':':
-
-                        t = eat_punctuation(text, ref b, end);
+                    case '.':
+                    case '-':
+                        t = eat_punctuation(text, ref b, end,c);
                         break;
                     case '"':
                     case '“':
-                    case '”':
-                    t = eat_quote(text, ref b, end);
+                    case '（':
+                    case '(':
+                case '「':
+                    t = eat_quote(text, ref b, end,c);
                         break;
                 }
                 if (t == null || (string.IsNullOrEmpty(t.text))) //没有匹配上
@@ -75,18 +78,9 @@ namespace Weibo.Apis.StatusRender
                     if (last.text.Length > 0)
                     {
                         rtn.Add(last);
-                        sent.Add(last);
                         last = new Token();
                     }
                     rtn.Add(t);
-
-                    if ((t.tag == WeiboTextTokenTypes.ReplyTo || t.tag == WeiboTextTokenTypes.SharedFrom)
-                        && sent.Count > 0)
-                    {
-                        sentences.SentencesList.Add(sent);
-                        sent = new List<Token> { t };
-                    }
-                    else sent.Add(t);
 
                     begin = b;
                 }
@@ -94,10 +88,8 @@ namespace Weibo.Apis.StatusRender
             if (last.text.Length > 0)
             {
                 rtn.Add(last);
-                sent.Add(last);
             }
-            if (sent.Count > 0)
-                sentences.SentencesList.Add(sent);
+
             return rtn;
 
         }
@@ -105,9 +97,9 @@ namespace Weibo.Apis.StatusRender
         private static bool is_invalid_name_char(char c)
         {
             var invalid_name_chars = new[]
-                                         {
+                                         {'」','「',
                                              ':', '：', '\t', ' ', ' ', '，', '。', '；', '】','@',
-                                             ']', '/', '[', '【', '\\', ';','《','》',  '『' ,  '』',
+                                             ']', '/', '[', '【', '\\', ';','《','》',  '『' ,  '』','>','<',
                                              ',', '、', '\"', '\'', '）', '（', '(', ')', '\r', '\n','#'
                                          };
             return invalid_name_chars.Any(i => c == i);
@@ -124,12 +116,12 @@ namespace Weibo.Apis.StatusRender
             if (name == null || string.IsNullOrEmpty(name.text) || b >= end || (text[b] != ':' && text[b] != '；'))
                 return null;
             begin = ++b;//eat :
-            name.tag = WeiboTextTokenTypes.ReplyTo;
+            name.tag = WeiboTokenTypes.ReplyTo;
             return name;
         }
         private static Token eat_name(string text, ref int begin, int end)
         {
-            var rtn = new Token { text = "", tag = WeiboTextTokenTypes.Name };
+            var rtn = new Token { text = "", tag = WeiboTokenTypes.Name };
             const string h = "http://";
             var b = begin;
             ++begin;
@@ -145,7 +137,7 @@ namespace Weibo.Apis.StatusRender
 
                 rtn.text += text[begin++];
             }
-            if (rtn.text.Length > (int)WeiboTextTokenTypes.NameLength)
+            if (rtn.text.Length > 16)
             {
                 //最多16个字
                 rtn.text = "";
@@ -155,11 +147,11 @@ namespace Weibo.Apis.StatusRender
         }
         static bool is_quote(char c)
         {
-            return c == '”' || c == '“' || c == '"';
+            return c == '”' || c == '“' || c == '"' || c == ')' || c == '）' || c == '」' ;
         }
-        private static Token eat_quote(string text, ref int begin, int end)
-        {
-            var rtn = new Token {tag = WeiboTextTokenTypes.Quote};
+        private static Token eat_quote(string text, ref int begin, int end, char pre)
+        {            
+            var rtn = new Token {tag = WeiboTokenTypes.Quote};
             if(is_quote(text[begin]))
             {
                 ++begin;
@@ -171,11 +163,12 @@ namespace Weibo.Apis.StatusRender
                     rtn.text = string.Empty;
                 else ++begin;
             }
+            rtn.flag = pre;
             return rtn;
         }
         private static Token eat_emotion(string text, ref int begin, int end)
         {
-            var rtn = new Token { text = "", tag = WeiboTextTokenTypes.Emotion };
+            var rtn = new Token { text = "", tag = WeiboTokenTypes.Emotion };
 
             if (text[begin] == '[')
             {
@@ -191,19 +184,20 @@ namespace Weibo.Apis.StatusRender
             return rtn;
         }
 
-        private static Token eat_punctuation(string text, ref int begin, int end)
+        private static Token eat_punctuation(string text, ref int begin, int end, char punc)
         {
-            var rtn = new Token { text = "", tag = WeiboTextTokenTypes.Punctuations };
+            var rtn = new Token { text = "", tag = WeiboTokenTypes.Punctuation };
             while (begin < end && (text[begin].IsPunctuationExt() || char.IsWhiteSpace(text[begin])))
             {
                 rtn.text += text[begin++];
             }
+            rtn.flag = punc;
             return rtn;
         }
 
-        private static Token eat_topic(string text, ref int begin, int end)
+        private static Token eat_topic(string text, ref int begin, int end, char pre)
         {
-            var rtn = new Token { text = "", tag = WeiboTextTokenTypes.Topic };
+            var rtn = new Token { text = "", tag = WeiboTokenTypes.Topic };
             if (text[begin] == '#' || text[begin] == '【' || text[begin] == '《' || text[begin] == '『')
             {
                 ++begin;
@@ -216,13 +210,14 @@ namespace Weibo.Apis.StatusRender
                     rtn.text = "";
                 else ++begin;
             }
+            rtn.flag = pre;
             return rtn;
         }
 
         private static Token eat_sharedfrom(string text, ref int beg, int end)
         {
             var begin = beg;
-            var rtn = new Token { text = string.Empty, tag = WeiboTextTokenTypes.SharedFrom };
+            var rtn = new Token { text = string.Empty, tag = WeiboTokenTypes.CopyedFrom };
             if (begin + 2 < end && text[begin] == '/' && text[begin + 1] == '/' && text[begin + 2] == '@')
             {
                 begin += 3;
@@ -242,7 +237,7 @@ namespace Weibo.Apis.StatusRender
             }
             if (begin < end && (text[begin] == '：' || text[begin] == ':'))
                 ++begin;
-            if (rtn.text.Length > (int)WeiboTextTokenTypes.NameLength)
+            if (rtn.text.Length > 16)
             {//最多16个字
                 rtn.text = string.Empty;
             }
@@ -253,7 +248,7 @@ namespace Weibo.Apis.StatusRender
 
         private static Token eat_hyperlink(string text, ref int begin, int end)
         {
-            var rtn = new Token { text = "", tag = WeiboTextTokenTypes.Hyperlink };
+            var rtn = new Token { text = "", tag = WeiboTokenTypes.Hyperlink };
             const string h = "http://";
             var i = text.Substring(begin, (h.Length < end - begin) ? h.Length : (end - begin));
 

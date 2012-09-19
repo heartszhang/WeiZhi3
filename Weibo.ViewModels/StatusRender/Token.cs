@@ -1,4 +1,4 @@
-namespace Weibo.Apis.StatusRender
+namespace Weibo.ViewModels.StatusRender
 {
     public class Token
     {

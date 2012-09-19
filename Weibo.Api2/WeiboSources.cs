@@ -4,5 +4,6 @@ namespace Weibo.Api2
     {
         Sina = 0,
         Tencent = 1,
+        SinaV1 = 2,
     }
 }

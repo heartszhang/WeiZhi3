@@ -61,7 +61,7 @@
     <Compile Include="StatusRender\CharHelper.cs" />
     <Compile Include="StatusRender\Sentences.cs" />
     <Compile Include="StatusRender\Token.cs" />
-    <Compile Include="StatusRender\WeiboTextTokenTypes.cs" />
+    <Compile Include="StatusRender\WeiboTokenTypes.cs" />
     <Compile Include="V2\SuggestionsHotType.cs" />
     <Compile Include="V2\V2GeoApi.cs" />
     <Compile Include="Net\RestResult.cs" />
@@ -76,7 +76,7 @@
     <Compile Include="V2\V2FriendsTimelineApi.cs" />
     <Compile Include="V2\V2RepostsTimelineApi.cs" />
     <Compile Include="V2\V2UserApi.cs" />
-    <Compile Include="StatusRender\WeiboStatusTextParser.cs" />
+    <Compile Include="StatusRender\WeiboParser.cs" />
     <Compile Include="V2\V2StatusApi.cs" />
     <Compile Include="WeiZhiDirectories.cs" />
     <Compile Include="V2\V2WeiZhiApi.cs" />

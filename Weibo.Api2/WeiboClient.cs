@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,10 @@ namespace Weibo.Api2
 {
     internal class WeiboClient
     {
-        internal static async Task<WeiboResponse> WeiboGet(WeiboRequestHandler handler, WeiboSources src)
+        internal static async Task<WeiboResponse> WeiboGet(WeiboRequestHandler handler, WeiboSources src = WeiboSources.Sina)
         {
             var url = handler.CreateUrl(src);
+            Debug.WriteLine(url);
             var rtn = new WeiboResponse();
 
             using (var client = new HttpClient())
@@ -25,7 +27,7 @@ namespace Weibo.Api2
 
                         if ((int)resp.StatusCode >= 500)//server error
                             continue;//retry
-                        if (resp.IsSuccessStatusCode)
+                        if (resp.IsSuccessStatusCode || (int)resp.StatusCode>= 400)
                             rtn.Result = JToken.Parse(await resp.Content.ReadAsStringAsync());
                         break;
                     }
