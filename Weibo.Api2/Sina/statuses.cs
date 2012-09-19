@@ -32,7 +32,7 @@ trim_user	false	int	返回值中user字段开关，0：返回完整user字段、
             paras.base_app = base_app;
             paras.feature = feature;
             paras.trim_user = trim_user;
-            return await WeiboClient.WeiboGet(new WeiboRequestHandler("statuses/home_timeline.json", paras), WeiboSources.Sina);
+            return await WeiboClientInternal.WeiboGet(new WeiboRequestHandler("statuses/home_timeline.json", paras), WeiboSources.Sina);
         }
 
         /*statuses/friends_timeline/ids
@@ -55,7 +55,7 @@ feature	false	int	过滤类型ID，0：全部、1：原创、2：图片、3：�
             paras.page = page;
             paras.base_app = base_app;
             paras.feature = feature;
-            return await WeiboClient.WeiboGet(new WeiboRequestHandler("statuses/friends_timeline/ids.json", paras), WeiboSources.Sina);
+            return await WeiboClientInternal.WeiboGet(new WeiboRequestHandler("statuses/friends_timeline/ids.json", paras), WeiboSources.Sina);
         }
 
     }

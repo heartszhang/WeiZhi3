@@ -4,10 +4,37 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Weibo.Api2.Sina;
 
 namespace Weibo.Api2
 {
-    internal class WeiboClient
+    public interface IWeiboClient
+    {
+        
+    }
+
+    public class WeiboClient : IWeiboClient
+    {
+        public static WeiboClient Create(WeiboSources src)
+        {
+            if (src == WeiboSources.Sina)
+                return new SinaClient();
+            else if (src == WeiboSources.Tencent)
+                return new TencentClient();
+            else if (src == WeiboSources.SinaV1)
+                return new SinaV1Client();
+            return new SinaClient();
+        }
+    }
+    public partial class TencentClient : WeiboClient
+    {
+        
+    }
+    public partial class SinaV1Client : WeiboClient
+    {
+        
+    }
+    internal class WeiboClientInternal
     {
         internal static async Task<WeiboResponse> WeiboGet(WeiboRequestHandler handler, WeiboSources src = WeiboSources.Sina)
         {

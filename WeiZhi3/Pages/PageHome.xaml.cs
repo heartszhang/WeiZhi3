@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using Artefact.Animation;
 
 namespace WeiZhi3.Pages
 {
-    /// <summary>
-    /// Interaction logic for Home.xaml
-    /// </summary>
-    public partial class PageHome : Page
-    {
-        public PageHome()
+	public partial class PageHome
+	{
+		public PageHome()
+		{
+			this.InitializeComponent();
+		}
+
+		private void ToolsetPopup(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+            _tool_container.OffsetTo(0, 0, 1, AnimationTransitions.ElasticEaseOut, 0);
+		}
+        private void ToolsetSlideout(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+            _tool_container.OffsetTo(_tool_container.ActualWidth, 0, 1, AnimationTransitions.ElasticEaseOut, 0);
+		}
+        private void NavisetPopup(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            InitializeComponent();
+			_navi_container.OffsetTo(0, 0, 1, AnimationTransitions.ElasticEaseOut, 0);
         }
-    }
+        private void NavisetSlideout(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            _navi_container.OffsetTo(-_navi_container.ActualWidth, 0, 1, AnimationTransitions.ElasticEaseOut, 0);
+      }
+	}
 }

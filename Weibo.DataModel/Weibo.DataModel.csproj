@@ -55,6 +55,7 @@
     <Compile Include="Misc\FlowDocumentInfo.cs" />
     <Compile Include="Hot\HotStatus.cs" />
     <Compile Include="Hot\HotStatuses.cs" />
+    <Compile Include="Misc\SinaError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserModel\Relationship.cs" />
     <Compile Include="Remind\RemindSince.cs" />

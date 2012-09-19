@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModels\Account.cs" />
+    <Compile Include="DataModels\AuthroizeResult.cs" />
+    <Compile Include="DataModels\DateTimeHelper.cs" />
+    <Compile Include="DataModels\Profile.cs" />
     <Compile Include="ObservableObjectExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusRender\CharHelper.cs" />
@@ -53,6 +58,12 @@
     <Compile Include="StatusRender\WeiboTokenTypes.cs" />
     <Compile Include="UserExt.cs" />
     <Compile Include="WeiboStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weibo.Api2\Weibo.Api2.csproj">
+      <Project>{f150567b-1a4b-47dc-b1c1-dfb523ee639c}</Project>
+      <Name>Weibo.Api2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

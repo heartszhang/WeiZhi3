@@ -1,6 +1,6 @@
-namespace WeiZhi3.DataModel
+namespace Weibo.ViewModels.DataModels
 {
-    internal struct AuthroizeResult
+    public struct AuthroizeResult
     {
         public string AccessToken;
         public long RemindIn;

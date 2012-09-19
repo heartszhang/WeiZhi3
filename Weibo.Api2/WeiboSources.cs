@@ -1,6 +1,6 @@
 namespace Weibo.Api2
 {
-    internal enum WeiboSources
+    public enum WeiboSources
     {
         Sina = 0,
         Tencent = 1,

@@ -5,24 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
+using Weibo.Api2.Sina;
 
-namespace WeiZhi3.DataModel
+namespace Weibo.ViewModels.DataModels
 {
-    [DataContract]
-    public class Account
-    {
-        [DataMember]
-        public long Id { get; set; }
-
-        [DataMember]
-        public string AccessToken { get; set; }
-
-        [DataMember]
-        public long Expired { get; set; }
-    }
-
+    
     [DataContract]
     public class Profile
     {
@@ -36,9 +25,67 @@ namespace WeiZhi3.DataModel
         {
             return Accounts == null || Accounts.Length == 0;
         }
+        public Account Account()
+        {
+            if (Accounts == null || Accounts.Length == 0)
+                return null;
+            return Accounts[0];
+        }
+        public async Task VerifyAccounts()
+        {
+            if(Accounts == null || Accounts.Length == 0)
+                return ;
+            var wr = new Task[Accounts.Length];
 
+            var i = 0;
+            foreach(var a in Accounts)
+            {
+//todo: check weibo sources here
+                var a1 = a;
+                wr[i++] =  SinaClient.rate_limit_status(a.AccessToken).ContinueWith(
+                    (t)=>
+                        {
+                            if (t.Result.Failed())
+                            {
+                                var err = string.Format("id:{2} rate_limit_status:{0}:{1}", t.Result.Error(), t.Result.Reason(), a1.Id);
+                                Debug.WriteLine(err);
+                                Messenger.Default.Send(new NotificationMessage(err),"rate_limit_status");//user-name required
+                                
+                                a1.Id = 0;
+                            }
+                        });
+            }
+            await Task.WhenAll(wr);
+            Remove(0);//delete all error accounts
+            //Messenger.Default.Send(wrs,"rate_limit_status");
+            return;
+        }
+        public long Id()
+        {
+            if (Accounts == null || Accounts.Length == 0)
+                return 0;
+            return Accounts[0].Id;
+        }
+        public string Token(long uid = 0)
+        {
+            if (Accounts == null || Accounts.Length == 0)
+                return null;
+            return uid == 0 ? Accounts[0].AccessToken : (from a in Accounts where a.Id == uid select a.AccessToken).FirstOrDefault();
+        }
         public void Add(string token, long expiredseconds,long uid)
         {
+            if(Accounts != null)
+            {
+                foreach(var a in Accounts)
+                {
+                    if(a.Id == uid)
+                    {
+                        a.Expired = DateTime.Now.UnixTimestamp() + expiredseconds;
+                        a.AccessToken = token;
+                    }
+                }
+                return;
+            }
             var als = new List<Account>();
             if (Accounts != null)
                 als.AddRange(Accounts);

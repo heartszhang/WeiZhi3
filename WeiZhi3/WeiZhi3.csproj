@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Artefact">
+      <HintPath>Externals\Artefact.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.WPF45">
       <HintPath>Externals\GalaSoft.MvvmLight.WPF45.dll</HintPath>
     </Reference>
@@ -61,9 +64,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
-    <Compile Include="DataModel\AuthroizeResult.cs" />
-    <Compile Include="DataModel\DateTimeHelper.cs" />
-    <Compile Include="DataModel\Profile.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />
     <Compile Include="Pages\PageBootstrap.xaml.cs">
       <DependentUpon>PageBootstrap.xaml</DependentUpon>
@@ -73,6 +73,18 @@
     </Compile>
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\MainContent.xaml.cs">
+      <DependentUpon>MainContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\NavigationBar.xaml.cs">
+      <DependentUpon>NavigationBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\SecondaryContent.xaml.cs">
+      <DependentUpon>SecondaryContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\ToolsetBar.xaml.cs">
+      <DependentUpon>ToolsetBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelBase2.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -108,6 +120,22 @@
     <Page Include="Pages\PageAuthorizing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\MainContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\NavigationBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\SecondaryContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\ToolsetBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Parts\WindowTitleBar.xaml">
       <SubType>Designer</SubType>
@@ -170,9 +198,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataModel\" />
     <Folder Include="Themes\Accents\" />
     <Folder Include="Themes\Dark\" />
     <Folder Include="Themes\Light\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weibo.Api2\Weibo.Api2.csproj">
+      <Project>{f150567b-1a4b-47dc-b1c1-dfb523ee639c}</Project>
+      <Name>Weibo.Api2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Weibo.ViewModels\Weibo.ViewModels.csproj">
+      <Project>{73404F1E-DD06-4399-A4DB-CDBCD606E244}</Project>
+      <Name>Weibo.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

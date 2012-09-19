@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,9 +17,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
-using WeiZhi3.DataModel;
 using WeiZhi3.ViewModel;
 using WeiZhi3.Views;
+using Weibo.Api2;
+using Weibo.Api2.Sina;
+using Weibo.ViewModels.DataModels;
 
 namespace WeiZhi3
 {
@@ -32,7 +35,7 @@ namespace WeiZhi3
             InitializeComponent();
         }
 
-        private void NavigationWindowLoaded(object sender, RoutedEventArgs e)
+        private async void NavigationWindowLoaded(object sender, RoutedEventArgs e)
         {
             Messenger.Default.Register<DialogMessage>(
                 this, "authorize",
@@ -57,17 +60,21 @@ namespace WeiZhi3
                         l.Profile.Add(r.AccessToken, r.ExpiresIn, r.Id);
                         l.Profile.Save();
                         //如果直接跳转页面会导致，回调页面在ie中打开
-                        Navigate(new Uri("/Pages/PageHome.xaml", UriKind.Relative));
+                        Navigate(new Uri("/Pages/PageHome.xaml", UriKind.Relative), r.Id);
                     }
                     msg.ProcessCallback(rlt);
                 });
 
             var locator = (ViewModelLocator)FindResource("Locator");
             Debug.Assert(locator != null);
-            Navigate(locator.Profile.IsEmpty()
-                         ? new Uri("/Pages/PageAuthorizing.xaml", UriKind.Relative)
-                         : new Uri("/Pages/PageHome.xaml", UriKind.Relative));
+            await locator.Profile.VerifyAccounts();
+            Dispatcher.Invoke(
+                DispatcherPriority.SystemIdle
+                , (Action) (() => Navigate(locator.Profile.IsEmpty()
+                                               ? new Uri("/Pages/PageAuthorizing.xaml", UriKind.Relative)
+                                               : new Uri("/Pages/PageHome.xaml", UriKind.Relative))));
         }
+
         private static AuthroizeResult ExtractAccessToken(string namevalues)
         {
             var rtn = new AuthroizeResult();

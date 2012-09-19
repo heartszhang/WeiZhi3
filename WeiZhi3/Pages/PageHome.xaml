@@ -1,13 +1,46 @@
-﻿<Page x:Class="WeiZhi3.Pages.PageHome"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	Title="Home">
+﻿<Page
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Parts="clr-namespace:WeiZhi3.Parts" x:Class="WeiZhi3.Pages.PageHome"
+	x:Name="Page"
+	WindowTitle="Page"
+	FlowDirection="LeftToRight">
+	<Grid x:Name="LayoutRoot">
+        <Grid HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="640"/>
+                <ColumnDefinition Width="440"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" x:Name="_attach_container" >
+                <Parts:SecondaryContent/>
+            </Grid>
+            <Grid x:Name="_main_container">
+                <Parts:MainContent/>
+            </Grid>
+        </Grid>
+        <Grid HorizontalAlignment="Right" Width="50" Background="Transparent" MouseEnter="ToolsetPopup" Height="100" VerticalAlignment="Top" x:Name="_left_tool_hint"/>
+        <Grid x:Name="_tool_container" Width="120" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" MouseLeave="ToolsetSlideout">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="120"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+                <Parts:ToolsetBar/>
+            </Grid>
+		<Grid HorizontalAlignment="Left" Width="50" Background="Transparent" MouseEnter="NavisetPopup" Height="180" VerticalAlignment="Top" x:Name="_navi_hint"/>
+        <Grid x:Name="_navi_container" Width="300" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MouseLeave="NavisetSlideout">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-300"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+                <Parts:NavigationBar/>
+            </Grid>
 
-    <Grid>
-        <TextBlock Text="Hello Home"/>
-    </Grid>
+	</Grid>
 </Page>

@@ -7,5 +7,25 @@ namespace Weibo.Api2
         public dynamic Result { get; set; }
         public HttpStatusCode StatusCode { get; set; }
         public string ReasonPhrase { get; set; }
+        public bool Failed()
+        {
+            return StatusCode != HttpStatusCode.OK;
+        }
+        public string Reason()
+        {
+            var rtn = ReasonPhrase;
+            if(Result != null)
+            {
+                rtn = Result.error;
+            }
+            return rtn;
+        }
+        public int Error()
+        {
+            var rtn = (int) StatusCode;
+            if (Result != null)
+                rtn = Result.error_code;
+            return rtn;
+        }
     }
 }

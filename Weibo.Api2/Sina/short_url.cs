@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Weibo.Api2.Sina
 {
-    public partial class SinaClient
+    public partial class SinaClient : WeiboClient
     {
         /* short_url/info
       "result": true,
@@ -24,7 +24,7 @@ namespace Weibo.Api2.Sina
             dynamic paras = new ExpandoObject();
             paras.source = "603152360";//微游戏:603152360
 
-            return  await WeiboClient.WeiboGet(new WeiboRequestHandler("short_url/info.json")
+            return  await WeiboClientInternal.WeiboGet(new WeiboRequestHandler("short_url/info.json")
             {
                 Parameters = paras,
                 ListName = "url_short",

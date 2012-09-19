@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeiZhi3.DataModel;
+using Weibo.ViewModels.DataModels;
 
 namespace WeiZhi3.ViewModel
 {
