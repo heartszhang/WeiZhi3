@@ -68,6 +68,8 @@
     </ApplicationDefinition>
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />
+    <Compile Include="Design\DesignPageHomeViewModel.cs" />
+    <Compile Include="Design\DesignUserExt.cs" />
     <Compile Include="Pages\PageBootstrap.xaml.cs">
       <DependentUpon>PageBootstrap.xaml</DependentUpon>
     </Compile>
@@ -88,6 +90,9 @@
     </Compile>
     <Compile Include="Parts\ToolsetBar.xaml.cs">
       <DependentUpon>ToolsetBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\WeiboControl.xaml.cs">
+      <DependentUpon>WeiboControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelBase2.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -140,6 +145,10 @@
     <Page Include="Parts\ToolsetBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\WeiboControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Parts\WindowTitleBar.xaml">
       <SubType>Designer</SubType>

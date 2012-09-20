@@ -32,7 +32,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Horizontal">
             <Grid Width="{Binding ActualHeight,RelativeSource={RelativeSource Self}}"/>
-            <TextBlock Text="{Binding Title,ElementName=_this,Mode=OneWay,FallbackValue=WeiZhi}" Style="{StaticResource TitleTextStyle}" VerticalAlignment="Bottom"/>
+            <TextBlock Text="{Binding Title,ElementName=_this,Mode=OneWay,FallbackValue=WeiZhi}" Style="{StaticResource TitleTextStyle}" VerticalAlignment="Center"/>
         </StackPanel>
         <Grid Grid.Column="1" x:Name="_title"></Grid>
         <StackPanel Grid.Column="2" Orientation="Horizontal" x:Name="_win_commands">

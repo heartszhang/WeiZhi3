@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:wz="clr-namespace:WeiZhi3"
              xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
-             xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib" mc:Ignorable="d" 
+             xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
+             xmlns:p="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d" Background="White"
              d:DesignHeight="257" d:DesignWidth="560">
     <UserControl.Resources>
         <DataTemplate x:Key="SimpleWeiboTemplate" DataType="{x:Type v:WeiboStatus}">
             <Grid>
-                <TextBlock Text="{Binding text,Mode=OneWay}" Style="{StaticResource ContentTextStyle}"/>
+                <p:WeiboControl/>
             </Grid>
         </DataTemplate>
         <wz:WeiboTemplateSelector x:Key="wts"/>
@@ -20,7 +21,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border Padding="0,12" ClipToBounds="True" RenderOptions.ClearTypeHint="Enabled" BorderBrush="#40464646" BorderThickness="0,0,0,1" Background="Transparent" x:Name="_border">
+                        <Border Padding="0,12" ClipToBounds="True" RenderOptions.ClearTypeHint="Enabled" 
+                                BorderBrush="#40464646" BorderThickness="0,0,0,1" Background="Transparent" x:Name="_border">
                             <ContentPresenter/>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -68,7 +70,7 @@
                                             <ColumnDefinition Width="15"/>
 
                                         </Grid.ColumnDefinitions>
-                                        <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" />
+                                        <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" Grid.ColumnSpan="2"/>
                                         <ScrollBar Name="PART_VerticalScrollBar" Grid.Column="1"
 										Value="{TemplateBinding VerticalOffset}" ViewportSize="{TemplateBinding ViewportHeight}"
 										Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
@@ -96,10 +98,15 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <DockPanel IsHitTestVisible="False" Margin="10,12" Visibility="Collapsed" x:Name="_prompt">
-                            <Path Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Top" Margin="0,3,10,0" Fill="#FF333333" Data="{StaticResource PathWarning}"/>
-                            <TextBlock Text="没有要现实的微博" Foreground="#FF464646" Style="{StaticResource ContentTextStyle}"/>
+                            <Path Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Top" Margin="0,3,10,0" Fill="#FF464646" Data="{StaticResource PathWarning}"/>
+                            <TextBlock Text="没有要显示的微博" Foreground="#FF464646" Style="{StaticResource ContentTextStyle}"/>
                         </DockPanel>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Items.Count, RelativeSource={RelativeSource Self}, Mode=OneWay,FallbackValue=0}" Value="0">
+                            <Setter TargetName="_prompt" Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </ListBox.Template>
         </ListBox>
