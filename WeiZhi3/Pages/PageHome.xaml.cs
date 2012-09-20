@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using Artefact.Animation;
 using WeiZhi3.ViewModel;
 using Weibo.Api2.Sina;
@@ -11,14 +13,36 @@ using Weibo.ViewModels;
 
 namespace WeiZhi3.Pages
 {
+    //public static class DispatcherTimerHelper
+    //{
+    //    public static DispatcherTimer Start(double interval_seconds, EventHandler handler
+    //        , Dispatcher dispatcher
+    //        , DispatcherPriority prio = DispatcherPriority.SystemIdle, bool start = true)
+    //    {
+    //        var rtn = new DispatcherTimer(TimeSpan.FromSeconds(interval_seconds), prio, handler, dispatcher);
+    //        rtn.Tick += handler;
+    //        if(start)
+    //            rtn.Start();
+    //        return rtn;
+    //    }
+    //    public static void Stop(this DispatcherTimer timer, EventHandler handler)
+    //    {
+    //        timer.Stop();
+    //        timer.Tick -= handler;
+    //    }
+
+    //}
+
 	public partial class PageHome :Page
 	{
+	    private long _user_id;
+	    private Timer _timer;
 		public PageHome()
 		{
 			this.InitializeComponent();
 		    Loaded += OnPageHomeLoaded;
+            Unloaded += OnPageHomeUnloaded;
 		}
-
 
         #region UserScreenName (Attached DependencyProperty)
 
@@ -42,15 +66,45 @@ namespace WeiZhi3.Pages
         }
 
         #endregion
-        
-	    private void OnPageHomeLoaded(object sender, RoutedEventArgs e)
+
+
+        void OnPageHomeUnloaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= OnPageHomeUnloaded;
+
+            if(_timer != null)
+            {
+                _timer.Dispose();
+                _timer = null;
+            }
+            //do some cleanup here
+        }
+
+        private void OnPageHomeLoaded(object sender, RoutedEventArgs e)
 	    {
 	        Loaded -= OnPageHomeLoaded;
 	        Debug.Assert(NavigationService != null, "NavigationService != null");
 	        var src = NavigationService.Source.OriginalString;
 	        InitializePageHome(src);
+
+            var settings = Properties.Settings.Default;
+            _timer = new Timer(OnTimerCallback, DataContext, settings.TimelineTickInterval, settings.TimelineTickInterval);
 	    }
-        void InitializePageHome(string src)
+
+	    private void OnTimerCallback(object state)
+	    {
+            var vm = (PageHomeViewModel)state;
+            Debug.Assert(vm != null);
+
+            vm.OnTick(Token());
+        }
+
+        string Token()
+        {
+            var locator = (ViewModelLocator)FindResource("Locator");
+            return locator.Profile.Token(_user_id);            
+        }
+	    void InitializePageHome(string src)
         {
             var fields = src.Split(new char[] {'?','&','='}, StringSplitOptions.RemoveEmptyEntries);
             long uid = 0;
@@ -63,9 +117,11 @@ namespace WeiZhi3.Pages
                 }
             }
             var locator = (ViewModelLocator) FindResource("Locator");
-            uid= locator.Profile.Id(uid);
+            _user_id = uid = locator.Profile.Id(uid);
             var at = locator.Profile.Token(uid);
-            DataContext = new PageHomeViewModel(uid,at);
+            var vm = new PageHomeViewModel(uid,at);
+            DataContext = vm;
+            vm.Initialize(at);
         }
 	    private void ToolsetPopup(object sender, System.Windows.Input.MouseEventArgs e)
 		{

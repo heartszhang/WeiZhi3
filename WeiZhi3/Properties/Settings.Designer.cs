@@ -82,5 +82,17 @@ namespace WeiZhi3.Properties {
                 this["WindowHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("240000")]
+        public int TimelineTickInterval {
+            get {
+                return ((int)(this["TimelineTickInterval"]));
+            }
+            set {
+                this["TimelineTickInterval"] = value;
+            }
+        }
     }
 }

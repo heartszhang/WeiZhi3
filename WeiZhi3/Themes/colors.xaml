@@ -3,5 +3,5 @@
     <Color x:Key="MetroColorFeature">#FFa60800</Color>
     <Color x:Key="MetroColorFeatureFade">#FFaa443f</Color>
     <Color x:Key="MetroColorFeatureContrast">#FFFFFFFF</Color>
-
+    <Color x:Key="MetroColorText">#FF333333</Color>
 </ResourceDictionary>

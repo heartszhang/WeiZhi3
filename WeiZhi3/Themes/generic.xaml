@@ -3,8 +3,19 @@
     <SolidColorBrush Color="{StaticResource MetroColorFeatureFade}" x:Key="MetroColorFeatureFadeBrush"/>
     <SolidColorBrush Color="{StaticResource MetroColorFeature}" x:Key="MetroColorFeatureBrush"/>
     <SolidColorBrush Color="{StaticResource MetroColorFeatureContrast}" x:Key="MetroColorFeatureContrastBrush"/>
+    <SolidColorBrush Color="{StaticResource MetroColorText}" x:Key="MetroColorTextBrush"/>
 
-    
+    <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="#FF333333" />
+        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <!--<Setter Property="Typography.StylisticSet20" Value="True" />-->
+        <!--<Setter Property="Typography.DiscretionaryLigatures" Value="True" />-->
+        <!--<Setter Property="TextOptions.TextFormattingMode" Value="Display" />-->
+    </Style>
     <!-- window buttons-->
     <ControlTemplate TargetType="Button" x:Key="ButtonWindowCommandTemplate">
         <Border Background="{TemplateBinding Background}">
