@@ -41,31 +41,7 @@ namespace WeiZhi3
              处理授权页面发出的消息，*/
             Messenger.Default.Register<DialogMessage>(
                 this, "authorize",
-                msg =>
-                {
-                    var rlt = MessageBoxResult.No;
-                    var r = ExtractAccessToken(msg.Content);
-                    if (r.Id == 0)//application error or user denied
-                    {
-                        rlt = DialogMessageBox.Show(string.Format("原因 {0} : {1}. {2}\r\n是：重新请求授权；否：返回", r.ErrorCode, r.Error, r.ErrorDescription)
-                            , "重新尝试一次？", MessageBoxButton.YesNo, MessageBoxResult.No);
-                        if(rlt != MessageBoxResult.Yes)
-                        {
-                            if (CanGoBack)
-                                GoBack();
-                            else Navigate(new Uri("/Pages/PageBootstrap.xaml", UriKind.Relative));
-                        }
-                    }
-                    else
-                    {
-                        var l = (ViewModelLocator)FindResource("Locator");
-                        l.Profile.Add(r.AccessToken, r.ExpiresIn, r.Id);
-                        l.Profile.Save();
-                        //如果直接跳转页面会导致，回调页面在ie中打开
-                        Navigate(new Uri("/Pages/PageHome.xaml?id=" +r.Id , UriKind.Relative), r.Id);
-                    }
-                    msg.ProcessCallback(rlt);
-                });
+                OnAuthorizingMessage);
 
             /*检验授权是否有效*/
             var locator = (ViewModelLocator)FindResource("Locator");
@@ -79,6 +55,31 @@ namespace WeiZhi3
                                                            ? new Uri("/Pages/PageAuthorizing.xaml", UriKind.Relative)
                                                            : new Uri("/Pages/PageHome.xaml", UriKind.Relative))));
                     });
+        }
+
+        private void OnAuthorizingMessage(DialogMessage msg)
+        {
+            var rlt = MessageBoxResult.No;
+            var r = ExtractAccessToken(msg.Content);
+            if (r.Id == 0) //application error or user denied
+            {
+                rlt = DialogMessageBox.Show(string.Format("原因 {0} : {1}. {2}\r\n是：重新请求授权；否：返回", r.ErrorCode, r.Error, r.ErrorDescription), "重新尝试一次？", MessageBoxButton.YesNo, MessageBoxResult.No);
+                if (rlt != MessageBoxResult.Yes)
+                {
+                    if (CanGoBack)
+                        GoBack();
+                    else Navigate(new Uri("/Pages/PageBootstrap.xaml", UriKind.Relative));
+                }
+            }
+            else
+            {
+                var l = (ViewModelLocator) FindResource("Locator");
+                l.Profile.Add(r.AccessToken, r.ExpiresIn, r.Id);
+                l.Profile.Save();
+                //如果直接跳转页面会导致，回调页面在ie中打开
+                Navigate(new Uri("/Pages/PageHome.xaml?id=" + r.Id, UriKind.Relative), r.Id);
+            }
+            msg.ProcessCallback(rlt);
         }
 
         private static AuthroizeResult ExtractAccessToken(string namevalues)
