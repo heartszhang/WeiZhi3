@@ -21,12 +21,6 @@ namespace Weibo.Apis.Net
             if (string.IsNullOrEmpty(resp))
                 return default(TResult);
             return Extract<TResult>(Encoding.UTF8.GetBytes(resp));
-/*            var ser = new DataContractJsonSerializer(typeof(TResult));
-            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(resp)))
-            {
-                return ser.ReadObject(ms) as TResult;
-            }
- * */
         }
     }
 }

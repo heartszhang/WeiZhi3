@@ -69,7 +69,7 @@ screen_name	false	string	需要查询的用户昵称。
             else if (!string.IsNullOrEmpty(screen_name))
                 paras.screen_name = screen_name;            
 
-            return await WeiboClientInternal.WeiboGet(new WeiboRequestHandler("users/show.json", paras), WeiboSources.Sina);
+            return await WeiboClientInternal.WeiboGet(new WeiboRequestHandler("users/show.json", paras));
         }
 
         /*

@@ -1,23 +1,33 @@
+using System.Net;
+
 namespace Weibo.Apis.Net
 {
     public class RestResultBase
     {
-        public int StatusCode;
-        public string Error;
+        public HttpStatusCode StatusCode { get; set; }
+        public string Reason { get; set; }
         internal RestResultBase()
         {
-            StatusCode = 200;
-            Error = "OK";
+            StatusCode = HttpStatusCode.Unused;
+            Reason = "Unknown";
         }
-        internal RestResultBase(int scode, string err)
+        internal RestResultBase(HttpStatusCode scode, string err)
         {
             StatusCode = scode;
-            Error = err;
+            Reason = err;
         }
         internal RestResultBase(RestResultBase rhs)
         {
             StatusCode = rhs.StatusCode;
-            Error = rhs.Error;
+            Reason = rhs.Reason;
+        }
+        public bool Failed()
+        {
+            return StatusCode != HttpStatusCode.OK;
+        }
+        public int Error()
+        {
+            return (int)StatusCode;
         }
     }
 }

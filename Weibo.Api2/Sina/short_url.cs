@@ -4,10 +4,11 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Weibo.DataModel;
 
 namespace Weibo.Api2.Sina
 {
-    public partial class SinaClient : WeiboClient
+    public partial class SinaClient 
     {
         /* short_url/info
       "result": true,
@@ -29,7 +30,7 @@ namespace Weibo.Api2.Sina
                 Parameters = paras,
                 ListName = "url_short",
                 ValueArray = urls.ToList(),
-            }, WeiboSources.Sina);            
+            }, WeiboSourcesType.Sina);            
         }
     }
 }

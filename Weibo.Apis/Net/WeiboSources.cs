@@ -1,0 +1,3 @@
+namespace Weibo.Apis.Net
+{
+}

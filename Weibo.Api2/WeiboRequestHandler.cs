@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Weibo.DataModel;
 
 namespace Weibo.Api2
 {
@@ -39,7 +40,7 @@ namespace Weibo.Api2
                 };
             return rtn;
         }
-        internal string CreateUrl(WeiboSources src)
+        internal string CreateUrl(WeiboSourcesType src)
         {
             if(Parameters == null || (Parameters as IDictionary<string,object>).Count == 0)
                 return BaseUrl[(int) src] + UrlPath;

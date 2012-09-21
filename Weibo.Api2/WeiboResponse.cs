@@ -28,4 +28,24 @@ namespace Weibo.Api2
             return rtn;
         }
     }
+    public class WeiboResponseGeneric<TResult>
+    {
+        public TResult Result { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
+        public string ReasonPhrase { get; set; }
+        public bool Failed()
+        {
+            return StatusCode != HttpStatusCode.OK;
+        }
+        public string Reason()
+        {
+            var rtn = ReasonPhrase;
+            return rtn;
+        }
+        public int Error()
+        {
+            var rtn = (int)StatusCode;
+            return rtn;
+        }
+    }    
 }

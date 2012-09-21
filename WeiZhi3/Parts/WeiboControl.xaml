@@ -80,6 +80,7 @@
             <Setter Property="Template" Value="{StaticResource WeiboCommandTemplate}"/>
         </Style>
         <c:ImageUrlConverter x:Key="iuc"/>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot"  >
@@ -91,8 +92,8 @@
             <Image  Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Center" 
                     Source="{Binding user.profile_image_url,Mode=OneWay,IsAsync=true,Converter={StaticResource iuc}}" />
         </StackPanel>
-        <StackPanel Margin="0,0,16,0" Grid.Column="1">
-            <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}" Text="{Binding topic,Mode=OneWay}" Margin="0,-4,0,0"/>
+        <StackPanel Margin="0,0,31,0" Grid.Column="1">
+            <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}" Text="{Binding topic,Mode=OneWay}" Margin="0,-6,0,0"/>
             <Grid x:Name="_headernote">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -107,8 +108,8 @@
                 <TextBlock x:Name="_body" Text="{Binding text,Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
             <Grid Background="WhiteSmoke">
-                <Image x:Name="_img" MaxWidth="440" MaxHeight="640" Stretch="Uniform"
-                       Source="{Binding bmiddle_pic,Mode=OneWay,IsAsync=True,Converter={StaticResource iuc}}"/>
+                <Image x:Name="_img" MaxWidth="440" MaxHeight="640" Stretch="Uniform" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}"
+                       Source="{Binding bmiddle_pic,Mode=OneWay,IsAsync=True,Converter={StaticResource iuc}}" StretchDirection="DownOnly"/>
             </Grid>
             <Grid x:Name="_footnote" Height="32" Background="Transparent">
                 <Grid.ColumnDefinitions>

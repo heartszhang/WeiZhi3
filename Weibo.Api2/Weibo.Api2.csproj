@@ -55,10 +55,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WeiboRequestHandler.cs" />
     <Compile Include="WeiboResponse.cs" />
-    <Compile Include="WeiboSources.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tencent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weibo.DataModel\Weibo.DataModel.csproj">
+      <Project>{393970fb-de51-42d0-b79c-c6ba5b95c946}</Project>
+      <Name>Weibo.DataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

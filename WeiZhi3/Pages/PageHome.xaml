@@ -9,7 +9,7 @@
 	<Grid x:Name="LayoutRoot">
         <Grid HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="640"/>
+                <ColumnDefinition Width="680"/>
                 <ColumnDefinition Width="440"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" x:Name="_attach_container" >

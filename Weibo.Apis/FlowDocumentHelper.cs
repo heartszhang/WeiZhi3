@@ -1,7 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Threading;
-using Weibo.DataModel.Misc;
+using Weibo.DataModel;
 
 namespace Weibo.Apis
 {
