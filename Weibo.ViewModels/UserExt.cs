@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json.Linq;
+using Weibo.DataModel;
 
 namespace Weibo.ViewModels
 {
@@ -43,7 +44,7 @@ namespace Weibo.ViewModels
         public bool following { get { return _following; } set { SetProperty(ref _following, value); } }
         public long status_id { get; set; }
 
-        public void assign_sina(dynamic data)
+        public void assign_sina(UserWithoutStatus data)
         {
             /*
 id	int64	ÓÃ»§UID
@@ -100,8 +101,6 @@ status             */
             city = data.city;
             location = data.location;
 
-            if (data.status != null)
-                status_id = data.status.id;
         }
     }
 }

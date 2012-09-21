@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
-using Weibo.Api2.Sina;
+using Weibo.Apis.SinaV2;
 
 namespace Weibo.ViewModels.DataModels
 {
@@ -42,19 +42,19 @@ namespace Weibo.ViewModels.DataModels
             {
 //todo: check weibo sources here
                 var a1 = a;
-                wr[i++] =  SinaClient.rate_limit_status(a.AccessToken).ContinueWith(
+                wr[i++] = WeiboClient.account_rate_limit_status(a.AccessToken).ContinueWith(                
                     (t)=>
                         {
                             if (t.Result.Failed())
                             {
-                                var err = string.Format("id:{2} rate_limit_status:{0}:{1}", t.Result.Error(), t.Result.Reason(), a1.Id);
+                                var err = string.Format("id:{2} rate_limit_status:{0}:{1}", t.Result.Error(), t.Result.Reason, a1.Id);
                                 Debug.WriteLine(err);
                                 Messenger.Default.Send(new NotificationMessage(err),"rate_limit_status");//user-name required
                                 
                                 a1.Id = 0;
                             }else
                             {
-                                Debug.WriteLine("{0} reset-time : {1}",a1.Id,t.Result.Result.reset_time as string);
+                                Debug.WriteLine("{0} reset-time : {1}",a1.Id,(int)t.Result.Value.reset_time_in_seconds );
                             }
                         });
             }

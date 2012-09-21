@@ -1,5 +1,5 @@
 using System.Runtime.Serialization;
-using Weibo.Api2;
+using Weibo.DataModel;
 
 namespace Weibo.ViewModels.DataModels
 {
@@ -16,6 +16,6 @@ namespace Weibo.ViewModels.DataModels
         public long Expired { get; set; }
 
         [DataMember]
-        public WeiboSources Source { get; set; }
+        public WeiboSourcesType Source { get; set; }
     }
 }

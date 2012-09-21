@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
-using Weibo.Api2.Sina;
+using Weibo.Apis.SinaV2;
 
 namespace Weibo.ViewModels
 {
@@ -30,7 +30,21 @@ namespace Weibo.ViewModels
                 UiInvoke(()=>statuses.Add(ws));
             }
         }
+        /*
+        internal void ReloadSinaV2(Statuses result)
+        {
+            previous_cursor = result.previous_cursor;
+            next_cursor = result.next_cursor;
+            total_number = result.total_number;
 
+            UiInvoke(() => statuses.Clear());
+            foreach (var s in result.statuses)
+            {
+                var ws = new WeiboStatus();
+                ws.assign_sina(s);
+                UiInvoke(() => statuses.Add(ws));
+            }
+        }*/
         static void UiInvoke( Action act)
         {
             DispatcherHelper.UIDispatcher.Invoke(DispatcherPriority.SystemIdle,act);
@@ -62,22 +76,33 @@ namespace Weibo.ViewModels
         {
             if (IsInDesignMode)
                 return;
-             var r = await SinaClient.users_show(at,uid);
+            var r = await WeiboClient.users_show_async(uid, at);
+             
              if (!r.Failed())
              {
                  var u = new UserExt();
-                 u.assign_sina(r.Result);
+                 u.assign_sina(r.Value);
                  user = u;
                  Reload(at);
              }
-             else FireFailedMessage(r.Error(),r.Reason(),"user_show");
+             else FireFailedMessage(r.Error(),r.Reason,"user_show");
         }
 
         public override void OnTick(string token)
         {
             
         }
-
+        public override  async void Reload(string token)
+        {
+            var ses = await WeiboClient.statuses_friends_timeline_refresh_async(token);
+            if(ses.Failed())
+            {
+                FireFailedMessage(ses.Error(), ses.Reason, "timeline");
+                return;
+            }
+            ReloadSina(ses.Value);
+        }
+        /*
         public override async void Reload(string token)
         {
             var wr = await SinaClient.home_timeline(token);
@@ -87,7 +112,7 @@ namespace Weibo.ViewModels
                 return;
             }
             ReloadSina(wr.Result);
-        }
+        }*/
         void FireFailedMessage(int error, string reason, string source)
         {
             Messenger.Default.Send(new NotificationMessage(string.Format("{0}:{1}", error, reason)), source);

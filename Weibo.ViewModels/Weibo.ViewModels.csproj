@@ -63,9 +63,13 @@
     <Compile Include="WeiboStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Weibo.Api2\Weibo.Api2.csproj">
-      <Project>{f150567b-1a4b-47dc-b1c1-dfb523ee639c}</Project>
-      <Name>Weibo.Api2</Name>
+    <ProjectReference Include="..\Weibo.Apis\Weibo.Apis.csproj">
+      <Project>{788d0d98-63a2-4db0-87a6-4aa933f6a31f}</Project>
+      <Name>Weibo.Apis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Weibo.DataModel\Weibo.DataModel.csproj">
+      <Project>{393970fb-de51-42d0-b79c-c6ba5b95c946}</Project>
+      <Name>Weibo.DataModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

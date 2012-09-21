@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json.Linq;
+using Weibo.DataModel;
+using Weibo.DataModel.Misc;
 using Weibo.ViewModels.StatusRender;
 
 namespace Weibo.ViewModels
@@ -64,12 +66,14 @@ namespace Weibo.ViewModels
         public string topic { get; set; }
         public string widget { get; set; }
 
+        public bool has_pic { get; set; }
+
         public WeiboTopicSource topic_source { get; set; }
         #endregion
 
         public List<Token> tokens { get; set; }
 
-        public void assign_sina(dynamic data)
+        public void assign_sina(StatusWithoutRt data, bool enable_post_initial)
         {
             /*
             idstr	string	字符串型的微博ID
@@ -92,7 +96,7 @@ namespace Weibo.ViewModels
             geo	object	地理信息字段
             user */
             //var jt = ((JToken)data.created_at);
-            
+
             created_at = time(data.created_at.ToString());
             id = data.id;
             text = data.text;
@@ -106,10 +110,26 @@ namespace Weibo.ViewModels
             user = new UserExt();
             user.assign_sina(data.user);
 
+            has_pic = !string.IsNullOrEmpty(bmiddle_pic);
+            if(enable_post_initial)
+                post_initialize();
+        }
+        public void assign_sina(Status data)
+        {
+            assign_sina(data,false);
             if(data.retweeted_status != null)
             {
                 retweeted_status = new WeiboStatus();
-                retweeted_status.assign_sina(data.retweeted_status);
+                retweeted_status.assign_sina(data.retweeted_status,true);
+
+                if(retweeted_status.has_pic && !has_pic)
+                {
+                    bmiddle_pic = retweeted_status.bmiddle_pic;
+                    thumbnail_pic = retweeted_status.thumbnail_pic;
+
+                    thumb_pic_width = retweeted_status.thumb_pic_width;
+                    thumb_pic_height = retweeted_status.thumb_pic_height;
+                }
             }
             post_initialize();
 

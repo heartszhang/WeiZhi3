@@ -4,7 +4,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:Parts="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d"
+        xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:p="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d"
         Loaded="NavigationWindowLoaded"  Background="WhiteSmoke"
         Title="唯致" d:DesignHeight="350" d:DesignWidth="525">
     <NavigationWindow.Template>
@@ -16,7 +16,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <ContentPresenter Grid.Row="1"/>
-                    <Parts:WindowTitleBar Title="{TemplateBinding Title}" />
+                    <p:WindowTitleBar Title="{TemplateBinding Title}" />
                 </Grid>
             </Border>
         </ControlTemplate>

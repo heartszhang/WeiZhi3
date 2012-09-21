@@ -49,48 +49,57 @@
     <Compile Include="..\WeiZhiAssemblyInfo.cs">
       <Link>Properties\WeiZhiAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Misc\AccessToken.cs" />
-    <Compile Include="CommentModel\Comment.cs" />
-    <Compile Include="CommentModel\Comments.cs" />
-    <Compile Include="Misc\FlowDocumentInfo.cs" />
-    <Compile Include="Hot\HotStatus.cs" />
-    <Compile Include="Hot\HotStatuses.cs" />
-    <Compile Include="Misc\SinaError.cs" />
+    <Compile Include="AccessToken.cs" />
+    <Compile Include="Misc\CommentOriOptions.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="Comments.cs" />
+    <Compile Include="FlowDocumentInfo.cs" />
+    <Compile Include="HotStatus.cs" />
+    <Compile Include="HotStatuses.cs" />
+    <Compile Include="Geo.cs" />
+    <Compile Include="GeoInfo.cs" />
+    <Compile Include="Misc\RetweetOptions.cs" />
+    <Compile Include="Misc\SuggestionsHotType.cs" />
+    <Compile Include="RateLimitStatus.cs" />
+    <Compile Include="WeiboError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserModel\Relationship.cs" />
-    <Compile Include="Remind\RemindSince.cs" />
-    <Compile Include="Remind\RemindUnreadCount.cs" />
-    <Compile Include="Remind\RemindUnreadCountV1.cs" />
-    <Compile Include="Status\Reposts.cs" />
-    <Compile Include="Misc\SearchStatuses.cs" />
-    <Compile Include="Status\StatusBase.cs" />
-    <Compile Include="Status\StatusBaseBase.cs" />
-    <Compile Include="Misc\StatusCount.cs" />
-    <Compile Include="Status\Statuses.cs" />
-    <Compile Include="Status\StatusGeo.cs" />
-    <Compile Include="Status\StatusIds.cs" />
-    <Compile Include="Status\StatusInUser.cs" />
-    <Compile Include="Status\StatusProfile.cs" />
-    <Compile Include="Status\StatusReadyType.cs" />
-    <Compile Include="Status\StatusVisible.cs" />
-    <Compile Include="Status\StatusWithUser.cs" />
-    <Compile Include="Misc\UnreadInfo.cs" />
-    <Compile Include="Url\UrlComments.cs" />
-    <Compile Include="Url\UrlInfo.cs" />
-    <Compile Include="Url\UrlInfos.cs" />
-    <Compile Include="Url\UrlShort.cs" />
-    <Compile Include="Url\UrlShorts.cs" />
-    <Compile Include="Url\UrlShortType.cs" />
-    <Compile Include="UserModel\User.cs" />
-    <Compile Include="UserModel\UserIds.cs" />
-    <Compile Include="UserModel\UserRelationship.cs" />
-    <Compile Include="UserModel\Users.cs" />
-    <Compile Include="UserModel\UserWithLatestStatus.cs" />
-    <Compile Include="Misc\WidgetShow.cs" />
+    <Compile Include="Relationship.cs" />
+    <Compile Include="Misc\RemindSince.cs" />
+    <Compile Include="RemindUnreadCount.cs" />
+    <Compile Include="RemindUnreadCountV1.cs" />
+    <Compile Include="Reposts.cs" />
+    <Compile Include="SearchStatuses.cs" />
+    <Compile Include="Misc\StatusWithoutRt.cs" />
+    <Compile Include="Misc\StatusWithoutUser.cs" />
+    <Compile Include="StatusCount.cs" />
+    <Compile Include="Statuses.cs" />
+    <Compile Include="Geoes.cs" />
+    <Compile Include="StatusIds.cs" />
+    <Compile Include="StatusInUser.cs" />
+    <Compile Include="StatusProfile.cs" />
+    <Compile Include="Misc\StatusReadyType.cs" />
+    <Compile Include="StatusVisible.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="UnreadInfo.cs" />
+    <Compile Include="UrlComments.cs" />
+    <Compile Include="UrlInfo.cs" />
+    <Compile Include="UrlInfos.cs" />
+    <Compile Include="UrlShort.cs" />
+    <Compile Include="UrlShorts.cs" />
+    <Compile Include="Misc\UrlShortType.cs" />
+    <Compile Include="UserWithoutStatus.cs" />
+    <Compile Include="UserIds.cs" />
+    <Compile Include="UserRelationship.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="WeiboSources.cs" />
+    <Compile Include="WidgetShow.cs" />
+    <Compile Include="Misc\WithoutMentionOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wzdata.pfx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
