@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="WeiZhi3.Parts.NotificationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" x:Name="_this"
+             xmlns:b="clr-namespace:Bot.Transitions;assembly=Bot" xmlns:c="clr-namespace:WeiZhi3.Converters"
+             xmlns:s="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d" 
+             d:DesignWidth="480">
+    <UserControl.Resources>
+        <c:IntNZeroToVisibilityConverter x:Key="inz2v"/>
+        <DataTemplate x:Key="NotificationBodyTemplate" DataType="s:String">
+            <StackPanel Background="{StaticResource MetroColorFeatureBrush}">
+                <TextBlock Text="{Binding Mode=OneWay}" 
+                           Visibility="{Binding Length,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource inz2v}}"
+                           FontFamily="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, Segoe UI Symbol, Microsoft JhengHei UI,Microsoft JhengHei"
+                           TextWrapping="NoWrap" FontSize="13pt" Foreground="#FFFFFFFF" Margin="16,8"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <b:TransitionPresenter Content="{Binding NotificationText,ElementName=_this,Mode=OneWay}" ContentTemplate="{StaticResource NotificationBodyTemplate}">
+        <b:TransitionPresenter.Transition>
+            <b:TranslateTransition Duration="0:0:0.3" StartPoint="0,1"/>
+        </b:TransitionPresenter.Transition>
+    </b:TransitionPresenter>
+</UserControl>

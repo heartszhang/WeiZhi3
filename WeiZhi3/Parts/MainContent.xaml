@@ -97,10 +97,10 @@
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <DockPanel IsHitTestVisible="False" Margin="10,12" Visibility="Collapsed" x:Name="_prompt">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" IsHitTestVisible="False" Margin="10,12" Visibility="Collapsed" x:Name="_prompt" Opacity="0.3">
                             <Path Stretch="Uniform" Width="16" Height="16" VerticalAlignment="Top" Margin="0,3,10,0" Fill="#FF464646" Data="{StaticResource PathWarning}"/>
-                            <TextBlock Text="没有要显示的微博" Foreground="#FF464646" Style="{StaticResource ContentTextStyle}"/>
-                        </DockPanel>
+                            <TextBlock Text="正在获取微博... " Foreground="#FF464646" Style="{StaticResource ContentTextStyle}"/>
+                        </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding Items.Count, RelativeSource={RelativeSource Self}, Mode=OneWay,FallbackValue=0}" Value="0">
