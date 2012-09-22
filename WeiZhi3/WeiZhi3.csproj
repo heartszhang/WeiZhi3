@@ -37,6 +37,9 @@
     <Reference Include="Artefact">
       <HintPath>Externals\Artefact.dll</HintPath>
     </Reference>
+    <Reference Include="Bot">
+      <HintPath>Externals\Bot.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.WPF45">
       <HintPath>Externals\GalaSoft.MvvmLight.WPF45.dll</HintPath>
     </Reference>
@@ -67,6 +70,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
+    <Compile Include="Converters\IntNZeroToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntZeroToVisibilityConverter.cs" />
+    <Compile Include="Converters\ImageUrlConverter.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />
     <Compile Include="Design\DesignPageHomeViewModel.cs" />
     <Compile Include="Design\DesignUserExt.cs" />
@@ -85,6 +91,9 @@
     <Compile Include="Parts\NavigationBar.xaml.cs">
       <DependentUpon>NavigationBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Parts\NotificationControl.xaml.cs">
+      <DependentUpon>NotificationControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Parts\SecondaryContent.xaml.cs">
       <DependentUpon>SecondaryContent.xaml</DependentUpon>
     </Compile>
@@ -101,6 +110,7 @@
     </Compile>
     <Compile Include="Properties\WeiZhiAssemblyInfo.cs" />
     <Compile Include="WeiboTemplateSelector.cs" />
+    <Compile Include="WeiZhiCommands.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,6 +147,10 @@
     <Page Include="Parts\NavigationBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\NotificationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Parts\SecondaryContent.xaml">
       <Generator>MSBuild:Compile</Generator>

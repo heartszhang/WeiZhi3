@@ -18,7 +18,7 @@
     </Style>
     <!-- window buttons-->
     <ControlTemplate TargetType="Button" x:Key="ButtonWindowCommandTemplate">
-        <Border Background="{TemplateBinding Background}">
+        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal"/>
@@ -59,7 +59,7 @@
                     <VisualState x:Name="Unchecked"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <Path x:Name="_path" Stretch="Uniform" Margin="12,7" Data="{StaticResource PathMaximize}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}}" />
+            <Path x:Name="_path" Stretch="Uniform" Margin="10,7" Data="{StaticResource PathMaximize}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}}" />
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

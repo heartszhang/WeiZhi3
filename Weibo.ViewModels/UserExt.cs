@@ -74,6 +74,8 @@ follow_me	boolean	该用户是否关注当前登录用户
 online_status	int	用户的在线状态，0：不在线、1：在线
 bi_followers_count	int	用户的互粉数
 status             */
+            if (data == null)
+                return;
             bi_followers_count = data.bi_followers_count;
             online_status = data.online_status;
             follow_me = data.follow_me;

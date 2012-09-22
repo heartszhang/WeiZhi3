@@ -44,6 +44,7 @@ namespace Weibo.Api2
                 {//don't retry any request exception
                     rtn.StatusCode = HttpStatusCode.Unused;
                     rtn.ReasonPhrase = e.Message;
+                    Debug.WriteLine(e.Message);
                 }
             }
             return rtn;
@@ -75,6 +76,7 @@ namespace Weibo.Api2
                 {//don't retry any request exception
                     rtn.StatusCode = HttpStatusCode.Unused;
                     rtn.ReasonPhrase = e.Message;
+                    Debug.WriteLine(e.Message);
                 }
             }
             return rtn;

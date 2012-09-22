@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Weibo.ViewModels
 {
@@ -9,6 +10,10 @@ namespace Weibo.ViewModels
         {
             Set(propertyName, ref storage, value);
             return true;
+        }
+        protected void FireNotificationMessage(string format, params object[] args)
+        {
+            Messenger.Default.Send(new NotificationMessage(string.Format(format, args)), "noti");
         }
     }
 }

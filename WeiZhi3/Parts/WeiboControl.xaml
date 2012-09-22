@@ -12,7 +12,7 @@
         <Style x:Key="WeiboTitleTextStyle" TargetType="TextBlock" >
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Foreground" Value="#FF464646" />
-            <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
+            <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, Microsoft YaHei, Segoe UI Symbol, Microsoft JhengHei UI,Microsoft JhengHei" />
             <Setter Property="TextTrimming" Value="WordEllipsis" />
             <Setter Property="FontSize" Value="26.667" />
             <Setter Property="FontWeight" Value="Light" />
@@ -47,10 +47,10 @@
                 </Grid>
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup>
-                        <VisualState x:Name="Normal1" />
-                        <VisualState x:Name="MouseOver1"/>
-                        <VisualState x:Name="Pressed1"/>
-                        <VisualState x:Name="Disabled1"/>
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="MouseOver"/>
+                        <VisualState x:Name="Pressed"/>
+                        <VisualState x:Name="Disabled"/>
                     </VisualStateGroup>
                     <VisualStateGroup x:Name="CommonStates"/>
                     <VisualStateGroup x:Name="FocusStates"/>
@@ -67,18 +67,80 @@
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="Background" Value="#FF8ebc00" TargetName="_border"/>
+                    <Setter Property="Background" Value="{StaticResource MetroColorFeatureBrush}" TargetName="_border"/>
                 </Trigger>
             </ControlTemplate.Triggers>
 
         </ControlTemplate>
         <Style x:Key="WeiboCommandStyle" TargetType="Button">
-            <Setter Property="Foreground" Value="#FF464646"/>
+            <Setter Property="Foreground" Value="#FF999999"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="Padding" Value="16,0"/>
             <Setter Property="Margin" Value="1"/>
             <Setter Property="Template" Value="{StaticResource WeiboCommandTemplate}"/>
         </Style>
+        <Style x:Key="WeiboButtonTextStyle" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="#FFAAAAAA"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <!--<Setter Property="TextBlock.FontWeight" Value="SemiBold"/>-->
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" x:Name="_border"
+                                RenderTransformOrigin="0.5,0.5" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter x:Name="content" Tag="{TemplateBinding Tag}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Border.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="_scale" />
+                                    <SkewTransform />
+                                    <RotateTransform />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Border.RenderTransform>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#FF8ebc00" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="ScaleX" To="0.9" Duration="0:0:0.03" Storyboard.TargetName="_scale" />
+                                            <DoubleAnimation Storyboard.TargetProperty="ScaleY" To="0.9" Duration="0:0:0.03" Storyboard.TargetName="_scale" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.03" Storyboard.TargetName="_scale" />
+                                            <DoubleAnimation To="1.0" Storyboard.TargetName="_scale" Storyboard.TargetProperty="ScaleX" Duration="0:0:0.03" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <c:ImageUrlConverter x:Key="iuc"/>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </UserControl.Resources>
@@ -130,14 +192,25 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <Button Content="Reply" Style="{StaticResource WeiboCommandStyle}" >
-                    </Button>
-                    <Button Style="{StaticResource WeiboCommandStyle}">
-                        <Path Data="{StaticResource PathReply}" Stretch="Uniform" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}"/>
+                    <!--<Button Content="&#xE0D1;&#xE134;" Style="{StaticResource WeiboButtonTextStyle}" TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI">
+                    </Button>-->
+                    <Button Style="{StaticResource WeiboButtonTextStyle}" Content="&#xE200; 评论"
+                            TextBlock.FontSize="14.667" TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI">
+                        <!--<StackPanel Orientation="Horizontal">-->
+                            <!--<Path Data="{StaticResource PathReply}" Stretch="Uniform" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}"/>-->
+                            <!--<TextBlock Text="&#xE200; 评论" Style="{StaticResource NowrapTextStyle}" 
+                                       Foreground="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}"
+                                       TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI"/>
+                        </StackPanel>-->
                     </Button>
 
-                    <Button Style="{StaticResource WeiboCommandStyle}">
-                        <Path Data="{StaticResource PathRetweet}" Stretch="Uniform" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}"/>
+                    <Button Style="{StaticResource WeiboButtonTextStyle}" Content="&#xE14A; 转发" TextBlock.FontSize="14.667" TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI">
+                        <!--<StackPanel Orientation="Horizontal">-->
+                            <!--<Path Data="{StaticResource PathRetweet}" Stretch="Uniform" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}"/>-->
+                            <!--<TextBlock Text="&#xE14A; 转发" Style="{StaticResource NowrapTextStyle}" 
+                                             Foreground="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Button}}"
+FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI"/>-->
+                        <!--</StackPanel>-->
 
                     </Button>
                 </StackPanel>

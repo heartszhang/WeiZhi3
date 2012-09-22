@@ -17,7 +17,7 @@ namespace Weibo.Apis.Net
             using (var client = new HttpClient())
             {
                 var form = new MultipartFormDataContent();
-                foreach(var k in parameters.AllKeys)
+                foreach (var k in parameters.AllKeys)
                 {
                     form.Add(new StringContent(parameters[k]), k);
                 }
@@ -27,7 +27,7 @@ namespace Weibo.Apis.Net
                 rtn.Reason = resp.ReasonPhrase;
                 if (resp.IsSuccessStatusCode)
                     rtn.Value = JsonConvert.DeserializeObject<TResult>(await resp.Content.ReadAsStringAsync());
-                else if ((int)resp.StatusCode >= 400)
+                else if ((int) resp.StatusCode >= 400)
                 {
                     var er = JsonConvert.DeserializeObject<WeiboError>(await resp.Content.ReadAsStringAsync());
                     rtn.Reason = er.Translate();
@@ -37,25 +37,25 @@ namespace Weibo.Apis.Net
         }
 
         internal static async Task<RestResult<TResult>> HttpsGet<TResult>(string url)
-            where TResult: class
+            where TResult : class
         {
             Debug.WriteLine(url);
             var rtn = new RestResult<TResult>();
             using (var client = new HttpClient())
             {
-                try
+                for (var r = 0; r < 2; ++r)
                 {
-                    for (var r = 0; r < 2; ++r)
+                    try
                     {
                         var resp = await client.GetAsync(url);
                         rtn.StatusCode = resp.StatusCode;
                         rtn.Reason = resp.ReasonPhrase;
 
-                        if ((int)resp.StatusCode >= 500)//server error
-                            continue;//retry
+                        if ((int) resp.StatusCode >= 500) //server error
+                            continue; //retry
                         if (resp.IsSuccessStatusCode)
                             rtn.Value = JsonConvert.DeserializeObject<TResult>(await resp.Content.ReadAsStringAsync());
-                        else if ((int)resp.StatusCode >= 400)
+                        else if ((int) resp.StatusCode >= 400)
                         {
                             var er = JsonConvert.DeserializeObject<WeiboError>(await resp.Content.ReadAsStringAsync());
                             rtn.Reason = er.Translate();
@@ -63,11 +63,13 @@ namespace Weibo.Apis.Net
                         //JToken.Parse(await resp.Content.ReadAsStringAsync());
                         break;
                     }
-                }
-                catch (HttpRequestException e)
-                {//don't retry any request exception
-                    rtn.StatusCode = HttpStatusCode.Unused;
-                    rtn.Reason = e.Message;
+                    catch (HttpRequestException e)
+                    {
+//don't retry any request exception
+                        rtn.StatusCode = HttpStatusCode.Unused;
+                        rtn.Reason = e.Message;
+                        Debug.WriteLine(e.Message);
+                    }
                 }
             }
             return rtn;

@@ -1,64 +1,12 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
-using GalaSoft.MvvmLight.Messaging;
-using GalaSoft.MvvmLight.Threading;
 using Weibo.Apis.SinaV2;
 
 namespace Weibo.ViewModels
 {
-    public abstract class TimelineViewModel:ViewModelBase2
+    public class PageHomeViewModel : ViewModelBase2
     {
-        public abstract void OnTick(string token);
-        public abstract void Reload(string token);
-
-        internal long previous_cursor { get; set; }
-        internal long next_cursor { get; set; }
-        internal long total_number { get; set; }
-        
-        internal void ReloadSina(dynamic result)
-        {
-            previous_cursor = result.previous_cursor;
-            next_cursor = result.next_cursor;
-            total_number = result.total_number;
-
-            UiInvoke(()=>statuses.Clear());
-            foreach(var s in result.statuses)
-            {
-                var ws = new WeiboStatus();
-                ws.assign_sina(s);
-                UiInvoke(()=>statuses.Add(ws));
-            }
-        }
-        /*
-        internal void ReloadSinaV2(Statuses result)
-        {
-            previous_cursor = result.previous_cursor;
-            next_cursor = result.next_cursor;
-            total_number = result.total_number;
-
-            UiInvoke(() => statuses.Clear());
-            foreach (var s in result.statuses)
-            {
-                var ws = new WeiboStatus();
-                ws.assign_sina(s);
-                UiInvoke(() => statuses.Add(ws));
-            }
-        }*/
-        static void UiInvoke( Action act)
-        {
-            DispatcherHelper.UIDispatcher.Invoke(DispatcherPriority.SystemIdle,act);
-        }
-        public ObservableCollection<WeiboStatus> statuses { get; set; }
-        protected TimelineViewModel()
-        {
-            statuses = new ObservableCollection<WeiboStatus>();
-        }
-    }
-    public class PageHomeViewModel : TimelineViewModel
-    {
-       // private string _token;
+        // private string _token;
         private UserExt _user;
+        private TimelineViewModel _timeline;
         public long uid { get; set; }
 
         public UserExt user
@@ -66,6 +14,13 @@ namespace Weibo.ViewModels
             get { return _user; }
             set { Set(ref _user, value); }
         }
+
+        public TimelineViewModel Timeline
+        {
+            get { return _timeline; }
+            set { Set(ref _timeline , value); }
+        }
+
         public PageHomeViewModel(long id, string at)
         {
             uid = id;
@@ -76,46 +31,25 @@ namespace Weibo.ViewModels
         {
             if (IsInDesignMode)
                 return;
-            var r = await WeiboClient.users_show_async(uid, at);
-             
-             if (!r.Failed())
-             {
-                 var u = new UserExt();
-                 u.assign_sina(r.Value);
-                 user = u;
-                 Reload(at);
-             }
-             else FireFailedMessage(r.Error(),r.Reason,"user_show");
+            var t = WeiboClient.users_show_async(uid, at);
+
+            Timeline = new TimelineHomeViewModel();
+            Timeline.Reload(at);
+            var r = await t;
+            if (!r.Failed())
+            {
+                var u = new UserExt();
+                u.assign_sina(r.Value);
+                user = u;
+                FireNotificationMessage("@{0} Wecolme",u.screen_name);   
+            }
+            else FireNotificationMessage("{0} - user {1}",r.Error(), r.Reason);
         }
 
-        public override void OnTick(string token)
+        public void OnTick(string token)
         {
-            
-        }
-        public override  async void Reload(string token)
-        {
-            var ses = await WeiboClient.statuses_friends_timeline_refresh_async(token);
-            if(ses.Failed())
-            {
-                FireFailedMessage(ses.Error(), ses.Reason, "timeline");
-                return;
-            }
-            ReloadSina(ses.Value);
-        }
-        /*
-        public override async void Reload(string token)
-        {
-            var wr = await SinaClient.home_timeline(token);
-            if(wr.Failed())
-            {
-                FireFailedMessage(wr.Error(), wr.Reason(), "timeline");
-                return;
-            }
-            ReloadSina(wr.Result);
-        }*/
-        void FireFailedMessage(int error, string reason, string source)
-        {
-            Messenger.Default.Send(new NotificationMessage(string.Format("{0}:{1}", error, reason)), source);
+            if(Timeline != null)
+                Timeline.OnTick(token);
         }
     }
 }

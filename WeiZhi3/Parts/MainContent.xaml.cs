@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace WeiZhi3.Parts
 {
@@ -10,6 +12,7 @@ namespace WeiZhi3.Parts
         public MainContent()
         {
             InitializeComponent();
+            
         }
     }
 }
