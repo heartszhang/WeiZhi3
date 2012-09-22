@@ -14,14 +14,14 @@
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="_center" MaxWidth="1120">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="680*" MinWidth="500"/>
+                <ColumnDefinition Width="680*" MinWidth="560"/>
                 <ColumnDefinition Width="440*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" x:Name="_attach_container" >
-                <p:SecondaryContent/>
+                <p:RightColumnControl/>
             </Grid>
             <Grid x:Name="_main_container">
-                <p:MainContent DataContext="{Binding Timeline,Mode=OneWay}"/>
+                <p:TimelineControl DataContext="{Binding Timeline,Mode=OneWay}"/>
             </Grid>
         </Grid>
         <Grid HorizontalAlignment="Right" Width="50" Background="Transparent" MouseEnter="ToolsetPopup" Height="100" VerticalAlignment="Top" x:Name="_left_tool_hint"/>

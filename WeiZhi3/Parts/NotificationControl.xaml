@@ -19,7 +19,7 @@
     </UserControl.Resources>
     <b:TransitionPresenter Content="{Binding NotificationText,ElementName=_this,Mode=OneWay}" ContentTemplate="{StaticResource NotificationBodyTemplate}">
         <b:TransitionPresenter.Transition>
-            <b:TranslateTransition Duration="0:0:0.3" StartPoint="0,1"/>
+            <b:TranslateTransition Duration="0:0:0.5" StartPoint="0,1"/>
         </b:TransitionPresenter.Transition>
     </b:TransitionPresenter>
 </UserControl>

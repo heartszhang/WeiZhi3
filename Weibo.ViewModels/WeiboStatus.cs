@@ -69,11 +69,13 @@ namespace Weibo.ViewModels
         public bool has_pic { get; set; }
 
         public WeiboTopicSource topic_source { get; set; }
+
+        public string description { get; set; }
         #endregion
 
         public List<Token> tokens { get; set; }
 
-        public void assign_sina(StatusWithoutRt data, bool enable_post_initial)
+        public void assign_sina(StatusWithoutRt data, bool isretweet)
         {
             /*
             idstr	string	字符串型的微博ID
@@ -111,8 +113,8 @@ namespace Weibo.ViewModels
             user.assign_sina(data.user);
 
             has_pic = !string.IsNullOrEmpty(bmiddle_pic);
-            if(enable_post_initial)
-                post_initialize();
+            if (isretweet)
+                post_initialize(true);
         }
         public void assign_sina(Status data)
         {
@@ -131,29 +133,32 @@ namespace Weibo.ViewModels
                     thumb_pic_height = retweeted_status.thumb_pic_height;
                 }
             }
-            post_initialize();
+            post_initialize(false);
 
         }
         internal static DateTime time(string tm)
         {
             if (string.IsNullOrEmpty(tm))
-                return DateTime.Now;
+                return DateTime.MinValue;
             const string format = "ddd MMM dd HH:mm:ss zzzz yyyy"; //"ddd MMM dd HH:mm:ss zzzz yyyy";
             var tmt = DateTime.ParseExact(tm, format, new CultureInfo("en-US", true));
             return tmt;
         }
 
-        void post_initialize()
+        void post_initialize(bool isremovefirst )
         {
             tokens = text.Parse();
             var f = tokens.ElementAtOrDefault(0);
             Debug.Assert(f != null);
-            if(f.tag == WeiboTokenTypes.Part)
+
+            //正文的第一行作为标题
+            if(f.tag == WeiboTokenTypes.Part && f.text.Length < 20)//不要很长的标题
             {
                 topic_source = WeiboTopicSource.FirstSentence;
                 topic = f.text.Trim();
             }
 
+            //正文有标题
             foreach(var t in tokens)
             {
                 if (t.tag == WeiboTokenTypes.Topic)
@@ -168,13 +173,6 @@ namespace Weibo.ViewModels
                     topic = t.text.Trim();
                 }
             }
-            while (tokens.Count > 0)
-            {
-                if (tokens[0].tag == WeiboTokenTypes.Punctuation)
-                    tokens.RemoveAt(0);
-                else
-                    break;
-            }
             if(retweeted_status != null)
             {
                 if(topic_source == WeiboTopicSource.Reserved && retweeted_status.topic_source != WeiboTopicSource.Reserved)
@@ -182,11 +180,26 @@ namespace Weibo.ViewModels
                     topic_source = WeiboTopicSource.Retweeted;
                     topic = retweeted_status.topic;
                 }
-                else if(topic_source < WeiboTopicSource.FirstSentence && retweeted_status.topic_source >= WeiboTopicSource.Trend)
+                else if (topic_source <= WeiboTopicSource.FirstSentence && retweeted_status.topic_source >= WeiboTopicSource.FirstSentence)
                 {
                     topic_source = WeiboTopicSource.Retweeted;
                     topic = retweeted_status.topic;
                 }
+            }
+            if (isremovefirst == false)
+                return;
+            //从正文中删除标题内容
+            if (topic_source == WeiboTopicSource.FirstSentence)
+            {
+                tokens.RemoveAt(0);//去掉第一句
+            }
+            //去除正文开始的标点
+            while (tokens.Count > 0)
+            {
+                if (tokens[0].tag == WeiboTokenTypes.Punctuation)
+                    tokens.RemoveAt(0);
+                else
+                    break;
             }
         }
     }
