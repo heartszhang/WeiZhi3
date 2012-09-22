@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -29,13 +30,28 @@ namespace WeiZhi3
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {
+        private Timer _state_tick;
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        void NavigationWindowUnoaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= NavigationWindowUnoaded;
+            if(_state_tick != null)
+            {                
+                _state_tick.Dispose();
+                _state_tick = null;
+            }
+        }
+
         private async void NavigationWindowLoaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= NavigationWindowLoaded;
+
+            _state_tick = new Timer(OnStateTick, null, 5000, 5000);
+
             /*
              处理授权页面发出的消息，*/
             Messenger.Default.Register<DialogMessage>(
@@ -54,6 +70,15 @@ namespace WeiZhi3
                                                            ? new Uri("/Pages/PageAuthorizing.xaml", UriKind.Relative)
                                                            : new Uri("/Pages/PageHome.xaml", UriKind.Relative))));
                     });
+        }
+
+        private void OnStateTick(object state)
+        {
+            
+        }
+        void UiInvoke(Action act)
+        {
+            Dispatcher.Invoke(DispatcherPriority.SystemIdle, act);
         }
 
         private void OnAuthorizingMessage(DialogMessage msg)
