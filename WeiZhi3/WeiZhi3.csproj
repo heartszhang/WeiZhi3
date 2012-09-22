@@ -69,13 +69,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviours\ImageStretchBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
+    <Compile Include="Converters\FriendlyTimeConverter.cs" />
     <Compile Include="Converters\IntNZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\IntZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\ImageUrlConverter.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />
     <Compile Include="Design\DesignPageHomeViewModel.cs" />
     <Compile Include="Design\DesignUserExt.cs" />
+    <Compile Include="ImageLocalCache.cs" />
     <Compile Include="Pages\PageBootstrap.xaml.cs">
       <DependentUpon>PageBootstrap.xaml</DependentUpon>
     </Compile>
@@ -85,8 +88,8 @@
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Parts\MainContent.xaml.cs">
-      <DependentUpon>MainContent.xaml</DependentUpon>
+    <Compile Include="Parts\TimelineControl.xaml.cs">
+      <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\NavigationBar.xaml.cs">
       <DependentUpon>NavigationBar.xaml</DependentUpon>
@@ -94,8 +97,8 @@
     <Compile Include="Parts\NotificationControl.xaml.cs">
       <DependentUpon>NotificationControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Parts\SecondaryContent.xaml.cs">
-      <DependentUpon>SecondaryContent.xaml</DependentUpon>
+    <Compile Include="Parts\RightColumnControl.xaml.cs">
+      <DependentUpon>RightColumnControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\ToolsetBar.xaml.cs">
       <DependentUpon>ToolsetBar.xaml</DependentUpon>
@@ -140,7 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Parts\MainContent.xaml">
+    <Page Include="Parts\TimelineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -152,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Parts\SecondaryContent.xaml">
+    <Page Include="Parts\RightColumnControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -234,9 +237,9 @@
     <Folder Include="Themes\Dark\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Weibo.Api2\Weibo.Api2.csproj">
-      <Project>{f150567b-1a4b-47dc-b1c1-dfb523ee639c}</Project>
-      <Name>Weibo.Api2</Name>
+    <ProjectReference Include="..\Weibo.Apis\Weibo.Apis.csproj">
+      <Project>{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}</Project>
+      <Name>Weibo.Apis</Name>
     </ProjectReference>
     <ProjectReference Include="..\Weibo.ViewModels\Weibo.ViewModels.csproj">
       <Project>{73404F1E-DD06-4399-A4DB-CDBCD606E244}</Project>

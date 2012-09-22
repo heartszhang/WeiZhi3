@@ -9,7 +9,6 @@ using System.Windows.Navigation;
 using System.Windows.Threading;
 using Artefact.Animation;
 using WeiZhi3.ViewModel;
-using Weibo.Api2.Sina;
 using Weibo.ViewModels;
 
 namespace WeiZhi3.Pages

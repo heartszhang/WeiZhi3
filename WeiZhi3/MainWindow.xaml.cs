@@ -19,8 +19,6 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using WeiZhi3.ViewModel;
 using WeiZhi3.Views;
-using Weibo.Api2;
-using Weibo.Api2.Sina;
 using Weibo.ViewModels.DataModels;
 
 namespace WeiZhi3

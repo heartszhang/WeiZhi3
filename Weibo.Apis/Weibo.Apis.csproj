@@ -72,7 +72,7 @@
     <Compile Include="SinaV2\users.cs" />
     <Compile Include="Net\RestResult.cs" />
     <Compile Include="Net\RetryUtility.cs" />
-    <Compile Include="Net\UrlDownloader.cs" />
+    <Compile Include="Net\HttpDownloadToLocalFile.cs" />
     <Compile Include="DesString.cs" />
     <Compile Include="Net\ResponseParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
