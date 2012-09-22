@@ -5,9 +5,9 @@ namespace WeiZhi3.Parts
     /// <summary>
     /// Interaction logic for PartSecondaryContent.xaml
     /// </summary>
-    public partial class SecondaryContent : UserControl
+    public partial class RightColumnControl : UserControl
     {
-        public SecondaryContent()
+        public RightColumnControl()
         {
             InitializeComponent();
         }
