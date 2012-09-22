@@ -97,7 +97,7 @@ namespace Weibo.ViewModels
             user */
             //var jt = ((JToken)data.created_at);
 
-            created_at = time(data.created_at.ToString());
+            created_at = time(data.created_at);
             id = data.id;
             text = data.text;
             favorited = data.favorited;
@@ -136,8 +136,10 @@ namespace Weibo.ViewModels
         }
         internal static DateTime time(string tm)
         {
+            if (string.IsNullOrEmpty(tm))
+                return DateTime.Now;
             const string format = "ddd MMM dd HH:mm:ss zzzz yyyy"; //"ddd MMM dd HH:mm:ss zzzz yyyy";
-            DateTime tmt = DateTime.ParseExact(tm, format, new CultureInfo("en-US", true));
+            var tmt = DateTime.ParseExact(tm, format, new CultureInfo("en-US", true));
             return tmt;
         }
 
