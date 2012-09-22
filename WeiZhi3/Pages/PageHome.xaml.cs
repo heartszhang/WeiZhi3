@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using Artefact.Animation;
@@ -13,25 +14,6 @@ using Weibo.ViewModels;
 
 namespace WeiZhi3.Pages
 {
-    //public static class DispatcherTimerHelper
-    //{
-    //    public static DispatcherTimer Start(double interval_seconds, EventHandler handler
-    //        , Dispatcher dispatcher
-    //        , DispatcherPriority prio = DispatcherPriority.SystemIdle, bool start = true)
-    //    {
-    //        var rtn = new DispatcherTimer(TimeSpan.FromSeconds(interval_seconds), prio, handler, dispatcher);
-    //        rtn.Tick += handler;
-    //        if(start)
-    //            rtn.Start();
-    //        return rtn;
-    //    }
-    //    public static void Stop(this DispatcherTimer timer, EventHandler handler)
-    //    {
-    //        timer.Stop();
-    //        timer.Tick -= handler;
-    //    }
-
-    //}
 
 	public partial class PageHome :Page
 	{
@@ -116,6 +98,7 @@ namespace WeiZhi3.Pages
                     break;
                 }
             }
+
             var locator = (ViewModelLocator) FindResource("Locator");
             _user_id = uid = locator.Profile.Id(uid);
             var at = locator.Profile.Token(uid);
@@ -139,5 +122,20 @@ namespace WeiZhi3.Pages
         {
             _navi_container.OffsetTo(-_navi_container.ActualWidth, 0, 1, AnimationTransitions.ElasticEaseOut, 0);
       }
-	}
+
+        private void OnNextPageExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
+        private void OnPreviousPageExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void CanCommandExecuted(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+            e.Handled = true;
+        }
+    }
 }

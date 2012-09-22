@@ -3,20 +3,25 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:p="clr-namespace:WeiZhi3.Parts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dz="clr-namespace:WeiZhi3.Design"
-	x:Class="WeiZhi3.Pages.PageHome"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:b="clr-namespace:WeiZhi3.Behaviours"
+	xmlns:wz="clr-namespace:WeiZhi3" x:Class="WeiZhi3.Pages.PageHome"
 	x:Name="_this"  mc:Ignorable="d" d:DataContext="{d:DesignInstance dz:DesignPageHomeViewModel, IsDesignTimeCreatable=True}"
 	WindowTitle="钥匙就在那阳光里">
-	<Grid x:Name="LayoutRoot">
-        <Grid HorizontalAlignment="Center">
+    <Page.CommandBindings>
+        <CommandBinding Command="wz:WeiZhiCommands.NextPage" Executed="OnNextPageExecuted" CanExecute="CanCommandExecuted"/>
+        <CommandBinding Command="wz:WeiZhiCommands.PreviousPage" Executed="OnPreviousPageExecuted" CanExecute="CanCommandExecuted"/>
+    </Page.CommandBindings>
+    <Grid x:Name="LayoutRoot">
+        <Grid x:Name="_center" MaxWidth="1120">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="680"/>
-                <ColumnDefinition Width="440"/>
+                <ColumnDefinition Width="680*" MinWidth="500"/>
+                <ColumnDefinition Width="440*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" x:Name="_attach_container" >
                 <p:SecondaryContent/>
             </Grid>
             <Grid x:Name="_main_container">
-                <p:MainContent/>
+                <p:MainContent DataContext="{Binding Timeline,Mode=OneWay}"/>
             </Grid>
         </Grid>
         <Grid HorizontalAlignment="Right" Width="50" Background="Transparent" MouseEnter="ToolsetPopup" Height="100" VerticalAlignment="Top" x:Name="_left_tool_hint"/>
