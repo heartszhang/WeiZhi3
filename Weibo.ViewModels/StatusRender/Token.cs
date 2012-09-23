@@ -5,11 +5,11 @@ namespace Weibo.ViewModels.StatusRender
         public Token()
         {
             text = string.Empty;
-            tag = WeiboTokenTypes.Part;
+            tag = TokenTypes.Part;
         }
 
         public string text { get; set; }
         public char flag { get; set; }
-        public WeiboTokenTypes tag { get; set; }
+        public TokenTypes tag { get; set; }
     }
 }

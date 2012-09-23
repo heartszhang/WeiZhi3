@@ -1,6 +1,6 @@
 ﻿namespace Weibo.ViewModels.StatusRender
 {
-    public enum WeiboTokenTypes
+    public enum TokenTypes
     {
         Reserved = 0,
         Part,
@@ -13,5 +13,7 @@
         Emotion, // [xxx],【，L
         End ,//last sentence ,with or without punctuation
         ReplyTo ,//回复Name:        
+        Break,
+        Writer,
     }
 }

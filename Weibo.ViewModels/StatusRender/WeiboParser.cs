@@ -116,12 +116,12 @@ namespace Weibo.ViewModels.StatusRender
             if (name == null || string.IsNullOrEmpty(name.text) || b >= end || (text[b] != ':' && text[b] != '；'))
                 return null;
             begin = ++b;//eat :
-            name.tag = WeiboTokenTypes.ReplyTo;
+            name.tag = TokenTypes.ReplyTo;
             return name;
         }
         private static Token eat_name(string text, ref int begin, int end)
         {
-            var rtn = new Token { text = "", tag = WeiboTokenTypes.Name };
+            var rtn = new Token { text = "", tag = TokenTypes.Name };
             const string h = "http://";
             var b = begin;
             ++begin;
@@ -151,7 +151,7 @@ namespace Weibo.ViewModels.StatusRender
         }
         private static Token eat_quote(string text, ref int begin, int end, char pre)
         {            
-            var rtn = new Token {tag = WeiboTokenTypes.Quote};
+            var rtn = new Token {tag = TokenTypes.Quote};
             if(is_quote(text[begin]))
             {
                 ++begin;
@@ -168,7 +168,7 @@ namespace Weibo.ViewModels.StatusRender
         }
         private static Token eat_emotion(string text, ref int begin, int end)
         {
-            var rtn = new Token { text = "", tag = WeiboTokenTypes.Emotion };
+            var rtn = new Token { text = "", tag = TokenTypes.Emotion };
 
             if (text[begin] == '[')
             {
@@ -186,7 +186,7 @@ namespace Weibo.ViewModels.StatusRender
 
         private static Token eat_punctuation(string text, ref int begin, int end, char punc)
         {
-            var rtn = new Token { text = "", tag = WeiboTokenTypes.Punctuation };
+            var rtn = new Token { text = "", tag = TokenTypes.Punctuation };
             while (begin < end && (text[begin].IsPunctuationExt() || char.IsWhiteSpace(text[begin])))
             {
                 rtn.text += text[begin++];
@@ -197,7 +197,7 @@ namespace Weibo.ViewModels.StatusRender
 
         private static Token eat_topic(string text, ref int begin, int end, char pre)
         {
-            var rtn = new Token { text = "", tag = WeiboTokenTypes.Topic };
+            var rtn = new Token { text = "", tag = TokenTypes.Topic };
             if (text[begin] == '#' || text[begin] == '【' || text[begin] == '《' || text[begin] == '『')
             {
                 ++begin;
@@ -210,6 +210,7 @@ namespace Weibo.ViewModels.StatusRender
                     rtn.text = "";
                 else ++begin;
             }
+            rtn.text = rtn.text.Trim();
             rtn.flag = pre;
             return rtn;
         }
@@ -217,7 +218,7 @@ namespace Weibo.ViewModels.StatusRender
         private static Token eat_sharedfrom(string text, ref int beg, int end)
         {
             var begin = beg;
-            var rtn = new Token { text = string.Empty, tag = WeiboTokenTypes.CopyedFrom };
+            var rtn = new Token { text = string.Empty, tag = TokenTypes.CopyedFrom };
             if (begin + 2 < end && text[begin] == '/' && text[begin + 1] == '/' && text[begin + 2] == '@')
             {
                 begin += 3;
@@ -248,7 +249,7 @@ namespace Weibo.ViewModels.StatusRender
 
         private static Token eat_hyperlink(string text, ref int begin, int end)
         {
-            var rtn = new Token { text = "", tag = WeiboTokenTypes.Hyperlink };
+            var rtn = new Token { text = "", tag = TokenTypes.Hyperlink };
             const string h = "http://";
             var i = text.Substring(begin, (h.Length < end - begin) ? h.Length : (end - begin));
 
