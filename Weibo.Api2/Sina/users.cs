@@ -88,6 +88,7 @@ screen_name	false	string	需要查询的用户昵称。
         {
             dynamic paras = new ExpandoObject();
             paras.access_token = access_token;
+            paras.source = 164653724;
             return await WeiboClientInternal.WeiboGet(WeiboRequestHandler.Create("account/rate_limit_status.json", paras));
         }
     }

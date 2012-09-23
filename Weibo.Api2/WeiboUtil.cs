@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -88,9 +89,9 @@ namespace Weibo.Api2
                         read = await stream.ReadAsync(buffer, 0, 5);
                         if (read == 5 && buffer[0] == 0x49 && buffer[1] == 0x46 && buffer[2] == 0x38 && buffer[4] == 0x61)// gif magic match
                         {
-                            read = await stream.ReadAsync(buffer, 0, 2);
+                            await stream.ReadAsync(buffer, 0, 2);
                             rtn.Width = BitConverter.ToInt16(buffer, 0);
-                            read = await stream.ReadAsync(buffer, 0, 2);
+                            await stream.ReadAsync(buffer, 0, 2);
                             rtn.Height = BitConverter.ToInt16(buffer, 0);
                         }
                     }
@@ -101,7 +102,7 @@ namespace Weibo.Api2
                         if (read == 7 && buffer[0] == 0x50 && buffer[1] == 0x4E && buffer[2] == 0x47
                             && buffer[3] == 0x0D && buffer[4] == 0x0A && buffer[5] == 0x1A && buffer[6] == 0x0A)//png match
                         {
-                            read = await stream.ReadAsync(buffer, 0, 8);
+                            await stream.ReadAsync(buffer, 0, 8);
                             rtn.Width = LittleEndianInt32(buffer, 0);
                             rtn.Height = LittleEndianInt32(buffer, 4);
                         }
@@ -113,25 +114,25 @@ namespace Weibo.Api2
                         {
                             for (; ; )
                             {
-                                read = await stream.ReadAsync(buffer, 0, 4);//mark + marksize
+                                await stream.ReadAsync(buffer, 0, 4);//mark + marksize
                                 var chunksize = LittleEndianInt16(buffer, 2);
                                 if (buffer[0] == 0xff && buffer[1] == 0xc0)
                                 {
-                                    read = await stream.ReadAsync(buffer, 0, 5);
+                                    await stream.ReadAsync(buffer, 0, 5);
                                     rtn.Width = LittleEndianInt16(buffer, 1);
                                     rtn.Height = LittleEndianInt16(buffer, 3);
                                     break;
                                 }
                                 var b = new byte[chunksize];
-                                read = await stream.ReadAsync(b, 0, chunksize - 2);
+                                await stream.ReadAsync(b, 0, chunksize - 2);
                             }
 
                         }
                     }
                 }
-                catch(HttpRequestException)
+                catch(HttpRequestException e)
                 {
-
+                    Debug.WriteLine(e.InnerException.Message);
                 }finally
                 {
                     client.CancelPendingRequests();
