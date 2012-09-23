@@ -9,14 +9,10 @@
              Height="24" d:DesignWidth="600">
     <UserControl.Resources>
         <cvt:WindowMaximzedStateToBooleanConverter x:Key="ws2b"/>
-        <Color x:Key="TextColor" >#FF000000</Color>
-        <Color x:Key="TextLightColor" >#FF666666</Color>
-        <SolidColorBrush x:Key="MetroText" Color="{StaticResource TextColor}"  />
-        <SolidColorBrush x:Key="MetroTextLight" Color="{StaticResource TextLightColor}"  />
         <Style x:Key="TitleTextStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI Light, Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="Foreground" Value="{StaticResource MetroTextLight}"/>
+            <Setter Property="Foreground" Value="{StaticResource MetroColorTextLight}"/>
         </Style>
         <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI Semilight, Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />

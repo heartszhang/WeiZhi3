@@ -5,7 +5,7 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:p="clr-namespace:WeiZhi3.Parts"
-                  mc:Ignorable="d"
+                  mc:Ignorable="d" Icon="logo3.ico"
                   Loaded="NavigationWindowLoaded" Unloaded="NavigationWindowUnoaded"
                   Background="WhiteSmoke"
                   Title="唯致" d:DesignHeight="350" d:DesignWidth="525" Source="/Pages/PageBootstrap.xaml">

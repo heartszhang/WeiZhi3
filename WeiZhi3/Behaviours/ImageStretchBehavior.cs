@@ -8,19 +8,20 @@ namespace WeiZhi3.Behaviours
 {
     internal sealed class ImageStretchBehavior : Behavior<Image>
     {
-
         public double DesiredSize
         {
             get { return (double)GetValue(DesiredSizeProperty); }
             set { SetValue(DesiredSizeProperty, value); }
         }
+
+        
         public static DependencyProperty DesiredSizeProperty = 
             DependencyProperty.Register("DesiredSize", typeof(double), typeof(ImageStretchBehavior), new PropertyMetadata(440.0));
         
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.MouseLeftButtonDown += OnMouseLeftButtonDown;
+           // AssociatedObject.MouseLeftButtonDown += OnMouseLeftButtonDown;
             AssociatedObject.Unloaded +=OnUnloaded;
 //            AssociatedObject.NormalizeTransformGroup();
         }
@@ -49,7 +50,7 @@ namespace WeiZhi3.Behaviours
             {
                 targeth = desiredh;
             }
-            ArtefactAnimator.AddEase(AssociatedObject, FrameworkElement.MaxHeightProperty, targeth, 0.2,
+            ArtefactAnimator.AddEase(AssociatedObject, FrameworkElement.MaxHeightProperty, targeth, 0.1,
                                      AnimationTransitions.ExpoEaseOut, 0);
         }
 

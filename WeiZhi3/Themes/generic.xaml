@@ -5,7 +5,10 @@
     <SolidColorBrush Color="{StaticResource MetroColorFeatureContrast}" x:Key="MetroColorFeatureContrastBrush"/>
     <SolidColorBrush Color="{StaticResource MetroColorText}" x:Key="MetroColorTextBrush"/>
 
-    <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+    <Color x:Key="MetroColorFadeTextColor" >#FF666666</Color>
+    <SolidColorBrush x:Key="MetroColorTextLight" Color="{StaticResource MetroColorTextSecond}"  />
+
+    <Style x:Key="BasicTextStyle" TargetType="TextBlock">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="#FF464646" />
         <Setter Property="FontSize" Value="14.667" />
@@ -16,6 +19,18 @@
         <!--<Setter Property="Typography.DiscretionaryLigatures" Value="True" />-->
         <!--<Setter Property="TextOptions.TextFormattingMode" Value="Display" />-->
     </Style>
+
+    <Style x:Key="{x:Type Hyperlink}" TargetType="{x:Type Hyperlink}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="TextDecorations" Value="{x:Null}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <!-- window buttons-->
     <ControlTemplate TargetType="Button" x:Key="ButtonWindowCommandTemplate">
         <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">

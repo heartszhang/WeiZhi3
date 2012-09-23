@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ds="clr-namespace:WeiZhi3.Design"
              xmlns:c="clr-namespace:WeiZhi3.Converters"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:wz="clr-namespace:WeiZhi3" mc:Ignorable="d" 
+             xmlns:b="clr-namespace:WeiZhi3.Behaviours" 
+             xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
              x:Name="_this"
              d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
              d:DataContext="{d:DesignInstance ds:MockWeiboStatus,IsDesignTimeCreatable=True}">
@@ -37,6 +38,8 @@
             <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
             <Setter Property="TextTrimming" Value="WordEllipsis" />
             <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="LineHeight" Value="22" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
             <Setter Property="Typography.StylisticSet20" Value="True" />
             <Setter Property="Typography.DiscretionaryLigatures" Value="True" />
         </Style>
@@ -173,15 +176,14 @@
                 </StackPanel>
             </Grid>
             <Grid>
-                <TextBlock x:Name="_body" Text="{Binding text,Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
+                <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
-            <Grid Background="WhiteSmoke" Margin="0,0,0,8">
-                <Image x:Name="_img" MaxWidth="440" MaxHeight="640" Stretch="Uniform"                        
-                       Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}"
-                       wz:ImageLocalCache.UrlSource="{Binding bmiddle_pic,Mode=OneWay}" StretchDirection="DownOnly">
-                    <i:Interaction.Behaviors>
+            <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+                <Image x:Name="_img" MaxHeight="320" Stretch="Uniform"                        
+                       a:ImageWeiboLocalCache.Item="{Binding Mode=OneWay}" StretchDirection="DownOnly">
+                    <!--<i:Interaction.Behaviors>
                         <b:ImageStretchBehavior/>
-                    </i:Interaction.Behaviors>
+                    </i:Interaction.Behaviors>-->
                 </Image>
             </Grid>
             <Grid x:Name="_footnote" Height="32" Background="Transparent">

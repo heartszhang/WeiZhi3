@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:p="clr-namespace:WeiZhi3.Parts"
-             xmlns:wz="clr-namespace:WeiZhi3" mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="440">
+             xmlns:wz="clr-namespace:WeiZhi3" xmlns:b="clr-namespace:Bot.Transitions;assembly=Bot"
+             xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:dz="clr-namespace:WeiZhi3.Design"
+             xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib" mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance dz:DesignPageHomeViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="600" d:DesignWidth="440">
     <UserControl.Resources>
         <Style x:Key="MetroTileButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -71,6 +74,122 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0,6"/>
         </Style>
+        <Style TargetType="ScrollBar" x:Key="ScrollBarThinStyle">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="MinWidth" Value="8" />
+            <!-- 必须设置这个值，默认值是17-->
+            <Setter Property="UseLayoutRounding" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid HorizontalAlignment="Stretch" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}"  Style="{StaticResource VerticalScrollBarPageButton}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}"  Style="{StaticResource VerticalScrollBarPageButton}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb MinHeight="50" Background="#FFDDDDDD" x:Name="scroll" Style="{StaticResource ScrollBarThumbVertical}"/>
+                                </Track.Thumb>
+                            </Track>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition To="Normal" GeneratedDuration="0:0:0.1"/>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="Background.Color" Storyboard.TargetName="scroll">
+                                                <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FF333333"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" Height="10" VerticalAlignment="Bottom">
+                                    <Track x:Name="PART_Track" IsEnabled="{TemplateBinding IsMouseOver}">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Background="#FFDDDDDD" Style="{StaticResource ScrollBarThumbHorizontal}" x:Name="scroll"/>
+                                        </Track.Thumb>
+                                    </Track>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualStateGroup.Transitions>
+                                                <VisualTransition To="Normal" GeneratedDuration="0:0:0.1"/>
+                                            </VisualStateGroup.Transitions>
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="Background.Color" Storyboard.TargetName="scroll">
+                                                        <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FF333333"/>
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <c:ImageUrlConverter x:Key="iuc"/>
+        <c:NotNullToVisibilityConverter x:Key="nn2v"/>
+        <DataTemplate x:Key="FocusedItemTemplate">
+            <Grid Background="White" MinHeight="200" Visibility="{Binding Mode=OneWay,Converter={StaticResource nn2v},FallbackValue=Visible}">
+                <TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Style="{StaticResource BasicTextStyle}"
+                           Foreground="{StaticResource MetroColorTextLight}"/>
+                <ScrollViewer m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollSmoothing="Smooth" m:MouseWheel.PhysicalScrollIncrement="24*" m:MouseWheel.PhysicalVScrollDebouncing="Single"
+                              HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer.Template>
+                        <ControlTemplate TargetType="ScrollViewer">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="8"/>
+
+                                </Grid.ColumnDefinitions>
+                                <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" Grid.ColumnSpan="2"/>
+                                <ScrollBar Name="PART_VerticalScrollBar" Grid.Column="1" Style="{StaticResource ScrollBarThinStyle}"
+										Value="{TemplateBinding VerticalOffset}" ViewportSize="{TemplateBinding ViewportHeight}"
+										Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+										Maximum="{TemplateBinding ScrollableHeight}">
+
+                                </ScrollBar>
+                            </Grid>
+                        </ControlTemplate>
+                    </ScrollViewer.Template>
+                        <StackPanel>
+                        <Image Source="{Binding Mode=OneWay,Converter={StaticResource iuc},IsAsync=True}" StretchDirection="DownOnly" Stretch="Uniform"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom">
@@ -89,6 +208,15 @@
             </Grid>
             <p:NotificationControl NotificationText="Welcome"/>
         </StackPanel>
-        <StackPanel></StackPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Grid Height="160">
+                
+            </Grid>
+        </StackPanel>
+        <b:TransitionPresenter DockPanel.Dock="Top" MinHeight="200" Content="{Binding Timeline.FocusedItem,Mode=OneWay}" ContentTemplate="{StaticResource FocusedItemTemplate}">
+            <b:TransitionPresenter.Transition>
+                <b:TranslateTransition Duration="0:0:0.2" StartPoint="-1,0"/>
+            </b:TransitionPresenter.Transition>
+        </b:TransitionPresenter>
     </DockPanel>
 </UserControl>

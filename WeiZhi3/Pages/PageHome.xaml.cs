@@ -120,15 +120,22 @@ namespace WeiZhi3.Pages
         private void NavisetSlideout(object sender, System.Windows.Input.MouseEventArgs e)
         {
             _navi_container.OffsetTo(-_navi_container.ActualWidth, 0, 1, AnimationTransitions.ElasticEaseOut, 0);
-      }
+        }
+        TimelineViewModel GetTimeline()
+        {
+            var vm = (PageHomeViewModel) DataContext;
+            return vm.Timeline;
+        }
 
         private void OnNextPageExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            var tvm = GetTimeline();
+            tvm.NextPage(Token());
         }
 
         private void OnPreviousPageExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-
+            GetTimeline().PreviousPage(Token());
         }
 
         private void CanCommandExecuted(object sender, CanExecuteRoutedEventArgs e)
