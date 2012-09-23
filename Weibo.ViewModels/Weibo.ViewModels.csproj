@@ -58,6 +58,7 @@
     <Compile Include="StatusRender\Token.cs" />
     <Compile Include="StatusRender\WeiboParser.cs" />
     <Compile Include="StatusRender\WeiboTokenTypes.cs" />
+    <Compile Include="TimelineHomeViewModel.cs" />
     <Compile Include="TimelineViewModel.cs" />
     <Compile Include="UserExt.cs" />
     <Compile Include="ViewModelBase2.cs" />
