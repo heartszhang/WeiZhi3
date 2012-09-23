@@ -20,16 +20,16 @@ namespace Weibo.Apis.SinaV2
             return await WeiboInternal.HttpsGet<Statuses>(WeiboSources.SinaV2(path));
         }
 
-        public static async Task<RestResult<Statuses>> statuses_friends_timeline_next_page_async(int page, long maxid, int count, string token)
+        public static async Task<RestResult<Statuses>> statuses_friends_timeline_next_page_async(string token, int page = 1, long maxid = 0, int count = 50 )
         {
             return await WeiboInternal.HttpsGet<Statuses>(WeiboSources.SinaV2(
                 string.Format("statuses/friends_timeline.json?count={0}&page={1}&feature={2}&max_id={3}&access_token={4}", 
                 count, page, 0, maxid, token)));
         }
 
-        public static async Task<RestResult<Statuses>> statuses_mentions_refresh_async(long sinceid,
-            int count,
-            int page, string token)
+        public static async Task<RestResult<Statuses>> statuses_mentions_refresh_async(string token, long sinceid,
+            int page = 1, int count = 50
+            )
         {
             var path = string.Format("statuses/mentions.json?page={0}&count={1}&since_id={2}&access_token={3}",
                                      page,
@@ -38,18 +38,18 @@ namespace Weibo.Apis.SinaV2
                                      token);
             return await WeiboInternal.HttpsGet<Statuses>(WeiboSources.SinaV2(path));
         }
-        public static async Task<RestResult<StatusIds>> statuses_mentions_ids_async(long sinceid, int count, string token)
+        public static async Task<RestResult<StatusIds>> statuses_mentions_ids_async(string token,long sinceid, int count )
         {
             var path = string.Format("statuses/mentions/ids.json?since_id={0}&access_token={1}&count={2}", sinceid, token, count);
             return await WeiboInternal.HttpsGet<StatusIds>(WeiboSources.SinaV2(path));
         }
-        public static async Task<RestResult<StatusIds>> statuses_friends_timeline_ids_async(long sinceid, int page, int count, string token)
+        public static async Task<RestResult<StatusIds>> statuses_friends_timeline_ids_async( string token,long sinceid, int page, int count)
         {
             var path = string.Format("statuses/friends_timeline/ids.json?since_id={0}&access_token={1}&count={2}&page={3}", sinceid, token, count, page);
             return await WeiboInternal.HttpsGet<StatusIds>(WeiboSources.SinaV2(path));
         }
         public static async Task<RestResult<Statuses>>
-            statuses_hot_repost_daily_async(int count, string token)
+            statuses_hot_repost_daily_async(string token,int count )
         {
             var path = string.Format("statuses/hot/repost_daily.json?count={0}&access_token={1}", count, token);
             return await WeiboInternal.HttpsGet<Statuses>(WeiboSources.SinaV2(path));
@@ -97,14 +97,14 @@ namespace Weibo.Apis.SinaV2
         //}
 
         public static async Task<RestResult<Reposts>>
-            statuses_repost_timeline_refresh_async(long statusid, long sinceid, int page, int count, string token)
+            statuses_repost_timeline_refresh_async(string token,long statusid, long sinceid, int page, int count )
         {
             var path = string.Format("statuses/repost_timeline.json?id={0}&since_id={1}&count={2}&page={3}&access_token={4}",
                 statusid, sinceid, count, page, token);
             return await WeiboInternal.HttpsGet<Reposts>(WeiboSources.SinaV2(path));
         }
         public static async Task<RestResult<Reposts>>
-            statuses_repost_timeline_next_page_async(long statusid, long maxid, int page, int count, string token)
+            statuses_repost_timeline_next_page_async(string token,long statusid, long maxid, int page, int count )
         {
             var path = string.Format("statuses/repost_timeline.json?id={0}&max_id={1}&count={2}&page={3}&access_token={4}",
                 statusid, maxid, count, page, token);
@@ -141,7 +141,7 @@ namespace Weibo.Apis.SinaV2
             return rtn;
         }
 
-        public static async Task<RestResult<Status>> statuses_update_async(string post, long replyto, string token)
+        public static async Task<RestResult<Status>> statuses_update_async(string token,string post, long replyto )
         {
             var data = new NameValueCollection { { "access_token", token }, { "status", post } };
             return await WeiboInternal.HttpsPost<Status>("statuses/update.json", data);
@@ -177,7 +177,7 @@ namespace Weibo.Apis.SinaV2
         }
 
         public static async Task<RestResult<Statuses>>
-            statuses_user_timeline_refresh_async(long userid, long sinceid, int count, int page, string token)
+            statuses_user_timeline_refresh_async(string token,long userid, long sinceid, int count, int page )
         {
             var path = String.Format("statuses/user_timeline.json?uid={0}&since_id={1}&count={2}&page={3}&access_token={4}"
                 , userid, sinceid, count, page, token);
@@ -185,14 +185,14 @@ namespace Weibo.Apis.SinaV2
         }
 
         public static async Task<RestResult<Statuses>>
-            statuses_user_timeline_next_page_async(long userid, long maxid, int page, int count, string token)
+            statuses_user_timeline_next_page_async(string token,long userid, long maxid, int page, int count )
         {
             var path = String.Format("statuses/user_timeline.json?uid={0}&max_id={1}&count={2}&page={3}&access_token={4}", userid, maxid, count, page, token);
             return await WeiboInternal.HttpsGet<Statuses>(WeiboSources.SinaV2(path));
         }
 
         public static async Task<RestResult<Statuses>>
-            statuses_user_timeline_refresh_async(string screenname, long sinceid, int count, int page, string token)
+            statuses_user_timeline_refresh_async(string token,string screenname, long sinceid, int count, int page )
         {
             var path = String.Format("statuses/user_timeline.json?uid={0}&since_id={1}&count={2}&page={3}&access_token={4}"
                 , screenname, sinceid, count, page, token);
@@ -200,7 +200,7 @@ namespace Weibo.Apis.SinaV2
         }
 
         public static async Task<RestResult<Statuses>>
-            statuses_user_timeline_next_page_async(string screenname, long maxid, int page, int count, string token)
+            statuses_user_timeline_next_page_async(string token,string screenname, long maxid, int page, int count )
         {
             var path = String.Format("statuses/user_timeline.json?uid={0}&max_id={1}&count={2}&page={3}&access_token={4}", screenname, maxid, count, page, token);
             return await WeiboInternal.HttpsGet<Statuses>(WeiboSources.SinaV2(path));
