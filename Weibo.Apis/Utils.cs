@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,21 +8,32 @@ namespace Weibo.Apis
 {
     public static class Utils
     {
-        public static string ExtractUrlFromWeibo(string text, string su = "http://t.cn/")
+        public static string[] ExtractUrlFromWeibo(string text, string su = "http://t.cn/")
         {
             if (string.IsNullOrEmpty(text))
-                return null;
-
-            var fi = text.IndexOf(su, StringComparison.Ordinal);
-            if (fi < 0)
-                return null;
-            var rtn = string.Empty;
-            for (fi = fi + su.Length; fi < text.Length && char.IsLetterOrDigit(text[fi]) && text[fi] < 128; ++fi)
+                return new string[0];
+            var rtn = new List<string>();
+            var c = 0;
+            while (true)
             {
-                rtn += text[fi];
-            }
+                var fi = text.IndexOf(su, c, StringComparison.OrdinalIgnoreCase);
+                if (fi < 0)
+                    break;
+                var x = string.Empty;
+                for (fi = fi + su.Length; fi < text.Length && char.IsLetterOrDigit(text[fi]) && text[fi] < 128; ++fi)
+                {
+                    x += text[fi];
+                }
 
-            return rtn.Length > 0 ? su + rtn : null;
+                if (x.Length <= 0)
+                {
+                    break;
+                }
+                rtn.Add(x);
+                c = fi ;
+                Debug.WriteLine(x);
+            }
+            return rtn.ToArray();
         }
         internal static int LittleEndianInt32(byte[] buffer, int start)
         {

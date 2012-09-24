@@ -9,13 +9,24 @@ namespace Weibo.Apis.SinaV2
 {
     public partial class WeiboClient
     {
+        public static async Task<RestResult<UrlInfos>> short_url_info(IEnumerable<string> shorturls, long consumerkey)
+        {
+            var urls = shorturls.Aggregate(string.Empty
+                , (current, shorturl) =>
+                    current + string.Format("&url_short={0}", Uri.EscapeDataString(shorturl)));
+            if(consumerkey == 0)
+                consumerkey = 603152360;//微游戏:603152360
+            var path = string.Format("short_url/info.json?source={0}{1}", consumerkey, urls);
+
+            return await WeiboInternal.HttpsGet<UrlInfos>(WeiboSources.SinaV2(path));
+        }
         public static async Task<UrlShorts> short_url_expand(IEnumerable<string> shorturls, long consumerkey)
         {
             var urls = shorturls.Aggregate(string.Empty
                 , (current, shorturl) =>
                     current + string.Format("&url_short={0}", Uri.EscapeDataString(shorturl)));
             var path = string.Format("short_url/expand.json?source={0}{1}", consumerkey, urls);
-            return (await WeiboInternal.HttpsGet<UrlShorts>(path)).Value;
+            return (await WeiboInternal.HttpsGet<UrlShorts>(WeiboSources.SinaV2(path))).Value;
         }
         public static async Task<string> widget_show(string shorturl, long consumerkey)
         {

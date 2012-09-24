@@ -51,7 +51,7 @@ namespace Weibo.Apis.Net
                 }
             }catch(HttpRequestException e)
             {
-                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message, e.InnerException.Message);
             }catch(Exception e)
             {
                 Debug.WriteLine(e.Message);

@@ -68,7 +68,11 @@ namespace Weibo.Apis.Net
 //don't retry any request exception
                         rtn.StatusCode = HttpStatusCode.Unused;
                         rtn.Reason = e.Message;
-                        Debug.WriteLine(e.Message);
+                        if(e.InnerException != null)
+                        {
+                            rtn.Reason = e.InnerException.Message;
+                        }
+                        Debug.WriteLine(rtn.Reason);
                     }
                 }
             }

@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>Externals\System.Windows.Interactivity.dll</HintPath>
@@ -74,6 +75,7 @@
     </ApplicationDefinition>
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
     <Compile Include="Behaviours\ImageStretchBehavior.cs" />
+    <Compile Include="Behaviours\ScrollToTopWhenResetBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
     <Compile Include="Converters\FriendlyTimeConverter.cs" />
     <Compile Include="Converters\IntNZeroToVisibilityConverter.cs" />
@@ -110,6 +112,9 @@
     </Compile>
     <Compile Include="Parts\WeiboControl.xaml.cs">
       <DependentUpon>WeiboControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\WeiboRetweetControl.xaml.cs">
+      <DependentUpon>WeiboRetweetControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelBase2.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -172,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Parts\WeiboRetweetControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Parts\WindowTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Light\scrollbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\weibos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +258,10 @@
     <ProjectReference Include="..\Weibo.Apis\Weibo.Apis.csproj">
       <Project>{788D0D98-63A2-4DB0-87A6-4AA933F6A31F}</Project>
       <Name>Weibo.Apis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Weibo.DataModel\Weibo.DataModel.csproj">
+      <Project>{393970FB-DE51-42D0-B79C-C6BA5B95C946}</Project>
+      <Name>Weibo.DataModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Weibo.ViewModels\Weibo.ViewModels.csproj">
       <Project>{73404F1E-DD06-4399-A4DB-CDBCD606E244}</Project>

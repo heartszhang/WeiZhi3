@@ -161,8 +161,8 @@
         <c:NotNullToVisibilityConverter x:Key="nn2v"/>
         <DataTemplate x:Key="FocusedItemTemplate">
             <Grid Background="White" MinHeight="200" Visibility="{Binding Mode=OneWay,Converter={StaticResource nn2v},FallbackValue=Visible}">
-                <TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Style="{StaticResource BasicTextStyle}"
+                <TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Top"
+                           Style="{StaticResource BasicTextStyle}" 
                            Foreground="{StaticResource MetroColorTextLight}"/>
                 <ScrollViewer m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollSmoothing="Smooth" m:MouseWheel.PhysicalScrollIncrement="24*" m:MouseWheel.PhysicalVScrollDebouncing="Single"
                               HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">

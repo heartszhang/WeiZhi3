@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:wz="clr-namespace:WeiZhi3"
              xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
              xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
-             xmlns:p="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d" Background="White"
+             xmlns:p="clr-namespace:WeiZhi3.Parts" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:b="clr-namespace:WeiZhi3.Behaviours" mc:Ignorable="d" Background="White"
              x:Name="_this"
              d:DesignHeight="257" d:DesignWidth="560">
     <UserControl.Resources>
@@ -22,7 +23,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border Padding="0,12" ClipToBounds="True" RenderOptions.ClearTypeHint="Enabled" 
+                        <Border Padding="0,15" ClipToBounds="True" RenderOptions.ClearTypeHint="Enabled" 
                                 BorderBrush="#40464646" BorderThickness="0,0,0,1" Background="Transparent" x:Name="_border">
                             <ContentPresenter/>
                             <VisualStateManager.VisualStateGroups>
@@ -51,18 +52,22 @@
     </UserControl.Resources>
     <Grid>
         <ListBox FocusVisualStyle="{x:Null}" 
-                 SelectionChanged="OnSelectionChanged"
+                 SelectionChanged="OnSelectionChanged" IsSynchronizedWithCurrentItem="True"
                  m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollMode="Auto" m:MouseWheel.VScrollSmoothing="Smooth"
-                 m:MouseWheel.Smoothing="Smooth" m:MouseWheel.PhysicalVScrollIncrement="32*"
+                 m:MouseWheel.Smoothing="Smooth" m:MouseWheel.PhysicalVScrollIncrement="24*"
                  ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ScrollViewer.PanningMode="VerticalOnly" ScrollViewer.IsDeferredScrollingEnabled="True"
-                 VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizing="False" ItemTemplate="{StaticResource SimpleWeiboTemplate}"
+                 VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizing="False"
                  ItemsSource="{Binding statuses,IsAsync=True,Mode=OneWay}"
+                 ItemTemplateSelector="{StaticResource wts}"
                   ItemContainerStyle="{StaticResource WeiboItemContainerStyle}">
+            <i:Interaction.Behaviors>
+                <b:ScrollToTopWhenResetBehavior/>
+            </i:Interaction.Behaviors>
             <ListBox.Template>
                 <ControlTemplate TargetType="ListBox">
                     <Grid>
-                        <ScrollViewer FocusVisualStyle="{x:Null}">
+                        <ScrollViewer FocusVisualStyle="{x:Null}" x:Name="_scroll">
                             <VirtualizingStackPanel IsItemsHost="True" HorizontalAlignment="Stretch" />
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="ScrollViewer">

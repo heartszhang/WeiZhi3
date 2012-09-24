@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using WeiZhi3.Parts;
 using Weibo.ViewModels;
 
 namespace WeiZhi3
@@ -17,9 +18,11 @@ namespace WeiZhi3
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             var ws = item as WeiboStatus;
-            // if (ws == null)
-            return base.SelectTemplate(item, container);
-
+            if (ws == null)
+                return base.SelectTemplate(item, container);
+            if (ws.has_rt)
+                return CreateDataTemplate<WeiboRetweetControl>();
+            else return CreateDataTemplate<WeiboControl>();
         }
     }
 }

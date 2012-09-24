@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Caching;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Weibo.DataModel;
 using Weibo.ViewModels;
 using Weibo.ViewModels.StatusRender;
 
@@ -192,13 +195,31 @@ namespace WeiZhi3.Attached
             if (ut.Length != token.text.Length)
                 textblock.Add(new Run(" "));
 
-            //create hyperlink 
-            var h = new Hyperlink(new Run(ut.Replace("http://t.cn/", string.Empty)))
-            {
-                //Command = WeiZhiCommands.NavigateUrlCommand,
-                CommandParameter = ut,
-            };
+            var run = ut.Replace("http://t.cn/", string.Empty);
 
+            //create hyperlink 
+            var h = new Hyperlink(new Run(run))
+            {
+                //Command = WeiZhiCommands.NavigateUrlCommand,                
+                CommandParameter = ut,
+                ToolTip =  ut,
+            };
+            h.ToolTipOpening += 
+                (s, e) =>
+                {
+                    var dp =(Hyperlink) s;
+                    if (dp.Tag != null)
+                        return;
+                    var mem = MemoryCache.Default;
+                    var ui = (UrlInfo) mem.Get(ut);
+                    if (ui == null)
+                        return;
+                    dp.Tag = ui;
+                    if (!string.IsNullOrEmpty(ui.title))
+                        dp.ToolTip = ui.title;
+                    else dp.ToolTip = ui.url_long;
+                };
+            h.SetResourceReference(TextElement.ForegroundProperty, "MetroColorFeatureBrush");
             textblock.Add(h);
 
             if (ut.Length != token.text.Length)

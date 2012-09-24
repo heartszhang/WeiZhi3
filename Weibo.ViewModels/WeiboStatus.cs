@@ -150,7 +150,6 @@ namespace Weibo.ViewModels
                 topic_source = WeiboTopicSource.FirstSentence;
                 topic = f.text.Trim();
             }
-
             //正文有标题
             foreach(var t in tokens)
             {
@@ -169,7 +168,7 @@ namespace Weibo.ViewModels
             if(retweeted_status != null)
             {
                 //使用rt中的标题
-                if(topic_source == WeiboTopicSource.Reserved && retweeted_status.topic_source != WeiboTopicSource.Reserved)
+                if(retweeted_status.topic_source != WeiboTopicSource.Reserved)
                 {
                     topic_source = WeiboTopicSource.Retweeted;
                     topic = retweeted_status.topic;
@@ -192,7 +191,7 @@ namespace Weibo.ViewModels
             if(retweeted_status != null)
             {
                 if(tokens.Count > 0)
-                    tokens.Insert(0,new Token{tag = TokenTypes.Writer});
+                    tokens.Insert(0,new Token{tag = TokenTypes.Writer, text = user.screen_name});
                 tokens.Insert(0, new Token { tag = TokenTypes.Break });
                 tokens.Insert(0, new Token { tag = TokenTypes.Break });
                 tokens.InsertRange(0,retweeted_status.tokens);
