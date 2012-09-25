@@ -29,9 +29,6 @@
                     Source="{Binding user.profile_image_url,Mode=OneWay,IsAsync=true,Converter={StaticResource iuc}}" />
         </StackPanel>
         <StackPanel Margin="0,0,31,0" Grid.Column="1">
-            <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}"
-                       Visibility="{Binding topic.Length,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource in2v}}"
-                       Text="{Binding topic,Mode=OneWay}" Margin="0,-6,0,0"/>
             <Grid x:Name="_headernote">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -42,11 +39,14 @@
                     <TextBlock Text="{Binding created_at,Mode=OneWay,Converter={StaticResource ftc}}" Foreground="#FF999999" Style="{StaticResource NowrapTextStyle}"/>
                 </StackPanel>
             </Grid>
+            <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}"
+                       Visibility="{Binding topic.Length,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource in2v}}"
+                       Text="{Binding topic,Mode=OneWay}" />
             <Grid>
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <Image x:Name="_img" MaxHeight="320" Stretch="Uniform"                        
+                <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
                        a:ImageWeiboLocalCache.Item="{Binding Mode=OneWay}" StretchDirection="DownOnly">
                     <!--<i:Interaction.Behaviors>
                         <b:ImageStretchBehavior/>

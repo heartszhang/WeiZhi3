@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -6,6 +7,8 @@ using Artefact.Animation;
 
 namespace WeiZhi3.Behaviours
 {
+    /**/
+    [Obsolete]
     internal sealed class ImageStretchBehavior : Behavior<Image>
     {
         public double DesiredSize

@@ -51,7 +51,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <ListBox FocusVisualStyle="{x:Null}" 
+        <p:ListBoxExt FocusVisualStyle="{x:Null}" 
                  SelectionChanged="OnSelectionChanged" IsSynchronizedWithCurrentItem="True"
                  m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollMode="Auto" m:MouseWheel.VScrollSmoothing="Smooth"
                  m:MouseWheel.Smoothing="Smooth" m:MouseWheel.PhysicalVScrollIncrement="24*"
@@ -62,7 +62,7 @@
                  ItemTemplateSelector="{StaticResource wts}"
                   ItemContainerStyle="{StaticResource WeiboItemContainerStyle}">
             <i:Interaction.Behaviors>
-                <b:ScrollToTopWhenResetBehavior/>
+                <b:ListBoxScrollToTopWhenResetBehavior/>
             </i:Interaction.Behaviors>
             <ListBox.Template>
                 <ControlTemplate TargetType="ListBox">
@@ -116,6 +116,6 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </ListBox.Template>
-        </ListBox>
+        </p:ListBoxExt>
     </Grid>
 </UserControl>

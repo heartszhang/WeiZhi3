@@ -61,7 +61,7 @@ namespace Weibo.ViewModels
 
         public override async void PreviousPage(string token)
         {
-            var pg = Math.Min(1, PageNo - 1);
+            var pg = Math.Max(1, PageNo - 1);
             var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token, pg);
             if (ses.Failed())
             {

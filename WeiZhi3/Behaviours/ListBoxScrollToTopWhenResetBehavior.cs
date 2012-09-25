@@ -5,7 +5,7 @@ using System.Windows.Interactivity;
 
 namespace WeiZhi3.Behaviours
 {
-    public class ScrollToTopWhenResetBehavior : Behavior<ListBox>
+    public class ListBoxScrollToTopWhenResetBehavior : Behavior<ListBox>
     {
         protected override void OnAttached()
         {

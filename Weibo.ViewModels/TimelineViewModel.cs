@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
@@ -60,7 +62,7 @@ namespace Weibo.ViewModels
         {
             statuses = new ObservableCollection<WeiboStatus>();
         }
-        protected async void FetchUrlInfos(Status[] ses)
+        protected void FetchUrlInfos(Status[] ses)
         {
             if (ses == null || ses.Length == 0)
                 return;
@@ -82,6 +84,20 @@ namespace Weibo.ViewModels
                     }
                 }
             }
+            if(urls.Count >= 20)
+            {
+                var u1 = urls.Take(20);
+                Task.Run(()=> FetchUrlInfosImp(u1));
+                var u2 = urls.Skip(20);
+                Task.Run(()=> FetchUrlInfosImp(u2));
+            }else
+            {
+                FetchUrlInfosImp(urls);
+            }
+
+        }
+        async void FetchUrlInfosImp(IEnumerable<string> urls)
+        {
             var rlt = await WeiboClient.short_url_info(urls, 0);
             if (rlt.Failed())
                 return;
@@ -90,7 +106,7 @@ namespace Weibo.ViewModels
             {
                 mem.Set(url.url_short, url, DateTimeOffset.Now.AddHours(2.0));
                 url.title = ExtractUrlTitle(url.title);
-                Debug.WriteLine("url-cache {3} - {0} : {1} - {2}", url.type, url.title,url.url_long,url.url_short);
+                Debug.WriteLine("url-cache {3} - {0} : {1} - {2}", url.type, url.title, url.url_long, url.url_short);
             }
         }
         static readonly Regex ArticleTitleDashRegex1 = new Regex(" [\\|\\-_] ", RegexOptions.Compiled);

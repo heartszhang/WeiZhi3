@@ -75,7 +75,8 @@
     </ApplicationDefinition>
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
     <Compile Include="Behaviours\ImageStretchBehavior.cs" />
-    <Compile Include="Behaviours\ScrollToTopWhenResetBehavior.cs" />
+    <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
+    <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
     <Compile Include="Converters\FriendlyTimeConverter.cs" />
     <Compile Include="Converters\IntNZeroToVisibilityConverter.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Parts\ListBoxExt.cs" />
     <Compile Include="Parts\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>

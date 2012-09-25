@@ -43,7 +43,7 @@
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <Image x:Name="_img" MaxHeight="320" Stretch="Uniform"                        
+                <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
                        a:ImageWeiboLocalCache.Item="{Binding Mode=OneWay}" StretchDirection="DownOnly">
                     <!--<i:Interaction.Behaviors>
                         <b:ImageStretchBehavior/>
