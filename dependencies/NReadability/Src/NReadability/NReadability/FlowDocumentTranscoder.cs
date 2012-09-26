@@ -195,7 +195,7 @@ namespace NReadability
                 }
             }
             //删除段尾的换行
-            if (IsElementBreak((XElement)paragraph.LastNode))
+            if (paragraph.HasElements && IsElementBreak((XElement)paragraph.LastNode))
             {
                 paragraph.LastNode.Remove();
             }
@@ -311,6 +311,7 @@ namespace NReadability
             if (article != null)
             {
                 var title = CreateParagraph();
+                title.SetAttributeValue("Style", "{StaticResource DocTitleStyle}");
                 title.Value = GetInnerText(article.Value,false);
                 root.Add(title);
             }
@@ -322,7 +323,7 @@ namespace NReadability
             return doc;
         }
         private static string _readingFlowStyle =
-            @"<FlowDocument xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" ColumnWidth=""400"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+            @"<FlowDocument xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""  PagePadding=""0,32""  ColumnWidth=""440"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
   <FlowDocument.Resources>
     <Style x:Key=""{x:Type FlowDocument}"" TargetType=""{x:Type FlowDocument}"">
       <Setter Property=""PagePadding"" Value=""0"" />
@@ -341,7 +342,6 @@ namespace NReadability
     </Style>
     <Style TargetType=""{x:Type Paragraph}"">
       <Setter Property=""Margin"" Value=""0,14"" />
-<Setter Property=""TextIndent"" Value=""36""/>
     </Style>
     <Style x:Key=""{x:Type Image}"" TargetType=""{x:Type Image}"">
       <Setter Property=""MaxHeight"" Value=""280"" />
