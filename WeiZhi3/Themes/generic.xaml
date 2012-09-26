@@ -12,7 +12,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="#FF464646" />
         <Setter Property="FontSize" Value="14.667" />
-        <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
+        <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei,Segoe UI Symbol" />
         <Setter Property="TextTrimming" Value="WordEllipsis" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <!--<Setter Property="Typography.StylisticSet20" Value="True" />-->

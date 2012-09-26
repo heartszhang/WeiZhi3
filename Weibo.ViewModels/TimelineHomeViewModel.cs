@@ -23,7 +23,7 @@ namespace Weibo.ViewModels
                 return;
             }
             FireNotificationMessage("{0} Status fetched", ses.Value.statuses.Length);
-            FetchUrlInfos(ses.Value.statuses);
+            await FetchUrlInfos(ses.Value.statuses);
 
             ReloadSinaV2(ses.Value);
 
@@ -52,7 +52,7 @@ namespace Weibo.ViewModels
                 return;
             }
             FireNotificationMessage("{1} - {0} Status fetched", ses.Value.statuses.Length, PageNo);
-            FetchUrlInfos(ses.Value.statuses);
+            await FetchUrlInfos(ses.Value.statuses);
 
             ReloadSinaV2(ses.Value);
             ++PageNo;
@@ -69,7 +69,7 @@ namespace Weibo.ViewModels
                 return;
             }
             FireNotificationMessage("{1} - {0} Status fetched", ses.Value.statuses.Length, PageNo);
-            FetchUrlInfos(ses.Value.statuses);
+            await FetchUrlInfos(ses.Value.statuses);
 
             ReloadSinaV2(ses.Value);
             PageNo = pg;

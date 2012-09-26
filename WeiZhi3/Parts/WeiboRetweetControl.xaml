@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:c="clr-namespace:WeiZhi3.Converters"
-             xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:ds="clr-namespace:WeiZhi3.Design" mc:Ignorable="d" 
+             xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:ds="clr-namespace:WeiZhi3.Design"
+             xmlns:p="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d" 
              x:Name="_this"
              d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
              d:DataContext="{d:DesignInstance ds:MockWeiboRetweetStatus,IsDesignTimeCreatable=True}">
@@ -12,6 +13,7 @@
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:FriendlyTimeConverter x:Key="ftc"/>
         <c:IntNZeroToVisibilityConverter x:Key="in2v"/>
+        <c:StringToVisibiltyConverter x:Key="s2v"/>
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot"  >
@@ -41,6 +43,9 @@
                        Text="{Binding topic,Mode=OneWay}" />
             <Grid>
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
+            </Grid>
+            <Grid x:Name="_doc_container" Visibility="{Binding has_url,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+                <p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        

@@ -46,8 +46,12 @@
     <Reference Include="GalaSoft.MvvmLight.WPF45">
       <HintPath>Externals\GalaSoft.MvvmLight.WPF45.dll</HintPath>
     </Reference>
+    <Reference Include="NReadability">
+      <HintPath>Externals\NReadability.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity">
@@ -60,6 +64,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Ude">
+      <HintPath>Externals\Ude.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -83,6 +90,8 @@
     <Compile Include="Converters\IntZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\ImageUrlConverter.cs" />
     <Compile Include="Converters\NotNullToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToVisibiltyConverter.cs" />
+    <Compile Include="Converters\UriInfoToHasDocumentConverter.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />
     <Compile Include="Design\DesignPageHomeViewModel.cs" />
     <Compile Include="Design\DesignUserExt.cs" />
@@ -95,6 +104,9 @@
     </Compile>
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\FlowDocumentEmbedViewer.xaml.cs">
+      <DependentUpon>FlowDocumentEmbedViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\ListBoxExt.cs" />
     <Compile Include="Parts\TimelineControl.xaml.cs">
@@ -154,6 +166,10 @@
     <Page Include="Pages\PageAuthorizing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\FlowDocumentEmbedViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Parts\TimelineControl.xaml">
       <Generator>MSBuild:Compile</Generator>

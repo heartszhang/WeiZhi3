@@ -40,8 +40,8 @@ namespace Weibo.ViewModels
         public bool allow_all_comment { get; set; }
         public string remark { get; set; }
 
-        public bool follow_me { get { return _follow_me; } set { SetProperty(ref _follow_me, value); } }
-        public bool following { get { return _following; } set { SetProperty(ref _following, value); } }
+        public bool follow_me { get { return _follow_me; } set { Set(ref _follow_me, value); } }
+        public bool following { get { return _following; } set { Set(ref _following, value); } }
         public long status_id { get; set; }
 
         public void assign_sina(UserWithoutStatus data)

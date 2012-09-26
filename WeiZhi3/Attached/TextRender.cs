@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using Weibo.DataModel;
+using Weibo.DataModel.Misc;
 using Weibo.ViewModels;
 using Weibo.ViewModels.StatusRender;
 
@@ -200,6 +201,7 @@ namespace WeiZhi3.Attached
             //create hyperlink 
             var h = new Hyperlink(new Run(run))
             {
+                NavigateUri = new Uri(ut,UriKind.Absolute),
                 //Command = WeiZhiCommands.NavigateUrlCommand,                
                 CommandParameter = ut,
                 ToolTip =  ut,
@@ -216,14 +218,24 @@ namespace WeiZhi3.Attached
                         return;
                     dp.Tag = ui;
                     if (!string.IsNullOrEmpty(ui.title))
-                        dp.ToolTip = ui.title;
-                    else dp.ToolTip = ui.url_long;
+                        dp.ToolTip = ui.title + " / " + EnumDescription.Get(ui.type);
+                    else dp.ToolTip = ui.url_long + " / " + EnumDescription.Get(ui.type);
+                    
                 };
             h.SetResourceReference(TextElement.ForegroundProperty, "MetroColorFeatureBrush");
             textblock.Add(h);
 
-            if (ut.Length != token.text.Length)
-                textblock.Add(new Run(" "));
+            var memc = MemoryCache.Default;
+            var uinfo = (UrlInfo)memc.Get(ut);
+            if (uinfo != null)
+            {
+                if (uinfo.type == UrlType.Video)
+                    textblock.Add(new Run("\uE173"));
+                else if (uinfo.type == UrlType.Music)
+                    textblock.Add(new Run("\u266C"));
+            }
+            else if (ut.Length != token.text.Length)
+               textblock.Add(new Run(" "));
         }
 
         #region Property Weibo 

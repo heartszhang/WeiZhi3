@@ -10,7 +10,7 @@ namespace Weibo.ViewModels
 {
     public class ObservableObjectExt : ObservableObject
     {//只有vs11支持 callermembername
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string property_name = null)
+        protected bool Set<T>(ref T storage, T value, [CallerMemberName] string property_name = null)
         {
             Set(property_name, ref storage, value);
             return true;

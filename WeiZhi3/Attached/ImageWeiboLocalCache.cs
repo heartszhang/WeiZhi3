@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -93,34 +94,51 @@ namespace WeiZhi3.Attached
             string url;
             if(mode == 2)//thumbnail mode
             {
-                img.SetValue(ImageModeProperty, 3);
+                //img.SetValue(ImageModeProperty, 3);
+                mode = 3;
                 url = await HttpDownloadToLocalFile.DownloadAsync(middlepic, "bmiddle", ".jpg");
             }
             else //middle pic mode
             {
-                img.SetValue(ImageModeProperty, 2);
+                //img.SetValue(ImageModeProperty, 2);
+                mode = 2;
                 url = await HttpDownloadToLocalFile.DownloadAsync(thumbnailpic, "thumbnail", ".jpg");
             }
             if (string.IsNullOrEmpty(url))
                 return;
-            SetImageSource(img, url);
+            SetImageSource(img, url, mode);
         }
-        public static void SetImageSource(Image img, string url)
+
+        static void UiInvoke(DispatcherObject img, Action act)
         {
+            img.Dispatcher.BeginInvoke(DispatcherPriority.SystemIdle,act);
+        }
+        public static void SetImageSource(Image img, string url, int mode)
+        {
+            if (string.IsNullOrEmpty(url))
+                return;
             var bmp = new BitmapImage();
             bmp.BeginInit();
-
             bmp.UriSource = new Uri(url, UriKind.Absolute);
             bmp.EndInit();
             bmp.Freeze();
             var bs = (bmp.DpiX > 160.0) ? ConvertBitmapTo96Dpi(bmp) : bmp;
-            img.Dispatcher.Invoke(
-                DispatcherPriority.SystemIdle,
-                (Action)(() =>
-                {
-                    if (img.Source == null || !img.Source.Equals(bs))
-                        img.Source = bs;
-                }));
+            try
+            {
+                img.Dispatcher.BeginInvoke(
+                    DispatcherPriority.SystemIdle,
+                    (Action) (() =>
+                    {
+                        if (img.Source == null || !img.Source.Equals(bs))
+                        {
+                            img.Source = bs;
+                            img.SetValue(ImageModeProperty,mode);
+                        }
+                    }));
+            }catch(System.NotSupportedException e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
         private static async void OnItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -142,19 +160,22 @@ namespace WeiZhi3.Attached
             if (sz.Height * sz.Width == 0)
                 return;
             
+
             string url;
             if(sz.Height > sz.Width)
             {//portrait
-                img.SetValue(ImageModeProperty, 2);
+                //UiInvoke(img, ()=>img.SetValue(ImageModeProperty, 2));
+                mode = 2;
                 url = await HttpDownloadToLocalFile.DownloadAsync(i.thumbnail_pic, "thumbnail", ".jpg");
             }else
             {
-                img.SetValue(ImageModeProperty,3);
+                //UiInvoke(img, () => img.SetValue(ImageModeProperty, 3));
+                mode = 3;
                 url = await HttpDownloadToLocalFile.DownloadAsync(i.bmiddle_pic, "bmiddle", ".jpg");
             }
             if (string.IsNullOrEmpty(url))
                 url = i.thumbnail_pic;
-            SetImageSource(img, url);
+            SetImageSource(img, url, mode);
         }
 
         #endregion

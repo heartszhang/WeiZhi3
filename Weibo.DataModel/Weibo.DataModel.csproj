@@ -58,6 +58,7 @@
     <Compile Include="HotStatuses.cs" />
     <Compile Include="Geo.cs" />
     <Compile Include="GeoInfo.cs" />
+    <Compile Include="Misc\EnumDescription.cs" />
     <Compile Include="Misc\RetweetOptions.cs" />
     <Compile Include="Misc\SuggestionsHotType.cs" />
     <Compile Include="RateLimitStatus.cs" />

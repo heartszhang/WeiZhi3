@@ -62,7 +62,7 @@ namespace Weibo.ViewModels
         {
             statuses = new ObservableCollection<WeiboStatus>();
         }
-        protected void FetchUrlInfos(Status[] ses)
+        protected async Task FetchUrlInfos(Status[] ses)
         {
             if (ses == null || ses.Length == 0)
                 return;
@@ -86,17 +86,19 @@ namespace Weibo.ViewModels
             }
             if(urls.Count >= 20)
             {
+                var tasks = new Task[2];
                 var u1 = urls.Take(20);
-                Task.Run(()=> FetchUrlInfosImp(u1));
+                tasks[0] = FetchUrlInfosImp(u1);
                 var u2 = urls.Skip(20);
-                Task.Run(()=> FetchUrlInfosImp(u2));
+                tasks[1] = FetchUrlInfosImp(u2);
+                await Task.WhenAll(tasks);
             }else
             {
-                FetchUrlInfosImp(urls);
+                await FetchUrlInfosImp(urls);
             }
 
         }
-        async void FetchUrlInfosImp(IEnumerable<string> urls)
+        async Task FetchUrlInfosImp(IEnumerable<string> urls)
         {
             var rlt = await WeiboClient.short_url_info(urls, 0);
             if (rlt.Failed())
@@ -119,25 +121,19 @@ namespace Weibo.ViewModels
             var rtn = title;
             if(string.IsNullOrEmpty(title))
                 return rtn;
-            if (ArticleTitleDashRegex1.IsMatch(title))
+            var a1 = title.Split(new char[] { '|', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
+            if (a1.Length > 1)
             {
-                rtn = ArticleTitleDashRegex2.Replace(title, "$1");
-
-                //中文不能用空格计算字数
-                if (title.Length < 5)
-                {
-                    rtn = ArticleTitleDashRegex3.Replace(title, "$1");
-                }
+                rtn = a1[0];
             }
-            else if ((title.IndexOf(": ") != -1) || (title.IndexOf("：") != -1))
+            else
             {
-                rtn = ArticleTitleColonRegex1.Replace(title, "$1");
-
-                if (title.Length < 3)
-                {
-                    rtn = ArticleTitleColonRegex2.Replace(title, "$1");
-                }
+                var b1 = title.Split(new char[] { ':', '：' }, StringSplitOptions.RemoveEmptyEntries);
+                if (b1.Length > 1)
+                    rtn = b1.Last();
             }
+            if (rtn.Length < 5)
+                rtn = title;
             return rtn;
         }
     }

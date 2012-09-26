@@ -54,7 +54,7 @@
         <p:ListBoxExt FocusVisualStyle="{x:Null}" 
                  SelectionChanged="OnSelectionChanged" IsSynchronizedWithCurrentItem="True"
                  m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollMode="Auto" m:MouseWheel.VScrollSmoothing="Smooth"
-                 m:MouseWheel.Smoothing="Smooth" m:MouseWheel.PhysicalVScrollIncrement="24*"
+                 m:MouseWheel.Smoothing="Smooth" m:MouseWheel.PhysicalVScrollIncrement="24*" m:MouseWheel.NestedVScroll="True"
                  ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ScrollViewer.PanningMode="VerticalOnly" ScrollViewer.IsDeferredScrollingEnabled="True"
                  VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizing="False"

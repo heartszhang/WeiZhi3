@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using Weibo.DataModel.Misc;
 
 namespace Weibo.DataModel
 {
@@ -10,7 +11,7 @@ namespace Weibo.DataModel
         [DataMember]
         public string url_long { get; set; }
         [DataMember]
-        public int type { get; set; }
+        public UrlType type { get; set; }
         [DataMember]
         public bool result { get; set; }
         [DataMember]

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
 using Newtonsoft.Json.Linq;
+using Weibo.Apis.SinaV2;
 using Weibo.DataModel;
 using Weibo.DataModel.Misc;
 using Weibo.ViewModels.StatusRender;
@@ -25,6 +28,7 @@ namespace Weibo.ViewModels
     }
     public class WeiboStatus : ObservableObjectExt
     {
+        private string _document;
         public DateTime created_at { get; set; }
         public string text { get; set; }
         public long id { get; set; }
@@ -53,10 +57,7 @@ namespace Weibo.ViewModels
         public int thumb_pic_width { get; set; }
         public int thumb_pic_height { get; set; }
 
-        public string url_topic { get; set; }
-        public string url_short { get; set; }
-        public string url_long { get; set; }
-        public int url_type { get; set; }
+        public UrlInfo url_info { get; set; }
 
         public UserExt user { get; set; }
         public WeiboStatus retweeted_status { get; set; }
@@ -73,7 +74,12 @@ namespace Weibo.ViewModels
         public string description { get; set; }
 
         public bool has_rt { get { return retweeted_status != null; } }
+        public bool has_url { get; set; }
+//        public string url { get; set; }
+        //public bool has_document { get; set; }
 
+        public int reposts_comments_count { get; set; }
+        public string document { get { return _document; } set { Set(ref _document, value); } }
         #endregion
 
         public List<Token> tokens { get; set; }
@@ -114,20 +120,24 @@ namespace Weibo.ViewModels
             comments_count = data.comments_count;
             user = new UserExt();
             user.assign_sina(data.user);
-
-            has_pic = !string.IsNullOrEmpty(bmiddle_pic);
+            
+            has_pic = !string.IsNullOrEmpty(bmiddle_pic);            
+            reposts_comments_count = comments_count + reposts_count;
         }
         public void assign_sina(Status data)
         {
             assign_sina_data(data);
+            var para = new InitializeParam();
             if(data.retweeted_status != null)
             {
                 retweeted_status = new WeiboStatus();
                 retweeted_status.assign_sina_data(data.retweeted_status);
-                retweeted_status.post_initialize(false);
+                retweeted_status.post_initialize(false,para);
             }
-            post_initialize(true);
+            post_initialize(true,para);
 
+            if (!string.IsNullOrEmpty(para.url) )
+                fetch_url_info(para.url);
         }
         internal static DateTime time(string tm)
         {
@@ -138,7 +148,7 @@ namespace Weibo.ViewModels
             return tmt;
         }
 
-        void post_initialize(bool arrange_tokens )
+        void post_initialize(bool arrange_tokens , InitializeParam param)
         {
             tokens = text.Parse();
             var f = tokens.ElementAtOrDefault(0);
@@ -150,6 +160,7 @@ namespace Weibo.ViewModels
                 topic_source = WeiboTopicSource.FirstSentence;
                 topic = f.text.Trim();
             }
+           // var url = string.Empty;
             //正文有标题
             foreach(var t in tokens)
             {
@@ -157,12 +168,17 @@ namespace Weibo.ViewModels
                 {
                     topic = t.text;
                     topic_source = WeiboTopicSource.Trend;
-                    break;
+                    //break;
                 }
                 if(t.tag == TokenTypes.Quote && topic_source == WeiboTopicSource.Reserved)
                 {
                     topic_source = WeiboTopicSource.Quote;
                     topic = t.text.Trim();
+                }
+                if(t.tag == TokenTypes.Hyperlink && t.text.Contains("http://t.cn/"))
+                {
+                    if (param.url == null)
+                        param.url = t.text;
                 }
             }
             if(retweeted_status != null)
@@ -183,6 +199,7 @@ namespace Weibo.ViewModels
                     thumb_pic_width = retweeted_status.thumb_pic_width;
                     thumb_pic_height = retweeted_status.thumb_pic_height;
                 }
+                
             }
 
             if (arrange_tokens == false)
@@ -211,6 +228,47 @@ namespace Weibo.ViewModels
                 else
                     break;
             }
+        }
+
+        void initialize_url_info(UrlInfo ui)
+        {
+            url_info = ui;
+          //  if (ui.type == UrlType.Blog || ui.type == UrlType.Normal || ui.type == UrlType.News || ui.type == UrlType.Media)
+            {
+                document = ui.url_short;
+                Debug.WriteLine("set-doc {1} : {0}",ui.url_short,ui.type);
+            }
+            has_url = true;
+        }
+        void fetch_url_info(string url)
+        {
+            var mem = MemoryCache.Default;
+            var ui = (UrlInfo) mem.Get(url);
+            if (ui == null)
+            {
+                Task.Run(async () =>
+                {
+                    var resp = await WeiboClient.short_url_info(new[] {url}, 0);
+                    if (resp.Failed())
+                    {
+                        Debug.WriteLine(resp.Reason);
+                        return;
+                    }
+                    if (resp.Value.urls == null || resp.Value.urls.Length == 0)
+                        return;
+                    initialize_url_info(resp.Value.urls[0]);
+                    mem.Set(url,url_info, DateTimeOffset.Now.AddHours(1.0));
+
+                });
+            }
+            else
+            {
+                initialize_url_info(ui);
+            }
+        }
+        protected  class InitializeParam
+        {
+            public string url { get; set; }
         }
     }
 }

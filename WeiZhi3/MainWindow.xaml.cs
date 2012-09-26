@@ -136,5 +136,22 @@ namespace WeiZhi3
 
             return rtn;
         }
+
+        private void OnNavigating(object sender, NavigatingCancelEventArgs e)
+        {
+            var uri = e.Uri;
+            if (uri == null || !uri.IsAbsoluteUri)
+                return;
+            var scheme = uri.Scheme;
+            if(scheme.Contains("http"))
+            {
+                e.Cancel = true;
+                var psi = new ProcessStartInfo(uri.AbsoluteUri) {UseShellExecute = true};
+                using(Process.Start(psi))
+                {
+                  //  Debug.WriteLine(proc.ProcessName);
+                }
+            }
+        }
     }
 }

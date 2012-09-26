@@ -6,7 +6,7 @@
              xmlns:c="clr-namespace:WeiZhi3.Converters"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:b="clr-namespace:WeiZhi3.Behaviours" 
-             xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
+             xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:p="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d" 
              x:Name="_this"
              d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
              d:DataContext="{d:DesignInstance ds:MockWeiboStatus,IsDesignTimeCreatable=True}">
@@ -17,6 +17,7 @@
         <BooleanToVisibilityConverter x:Key="b2v"/>
         <c:FriendlyTimeConverter x:Key="ftc"/>
         <c:IntNZeroToVisibilityConverter x:Key="in2v"/>
+        <c:StringToVisibiltyConverter x:Key="s2v"/>
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot"  >
@@ -36,7 +37,13 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" Style="{StaticResource NowrapTextStyle}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
-                    <TextBlock Text="{Binding created_at,Mode=OneWay,Converter={StaticResource ftc}}" Foreground="#FF999999" Style="{StaticResource NowrapTextStyle}"/>
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NowrapTextStyle}">
+                            <Setter Property="Foreground" Value="#FF999999"/>                            
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="{Binding reposts_comments_count,Mode=OneWay,StringFormat='\{0\} 转评'}" Margin="16,0"/>
+                    <TextBlock Text="{Binding created_at,Mode=OneWay,Converter={StaticResource ftc}}"/>
                 </StackPanel>
             </Grid>
             <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}"
@@ -44,6 +51,9 @@
                        Text="{Binding topic,Mode=OneWay}" />
             <Grid>
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
+            </Grid>
+            <Grid x:Name="_doc_container" Visibility="{Binding has_url,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+                <p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        

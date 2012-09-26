@@ -7,8 +7,9 @@
                   xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:p="clr-namespace:WeiZhi3.Parts"
                   mc:Ignorable="d" Icon="logo3.ico"
                   Loaded="NavigationWindowLoaded" Unloaded="NavigationWindowUnoaded"
-                  Background="WhiteSmoke"
-                  Title="唯致" d:DesignHeight="350" d:DesignWidth="525" Source="/Pages/PageBootstrap.xaml">
+                  Background="WhiteSmoke" Navigating="OnNavigating"
+                  Title="唯致" d:DesignHeight="350" d:DesignWidth="525" 
+                  Source="/Pages/PageBootstrap.xaml">
     <NavigationWindow.Template>
         <ControlTemplate TargetType="NavigationWindow">
             <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="{StaticResource MetroColorFeatureFadeBrush}">
