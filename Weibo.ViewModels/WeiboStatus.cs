@@ -134,10 +134,10 @@ namespace Weibo.ViewModels
                 retweeted_status.assign_sina_data(data.retweeted_status);
                 retweeted_status.post_initialize(false,para);
             }
-            post_initialize(true,para);
+            post_initialize(true, para);
 
-            if (!string.IsNullOrEmpty(para.url) )
-                fetch_url_info(para.url);
+            //if (!string.IsNullOrEmpty(para.url) )
+                //fetch_url_info(para.url);
         }
         internal static DateTime time(string tm)
         {
@@ -202,6 +202,10 @@ namespace Weibo.ViewModels
                 
             }
 
+            //在使用正文首行作为标题前，如果有url的标题，就用url标题
+            if(!string.IsNullOrEmpty(param.url))
+                fetch_url_info(param.url);
+
             if (arrange_tokens == false)
                 return;
 
@@ -233,10 +237,16 @@ namespace Weibo.ViewModels
         void initialize_url_info(UrlInfo ui)
         {
             url_info = ui;
-          //  if (ui.type == UrlType.Blog || ui.type == UrlType.Normal || ui.type == UrlType.News || ui.type == UrlType.Media)
+            if (ui.type == UrlType.Blog || ui.type == UrlType.Normal || ui.type == UrlType.News || ui.type == UrlType.Media)
             {
                 document = ui.url_short;
                 Debug.WriteLine("set-doc {1} : {0}",ui.url_short,ui.type);
+            }
+            var tpc = ui.topic();
+            if(!string.IsNullOrEmpty(tpc) && !tpc.Contains("..."))//标题可能被urlshort截断
+            {
+                topic = tpc;
+                topic_source = WeiboTopicSource.UrlContent;
             }
             has_url = true;
         }
@@ -244,7 +254,7 @@ namespace Weibo.ViewModels
         {
             var mem = MemoryCache.Default;
             var ui = (UrlInfo) mem.Get(url);
-            if (ui == null)
+/*            if (ui == null)
             {
                 Task.Run(async () =>
                 {
@@ -260,9 +270,8 @@ namespace Weibo.ViewModels
                     mem.Set(url,url_info, DateTimeOffset.Now.AddHours(1.0));
 
                 });
-            }
-            else
-            {
+            }*/
+            if(ui != null){
                 initialize_url_info(ui);
             }
         }

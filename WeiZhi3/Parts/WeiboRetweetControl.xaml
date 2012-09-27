@@ -34,8 +34,16 @@
                 <TextBlock Style="{StaticResource NowrapTextStyle}">
                     <Run Text="{Binding retweeted_status.user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" /><Run  Text="{Binding user.screen_name,Mode=OneWay,StringFormat='  由@\{0\} 转发'}" Foreground="{StaticResource MetroColorTextLight}"/>
                 </TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
-                    <TextBlock Text="{Binding created_at,Mode=OneWay,Converter={StaticResource ftc}}" Foreground="#FF999999" Style="{StaticResource NowrapTextStyle}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" DataContext="{Binding retweeted_status,Mode=OneWay}">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NowrapTextStyle}">
+                            <Setter Property="Foreground" Value="#FF999999"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="{Binding reposts_comments_count,Mode=OneWay,StringFormat='\{0\} 转评'}"
+                               Visibility="{Binding reposts_comments_count,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource in2v}}"
+                               Margin="16,0"/>
+                    <TextBlock Text="{Binding created_at,Mode=OneWay,Converter={StaticResource ftc}}" />
                 </StackPanel>
             </Grid>
             <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}"
@@ -45,7 +53,7 @@
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
             <Grid x:Name="_doc_container" Visibility="{Binding has_url,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>
+                <!--<p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>-->
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        

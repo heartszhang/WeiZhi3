@@ -166,7 +166,11 @@ namespace WeiZhi3.Attached
             var name = t.text;
             if (string.IsNullOrEmpty(name))
                 return;
-            textblock.Add(new Run(t.text + "："));
+            var run = new Run(t.text);
+            run.SetResourceReference(Control.ForegroundProperty, "MetroColorFeatureBrush");
+
+            textblock.Add(run);
+            textblock.Add(new Run("："));
         }
         private static void InsertMentionName(ICollection<Inline> textblock, Token t)
         {
@@ -217,8 +221,8 @@ namespace WeiZhi3.Attached
                     if (ui == null)
                         return;
                     dp.Tag = ui;
-                    if (!string.IsNullOrEmpty(ui.title))
-                        dp.ToolTip = ui.title + " / " + EnumDescription.Get(ui.type);
+                    if (!string.IsNullOrEmpty(ui.topic()))
+                        dp.ToolTip = ui.topic() + " / " + EnumDescription.Get(ui.type);
                     else dp.ToolTip = ui.url_long + " / " + EnumDescription.Get(ui.type);
                     
                 };

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Weibo.ViewModels.StatusRender
@@ -35,10 +36,16 @@ namespace Weibo.ViewModels.StatusRender
                         t = eat_hyperlink(text, ref b, end);
                         break;
                     case '#':
-                    case '【':
-                    case '《':
-                    case '『':
                         t = eat_topic(text, ref b, end, c);
+                        break;
+                    case '【':
+                        t = eat_topic(text, ref b, end, '】');
+                        break;
+                    case '《':
+                        t = eat_topic(text, ref b, end, '》');
+                        break;
+                    case '『':
+                        t = eat_topic(text, ref b, end, '』');
                         break;
                     case '[':
                         t = eat_emotion(text, ref b, end);
@@ -61,11 +68,19 @@ namespace Weibo.ViewModels.StatusRender
                         t = eat_punctuation(text, ref b, end,c);
                         break;
                     case '"':
+                        t = eat_quote(text, ref b, end, '"');
+                        break;
                     case '“':
+                        t = eat_quote(text, ref b, end, '”');
+                        break;
                     case '（':
+                        t = eat_quote(text, ref b, end, '）');
+                        break;
                     case '(':
-                case '「':
-                    t = eat_quote(text, ref b, end,c);
+                        t = eat_quote(text, ref b, end, '(');
+                        break;
+                    case '「':
+                        t = eat_quote(text, ref b, end, '」');
                         break;
                 }
                 if (t == null || (string.IsNullOrEmpty(t.text))) //没有匹配上
@@ -147,23 +162,21 @@ namespace Weibo.ViewModels.StatusRender
         }
         static bool is_quote(char c)
         {
-            return c == '”' || c == '“' || c == '"' || c == ')' || c == '）' || c == '」' ;
+            return c == '”' || c == '“' || c == '"' || c == ')' || c == '）' || c == '」' || c == '(' || c == '（' || c == '「';
         }
-        private static Token eat_quote(string text, ref int begin, int end, char pre)
+        private static Token eat_quote(string text, ref int begin, int end, char endchar)
         {            
             var rtn = new Token {tag = TokenTypes.Quote};
-            if(is_quote(text[begin]))
+            Debug.Assert(is_quote(text[begin]));
+            ++begin;
+            while (begin < end && text[begin] != endchar)
             {
-                ++begin;
-                while(begin < end && !is_quote(text[begin]))
-                {
-                    rtn.text += text[begin++];
-                }
-                if (begin == end)
-                    rtn.text = string.Empty;
-                else ++begin;
+                rtn.text += text[begin++];
             }
-            rtn.flag = pre;
+            if (begin == end)
+                rtn.text = string.Empty;
+            else ++begin;
+            rtn.flag = endchar;
             return rtn;
         }
         private static Token eat_emotion(string text, ref int begin, int end)
@@ -195,23 +208,19 @@ namespace Weibo.ViewModels.StatusRender
             return rtn;
         }
 
-        private static Token eat_topic(string text, ref int begin, int end, char pre)
+        private static Token eat_topic(string text, ref int begin, int end, char endchar)
         {
             var rtn = new Token { text = "", tag = TokenTypes.Topic };
-            if (text[begin] == '#' || text[begin] == '【' || text[begin] == '《' || text[begin] == '『')
+            ++begin;
+            while (begin < end && text[begin] != endchar)
             {
-                ++begin;
-                while (begin < end &&
-                       (text[begin] != '#' && text[begin] != '】' && text[begin] != '》' && text[begin] != '』'))
-                {
-                    rtn.text += text[begin++];
-                }
-                if (begin == end) //cann't find #
-                    rtn.text = "";
-                else ++begin;
+                rtn.text += text[begin++];
             }
+            if (begin == end) //cann't find #
+                rtn.text = "";
+            else ++begin;
             rtn.text = rtn.text.Trim();
-            rtn.flag = pre;
+            rtn.flag = endchar;
             return rtn;
         }
 

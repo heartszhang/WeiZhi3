@@ -42,7 +42,9 @@
                             <Setter Property="Foreground" Value="#FF999999"/>                            
                         </Style>
                     </StackPanel.Resources>
-                    <TextBlock Text="{Binding reposts_comments_count,Mode=OneWay,StringFormat='\{0\} 转评'}" Margin="16,0"/>
+                    <TextBlock Text="{Binding reposts_comments_count,Mode=OneWay,StringFormat='\{0\} 转评'}"
+                               Visibility="{Binding reposts_comments_count,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource in2v}}"
+                               Margin="16,0"/>
                     <TextBlock Text="{Binding created_at,Mode=OneWay,Converter={StaticResource ftc}}"/>
                 </StackPanel>
             </Grid>
@@ -53,7 +55,7 @@
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
             <Grid x:Name="_doc_container" Visibility="{Binding has_url,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>
+                <!--<p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>-->
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
