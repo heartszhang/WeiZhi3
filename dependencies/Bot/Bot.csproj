@@ -44,14 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionOnDispose.cs" />
-    <Compile Include="AnimatingPanel.cs" />
-    <Compile Include="AnimatingTilePanel.cs" />
+    <Compile Include="Panels\AnimatingPanel.cs" />
+    <Compile Include="Panels\AnimatingStackPanel.cs" />
+    <Compile Include="Panels\AnimatingTilePanel.cs" />
     <Compile Include="CastList.cs" />
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="CompositionTargetRenderingListener.cs" />
+    <Compile Include="DoubleUtil.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="InstanceFactory.cs" />
+    <Compile Include="IStackMeasure.cs" />
+    <Compile Include="IStackMeasureScrollData.cs" />
     <Compile Include="ListBase.cs" />
     <Compile Include="ListBaseContract.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />

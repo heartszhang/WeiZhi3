@@ -157,7 +157,7 @@ namespace Bot
         {
             return providedBounds.Location;
         }
-        private static bool updateChildData(AnimatingPanelItemData data, double dampening, double attractionFactor,
+        private static bool UpdateChildData(AnimatingPanelItemData data, double dampening, double attractionFactor,
                                             double variation)
         {
             if (data == null)
@@ -198,7 +198,7 @@ namespace Bot
             bool shouldChange = false;
             for (int i = 0; i < Children.Count; i++)
             {
-                shouldChange = updateChildData(
+                shouldChange = UpdateChildData(
                     (AnimatingPanelItemData) Children[i].GetValue(DataProperty),
                     dampening,
                     attractionFactor,
