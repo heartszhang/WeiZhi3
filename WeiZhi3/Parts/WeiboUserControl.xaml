@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="WeiZhi3.Parts.WeiboUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ds="clr-namespace:WeiZhi3.Design"
+             xmlns:c="clr-namespace:WeiZhi3.Converters" mc:Ignorable="d" 
+             Foreground="#FF666666" 
+             x:Name="_this" 
+             Height="150" d:DesignWidth="440" d:DataContext="{d:DesignInstance ds:DesignUserExt,IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <c:ImageUrlConverter x:Key="iuc"/>
+        <c:IntFriendlyConverter x:Key="ifc"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="{Binding avatar_large,Mode=OneWay,Converter={StaticResource iuc},IsAsync=True}" Width="150" Height="150" Stretch="Uniform"/>
+        <Grid Grid.Column="1" Margin="12,0">
+            <StackPanel Grid.Column="1">
+                <Grid Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="1" Text="v" Foreground="Red" ToolTip="{Binding verified_reason,Mode=OneWay}"/>
+                    <TextBlock ToolTip="{Binding url,Mode=OneWay, TargetNullValue='没有'}" Margin="16,0" VerticalAlignment="Center"  Grid.Column="2"><Hyperlink CommandParameter="{Binding url, Mode=OneWay}" ><Run Text="主页"/></Hyperlink></TextBlock>
+                    <TextBlock x:Name="name" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" FontSize="26.667" FontFamily="{StaticResource UniversalFonts}" Text="{Binding screen_name, FallbackValue=name, Mode=OneWay}"/>
+                </Grid>
+                <TextBlock ToolTip="{Binding description,Mode=OneWay}" Text="{Binding description,Mode=OneWay}" FontSize="10pt" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource UniversalFonts}"/>
+            </StackPanel>
+            <Grid x:Name="numbers" VerticalAlignment="Bottom">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="13pt"/>
+                        <Setter Property="FontFamily" Value="arial, sans-serif, Microsoft YaHei UI"/>
+                        <Setter Property="TextWrapping" Value="NoWrap"/>
+                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border>
+                    <TextBlock TextAlignment="Center" ><Run Foreground="{StaticResource MetroColorFeatureBrush}" FontWeight="Bold" Text="{Binding followers_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>粉丝</TextBlock>
+                </Border>
+                <Border Grid.Column="1" >
+                    <TextBlock TextAlignment="Center" ><Run FontWeight="Bold" Text="{Binding friends_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>关注</TextBlock>
+                </Border>
+                <Border Grid.Column="2">
+                    <TextBlock TextAlignment="Center" ><Run FontWeight="Bold" Text="{Binding statuses_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>微博</TextBlock>
+                </Border>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

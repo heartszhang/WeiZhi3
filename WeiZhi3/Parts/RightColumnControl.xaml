@@ -209,8 +209,8 @@
             <p:NotificationControl NotificationText="Welcome"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Top">
-            <Grid Height="160">
-                
+            <Grid x:Name="_profile_container" Visibility="{Binding user,Mode=OneWay,Converter={StaticResource nn2v},FallbackValue=Collapsed}">
+                <p:WeiboUserControl DataContext="{Binding user,Mode=OneWay}"/>
             </Grid>
         </StackPanel>
         <b:TransitionPresenter DockPanel.Dock="Top" MinHeight="200" Content="{Binding Timeline.FocusedItem,Mode=OneWay}" ContentTemplate="{StaticResource FocusedItemTemplate}">

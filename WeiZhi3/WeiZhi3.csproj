@@ -87,6 +87,7 @@
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
     <Compile Include="Converters\FriendlyTimeConverter.cs" />
+    <Compile Include="Converters\IntFriendlyConverter.cs" />
     <Compile Include="Converters\IntNZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\IntZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\ImageUrlConverter.cs" />
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="Parts\WeiboRetweetControl.xaml.cs">
       <DependentUpon>WeiboRetweetControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\WeiboUserControl.xaml.cs">
+      <DependentUpon>WeiboUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelBase2.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -218,9 +222,53 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Parts\WeiboUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Parts\WindowTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Accents\blue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\darkpurple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\green.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\lime.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\orange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\purple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\red.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\silver.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\skyblue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\teal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\colors.xaml">
       <SubType>Designer</SubType>
@@ -288,7 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
-    <Folder Include="Themes\Accents\" />
     <Folder Include="Themes\Dark\" />
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +354,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Accents\colors.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
