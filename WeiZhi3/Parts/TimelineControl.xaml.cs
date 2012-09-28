@@ -20,13 +20,13 @@ namespace WeiZhi3.Parts
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             return;
-            e.Handled = true;
-            if (e.AddedItems.Count != 1)
-                return;
-            var item = (WeiboStatus)e.AddedItems[0];
-            var vm = (TimelineViewModel) DataContext;
-            if (item.has_pic)
-                vm.FocusedItem = item.bmiddle_pic;
+            //e.Handled = true;
+            //if (e.AddedItems.Count != 1)
+            //    return;
+            //var item = (WeiboStatus)e.AddedItems[0];
+            //var vm = (TimelineViewModel) DataContext;
+            //if (item.has_pic)
+            //    vm.FocusedItem = item.bmiddle_pic;
         }
 
         private void OnMouseEnterItemContainer(object sender, MouseEventArgs e)

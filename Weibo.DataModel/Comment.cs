@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Weibo.DataModel
 {
@@ -34,5 +36,24 @@ namespace Weibo.DataModel
 
         [DataMember]
         public long mid { get; set; }
+
+        public void preprocess()
+        {
+            if (string.IsNullOrEmpty(text))
+                return;
+            var i = text.IndexOf("//@", StringComparison.Ordinal);
+            var t = i > -1 ? text.Substring(0, i) : text;
+            var x = t.Count(c => c == '@');            
+            score = extract_chars(t.Replace("转发微博", string.Empty)).Length;
+            score -= x*5;
+        }
+
+        public int score { get; set; }
+        internal static string extract_chars(string t)
+        {
+            var rtn = t.Where(i => !char.IsPunctuation(i)).Aggregate(string.Empty, (current, i) => current + i);
+            return rtn;
+        }
+  
     }
 }

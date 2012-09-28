@@ -9,7 +9,7 @@
              xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:p="clr-namespace:WeiZhi3.Parts"
              xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
              x:Name="_this"
-             d:DesignHeight="600" d:DesignWidth="600" Background="Transparent" MouseLeftButtonDown="OnMouseLeftButtonDownImp"
+             d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
              d:DataContext="{d:DesignInstance ds:MockWeiboStatus,IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -52,7 +52,7 @@
             <TextBlock x:Name="_title" Style="{StaticResource WeiboTitleTextStyle}"
                        Visibility="{Binding topic.Length,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource in2v}}"
                        Text="{Binding topic,Mode=OneWay}" />
-            <Grid>
+            <Grid Background="Transparent" MouseLeftButtonDown="OnMouseLeftButtonDownImp">
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
             <Grid x:Name="_doc_container" Visibility="{Binding has_url,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
@@ -80,8 +80,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="_memoto" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10pt" 
-                               Visibility="{Binding comments_count,Mode=OneWay,Converter={StaticResource in2v},FallbackValue=Collapsed}">
+                    <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10pt" Visibility="{Binding comments_count,Mode=OneWay,Converter={StaticResource in2v},FallbackValue=Collapsed}">
                         <Hyperlink Command="{Binding show_comments,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"><Run Text="{Binding comments_count,Mode=OneWay,StringFormat='显示评论(\{0\})&#x2a20;'}"/></Hyperlink>
                     </TextBlock>
                     <TextBlock Text="{Binding description,Mode=OneWay}" Style="{StaticResource NowrapTextStyle}" Foreground="{StaticResource MetroColorTextLightBrush}" VerticalAlignment="Center"/>

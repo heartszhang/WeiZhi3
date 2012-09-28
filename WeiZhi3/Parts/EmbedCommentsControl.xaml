@@ -100,7 +100,7 @@
 					ItemsSource="{Binding comments,Mode=OneWay,IsAsync=True}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 				<Grid>
 					<StackPanel Orientation="Horizontal" x:Name="_tools" Margin="43,0,0,0">
-						<TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10pt" Foreground="{StaticResource MetroColorTextLightBrush}"><Hyperlink >more...</Hyperlink></TextBlock>
+						<TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10pt" Foreground="{StaticResource MetroColorTextLightBrush}"><Hyperlink Command="{Binding show_more,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}">more...</Hyperlink></TextBlock>
 					</StackPanel>
 				</Grid>
 			</StackPanel>

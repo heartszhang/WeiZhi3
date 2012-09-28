@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Weibo.ViewModels;
 
 namespace WeiZhi3.Design
