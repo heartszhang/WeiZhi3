@@ -34,6 +34,36 @@
 
     <Geometry x:Key="PathReply">F1 M 356.741,34.9516L 360.795,31.1996L 362.678,31.2031L 359.85,34.0071L 363.313,34.0033C 363.313,34.0033 368.158,33.9428 368.158,38.506C 368.158,43.0691 363.369,43.0955 363.369,43.0955L 363.369,41.2614C 363.369,41.2614 366.56,41.4124 366.56,38.5469C 366.56,35.6813 363.325,35.7679 363.325,35.7679L 359.85,35.7763L 362.786,38.9413L 360.808,38.9365L 356.741,34.9516 Z</Geometry>
     <Geometry x:Key="PathRetweet">M 196.549,122.446L 191.854,122.531L 190.071,120.832L 193.351,120.839C 191.61,118.788 188.548,118.436 186.381,120.085C 185.365,120.859 184.72,121.94 184.479,123.099L 182.368,123.652C 182.505,121.678 183.46,119.771 185.158,118.478C 188.138,116.21 192.331,116.653 194.859,119.51L 194.41,116.412L 196.138,118.061L 196.549,122.446 Z M 182.375,125.841L 187.07,125.756L 188.853,127.455L 185.573,127.448C 187.314,129.499 190.376,129.851 192.543,128.202C 193.559,127.428 194.204,126.347 194.446,125.188L 196.556,124.635C 196.419,126.609 195.465,128.516 193.766,129.809C 190.786,132.077 186.593,131.634 184.066,128.777L 184.514,131.875L 182.787,130.226L 182.375,125.841 Z</Geometry>
+
+    <!-- window buttons-->
+    <ControlTemplate TargetType="Button" x:Key="ButtonWindowCommandTemplate">
+        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="Pressed"/>
+                    <VisualState x:Name="MouseOver"/>
+                    <VisualState x:Name="Disabled"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource MetroColorFeatureFadeBrush}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource MetroColorFeatureBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="ButtonWindowCommandStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource ButtonWindowCommandTemplate}"/>
+    </Style>
+    
     <ControlTemplate TargetType="Button" x:Key="WeiboCommandTemplate">
         <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" x:Name="_border">
             <Grid>
@@ -133,5 +163,49 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <ControlTemplate x:Key="MetroButtonTemplate" TargetType="{x:Type Button}">
+
+        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+            <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" x:Name="_content" />
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="MouseOver"/>
+                    <VisualState x:Name="Pressed"/>
+                    <VisualState x:Name="Disabled"/>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused"/>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="ValidationStates">
+                    <VisualState x:Name="InvalidFocused"/>
+                    <VisualState x:Name="InvalidUnfocused"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="0.8"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Black"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.8" TargetName="_content"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="MetroButtonStyle" TargetType="Button">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="LightGray"/>
+        <Setter Property="Padding" Value="16,4"/>
+        <Setter Property="Template" Value="{StaticResource MetroButtonTemplate}"/>
+    </Style>
+    <Style x:Key="MetroDefaultButtonStyle" TargetType="Button" BasedOn="{StaticResource MetroButtonStyle}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource MetroColorFeatureBrush}"/>
     </Style>
 </ResourceDictionary>

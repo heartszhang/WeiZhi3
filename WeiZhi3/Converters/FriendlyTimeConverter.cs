@@ -37,7 +37,7 @@ namespace WeiZhi3.Converters
                 {
                     return PrintHour(tmt);
                 }
-                return ts.Hours > 0 ? String.Format("{0} 时", ts.Hours) : "<1 时";
+                return ts.Hours > 0 ? String.Format("{0} 时前", ts.Hours) : "刚才";
             case 1:
                 return "昨天";
             case 2:

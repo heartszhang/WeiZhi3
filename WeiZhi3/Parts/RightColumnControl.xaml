@@ -163,7 +163,7 @@
             <Grid Background="White" MinHeight="200" Visibility="{Binding Mode=OneWay,Converter={StaticResource nn2v},FallbackValue=Visible}">
                 <TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Top"
                            Style="{StaticResource BasicTextStyle}" 
-                           Foreground="{StaticResource MetroColorTextLight}"/>
+                           Foreground="{StaticResource MetroColorTextLightBrush}"/>
                 <ScrollViewer m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollSmoothing="Smooth" m:MouseWheel.PhysicalScrollIncrement="24*" m:MouseWheel.PhysicalVScrollDebouncing="Single"
                               HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <ScrollViewer.Template>

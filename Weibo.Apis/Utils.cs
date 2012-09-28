@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -63,9 +64,10 @@ namespace Weibo.Apis
                 var resp = await client.GetAsync(imgurl, HttpCompletionOption.ResponseHeadersRead);
                 if (!resp.IsSuccessStatusCode)
                     return rtn;
+                Stream stream = null;
                 try
                 {
-                    var stream = await resp.Content.ReadAsStreamAsync();
+                    stream = await resp.Content.ReadAsStreamAsync();
 
                     var buffer = new byte[8];
                     var read = await stream.ReadAsync(buffer, 0, 1);
@@ -139,6 +141,8 @@ namespace Weibo.Apis
                 finally
                 {
                     client.CancelPendingRequests();
+                    if(stream != null)
+                        stream.Close();
                 }
             }
             return rtn;

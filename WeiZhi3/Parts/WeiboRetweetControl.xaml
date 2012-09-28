@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:c="clr-namespace:WeiZhi3.Converters"
              xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:ds="clr-namespace:WeiZhi3.Design"
-             xmlns:p="clr-namespace:WeiZhi3.Parts" mc:Ignorable="d" 
+             xmlns:p="clr-namespace:WeiZhi3.Parts"
+             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
              x:Name="_this"
-             d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
+             d:DesignHeight="600" d:DesignWidth="600" Background="Transparent" MouseLeftButtonDown="OnMouseLeftButtonDownImp"
              d:DataContext="{d:DesignInstance ds:MockWeiboRetweetStatus,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
+        <c:NotNullToVisibilityConverter x:Key="nn2v"/>
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:FriendlyTimeConverter x:Key="ftc"/>
         <c:IntNZeroToVisibilityConverter x:Key="in2v"/>
@@ -26,13 +28,13 @@
                     Source="{Binding retweeted_status.user.profile_image_url,Mode=OneWay,IsAsync=true,Converter={StaticResource iuc}}" />
         </StackPanel>
         <StackPanel Margin="0,0,31,0" Grid.Column="1">
-            <Grid x:Name="_headernote">
+            <Grid x:Name="_headernote" Margin="0,-3,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Style="{StaticResource NowrapTextStyle}">
-                    <Run Text="{Binding retweeted_status.user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" /><Run  Text="{Binding user.screen_name,Mode=OneWay,StringFormat='  由@\{0\} 转发'}" Foreground="{StaticResource MetroColorTextLight}"/>
+                    <Run Text="{Binding retweeted_status.user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" /><Run  Text="{Binding user.screen_name,Mode=OneWay,StringFormat='  由@\{0\} 转发'}" Foreground="{StaticResource MetroColorTextLightBrush}"/>
                 </TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" DataContext="{Binding retweeted_status,Mode=OneWay}">
                     <StackPanel.Resources>
@@ -58,20 +60,35 @@
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
                        a:ImageWeiboLocalCache.Item="{Binding Mode=OneWay}" StretchDirection="DownOnly">
-                    <!--<i:Interaction.Behaviors>
-                        <b:ImageStretchBehavior/>
-                    </i:Interaction.Behaviors>-->
                 </Image>
             </Grid>
-            <Grid x:Name="_footnote" Height="32" Background="Transparent">
+            <Grid x:Name="_edit_container" Visibility="{Binding editor,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource nn2v}}">
+                <ContentPresenter Content="{Binding editor,Mode=OneWay}">
+                    <ContentPresenter.Resources>
+                        <DataTemplate DataType="{x:Type v:WeiboEditor}">
+                            <p:EmbedEditControl/>
+                        </DataTemplate>
+
+                    </ContentPresenter.Resources>
+                </ContentPresenter>
+            </Grid>
+            <Grid x:Name="_footnote" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="_memoto" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10pt"  Margin="0,0,16,0"
+                               Visibility="{Binding comments_count,Mode=OneWay,Converter={StaticResource in2v},FallbackValue=Collapsed}">
+                        <Hyperlink Command="{Binding show_comments,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"><Run Text="{Binding comments_count,Mode=OneWay,StringFormat='显示评论(\{0\})&#x2a20;'}"/></Hyperlink>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10pt"
+                               Visibility="{Binding retweeted_status.comments_count,Mode=OneWay,Converter={StaticResource in2v},FallbackValue=Collapsed}">
+                        <Hyperlink Command="{Binding show_retweeted_comments,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"><Run Text="{Binding retweeted_status.comments_count,Mode=OneWay,StringFormat='原评论(\{0\})&#x2a20;'}"/></Hyperlink>
+                    </TextBlock>
                     <TextBlock Text="{Binding description,Mode=OneWay}" Style="{StaticResource NowrapTextStyle}" Foreground="#FF999999" VerticalAlignment="Center"/>
                 </StackPanel>
-                <StackPanel x:Name="_tool" Orientation="Horizontal" Grid.Column="1">
+                <!--<StackPanel x:Name="_tool" Orientation="Horizontal" Grid.Column="1">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -82,15 +99,23 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <!--<Button Content="&#xE0D1;&#xE134;" Style="{StaticResource WeiboButtonTextStyle}" TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI">
-                    </Button>-->
                     <Button Style="{StaticResource WeiboButtonTextStyle}" Content="&#xE200; 评论"
                             TextBlock.FontSize="14.667" TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI">
                     </Button>
 
                     <Button Style="{StaticResource WeiboButtonTextStyle}" Content="&#xE14A; 转发" TextBlock.FontSize="14.667" TextBlock.FontFamily="Segoe UI Symbol,Segoe UI, Microsoft YaHei UI">
                     </Button>
-                </StackPanel>
+                </StackPanel>-->
+            </Grid>
+            <Grid x:Name="_comments_container" Visibility="{Binding comments,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource nn2v}}">
+                <ContentPresenter Content="{Binding comments,Mode=OneWay}">
+                    <ContentPresenter.Resources>
+                        <DataTemplate DataType="{x:Type v:CommentsViewModel}">
+                            <p:EmbedCommentsControl/>
+                        </DataTemplate>
+
+                    </ContentPresenter.Resources>
+                </ContentPresenter>
             </Grid>
         </StackPanel>
     </Grid>

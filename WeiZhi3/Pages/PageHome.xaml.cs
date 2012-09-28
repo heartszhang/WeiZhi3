@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using Artefact.Animation;
 using WeiZhi3.ViewModel;
 using Weibo.ViewModels;
+using System.Runtime.Caching;
 
 namespace WeiZhi3.Pages
 {
@@ -100,10 +101,17 @@ namespace WeiZhi3.Pages
 
             var locator = (ViewModelLocator) FindResource("Locator");
             _user_id = uid = locator.Profile.Id(uid);
-            var at = locator.Profile.Token(uid);
+
+	        var at = locator.Profile.Token(uid);
+	        CacheToken(at);
             var vm = new PageHomeViewModel(uid,at);
             DataContext = vm;
             vm.Initialize(at);
+        }
+        void CacheToken(string token)
+        {
+            var mem = MemoryCache.Default;
+            mem.Set("current_token",token,DateTimeOffset.Now.AddDays(1.0));
         }
 	    private void ToolsetPopup(object sender, System.Windows.Input.MouseEventArgs e)
 		{

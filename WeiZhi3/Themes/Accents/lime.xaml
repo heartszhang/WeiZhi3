@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Color x:Key="MetroColorFeature">#FF8ebc00</Color>
     <Color x:Key="MetroColorFeatureFade">#FFa0b955</Color>
     <Color x:Key="MetroColorFeatureContrast">#FFFFFFFF</Color>
-    <Color x:Key="MetroColorText">#FF464646</Color>
-    <Color x:Key="MetroColorTextLight">#FF999999</Color>
+
 </ResourceDictionary>

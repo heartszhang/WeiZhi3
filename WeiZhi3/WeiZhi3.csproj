@@ -81,6 +81,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
+    <Compile Include="Attached\ListBoxHelper.cs" />
     <Compile Include="Behaviours\ImageStretchBehavior.cs" />
     <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />
@@ -96,6 +97,10 @@
     <Compile Include="Design\DesignPageHomeViewModel.cs" />
     <Compile Include="Design\DesignUserExt.cs" />
     <Compile Include="Attached\TextRender.cs" />
+    <Compile Include="Design\MockCommentsViewModel.cs" />
+    <Compile Include="Design\MockWeiboComment.cs" />
+    <Compile Include="Design\MockWeiboRetweetStatus.cs" />
+    <Compile Include="Design\MockWeiboStatus.cs" />
     <Compile Include="Pages\PageBootstrap.xaml.cs">
       <DependentUpon>PageBootstrap.xaml</DependentUpon>
     </Compile>
@@ -104,6 +109,12 @@
     </Compile>
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\EmbedCommentsControl.xaml.cs">
+      <DependentUpon>EmbedCommentsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\EmbedEditControl.xaml.cs">
+      <DependentUpon>EmbedEditControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\FlowDocumentEmbedViewer.xaml.cs">
       <DependentUpon>FlowDocumentEmbedViewer.xaml</DependentUpon>
@@ -166,6 +177,14 @@
     <Page Include="Pages\PageAuthorizing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\EmbedCommentsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\EmbedEditControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Parts\FlowDocumentEmbedViewer.xaml">
       <Generator>MSBuild:Compile</Generator>

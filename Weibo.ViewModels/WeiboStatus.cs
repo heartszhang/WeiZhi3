@@ -6,7 +6,9 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Threading;
 using Newtonsoft.Json.Linq;
 using Weibo.Apis.SinaV2;
@@ -16,6 +18,11 @@ using Weibo.ViewModels.StatusRender;
 
 namespace Weibo.ViewModels
 {
+    public interface IWeiboAccessToken
+    {
+        string get();
+        long id();
+    }
     public enum WeiboTopicSource
     {
         Reserved=0,
@@ -26,9 +33,15 @@ namespace Weibo.ViewModels
         UrlContent,
         Retweeted,
     }
+    public class WeiboEditor:ObservableObjectExt
+    {
+        
+    }
     public class WeiboStatus : ObservableObjectExt
     {
         private string _document;
+        private WeiboEditor _editor;
+        private CommentsViewModel _comments;
         public DateTime created_at { get; set; }
         public string text { get; set; }
         public long id { get; set; }
@@ -80,8 +93,52 @@ namespace Weibo.ViewModels
 
         public int reposts_comments_count { get; set; }
         public string document { get { return _document; } set { Set(ref _document, value); } }
+
+        public WeiboEditor editor { get { return _editor; } set { Set(ref _editor, value); } }
+        public CommentsViewModel comments { get { return _comments; } set { Set(ref _comments, value); } }
+        public ICommand show_editor { get; set; }
+        public ICommand show_comments { get; set; }
+        public ICommand show_retweeted_comments { get; set; }
+
         #endregion
 
+        #region constructor
+        public WeiboStatus()
+        {
+            show_editor = new RelayCommand(execute_show_editor);
+            show_comments = new RelayCommand<IWeiboAccessToken>(execute_show_comments);
+            show_retweeted_comments = new RelayCommand<IWeiboAccessToken>(execute_show_retweeted_comments);
+        }
+        void execute_show_retweeted_comments(IWeiboAccessToken o)
+        {
+            Debug.Assert(o != null && retweeted_status != null);
+            if(comments == null || comments.id != retweeted_status.id)
+            {
+                comments = new CommentsViewModel(retweeted_status.id);
+                comments.initialize(o.get());
+            }else
+            {
+                comments = null;
+            }
+        }
+        private void execute_show_comments(IWeiboAccessToken o)
+        {
+            Debug.Assert(o != null);
+            comments = comments == null ? new CommentsViewModel(id) : null;
+            if (comments == null || (retweeted_status != null ? retweeted_status.id : 0) != comments.id )
+            {
+                comments = new CommentsViewModel(id);
+                comments.initialize(o.get());
+            }
+            else
+                comments = null;
+        }
+        private void execute_show_editor()
+        {
+            editor = _editor == null ? new WeiboEditor() : null;
+        }
+
+        #endregion
         public List<Token> tokens { get; set; }
 
         public void assign_sina_data(StatusWithoutRt data)
@@ -240,7 +297,6 @@ namespace Weibo.ViewModels
             if (ui.type == UrlType.Blog || ui.type == UrlType.Normal || ui.type == UrlType.News || ui.type == UrlType.Media)
             {
                 document = ui.url_short;
-                Debug.WriteLine("set-doc {1} : {0}",ui.url_short,ui.type);
             }
             var tpc = ui.topic();
             if(!string.IsNullOrEmpty(tpc) && !tpc.Contains("..."))//标题可能被urlshort截断
@@ -254,23 +310,7 @@ namespace Weibo.ViewModels
         {
             var mem = MemoryCache.Default;
             var ui = (UrlInfo) mem.Get(url);
-/*            if (ui == null)
-            {
-                Task.Run(async () =>
-                {
-                    var resp = await WeiboClient.short_url_info(new[] {url}, 0);
-                    if (resp.Failed())
-                    {
-                        Debug.WriteLine(resp.Reason);
-                        return;
-                    }
-                    if (resp.Value.urls == null || resp.Value.urls.Length == 0)
-                        return;
-                    initialize_url_info(resp.Value.urls[0]);
-                    mem.Set(url,url_info, DateTimeOffset.Now.AddHours(1.0));
 
-                });
-            }*/
             if(ui != null){
                 initialize_url_info(ui);
             }

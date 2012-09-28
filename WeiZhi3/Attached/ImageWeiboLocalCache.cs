@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -142,6 +143,8 @@ namespace WeiZhi3.Attached
         }
         private static async void OnItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(d))
+                return;
             var i = (WeiboStatus) e.NewValue;
             var img = (Image)d;
             if (img == null || i == null || !i.has_pic)

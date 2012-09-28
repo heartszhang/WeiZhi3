@@ -6,7 +6,8 @@
              xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
              xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
              xmlns:p="clr-namespace:WeiZhi3.Parts" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:b="clr-namespace:WeiZhi3.Behaviours" mc:Ignorable="d" Background="White"
+             xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:a="clr-namespace:WeiZhi3.Attached"
+             mc:Ignorable="d" Background="White"
              x:Name="_this"
              d:DesignHeight="257" d:DesignWidth="560">
     <UserControl.Resources>
@@ -45,13 +46,15 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                         </Border>
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="MouseEnter" Handler="OnMouseEnterItemContainer"/>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <p:ListBoxExt FocusVisualStyle="{x:Null}" 
+        <p:ListBoxExt FocusVisualStyle="{x:Null}" x:Name="_items"
                  SelectionChanged="OnSelectionChanged" IsSynchronizedWithCurrentItem="True"
                  m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollMode="Auto" m:MouseWheel.VScrollSmoothing="Smooth"
                  m:MouseWheel.Smoothing="Smooth" m:MouseWheel.PhysicalVScrollIncrement="24*" m:MouseWheel.NestedVScroll="True"

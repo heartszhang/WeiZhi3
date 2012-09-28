@@ -51,7 +51,6 @@ namespace Weibo.ViewModels
                 ws.assign_sina(s);
                 UiInvoke(() => statuses.Add(ws));
             }
-//            UiInvoke(()=>    CollectionViewSource.GetDefaultView(statuses).MoveCurrentTo(statuses[0]));
         }
         static void UiInvoke( Action act)
         {
@@ -107,13 +106,9 @@ namespace Weibo.ViewModels
             foreach (var url in rlt.Value.urls)
             {
                 mem.Set(url.url_short, url, DateTimeOffset.Now.AddHours(2.0));
-                Debug.WriteLine("url-cache {3} - {0} : {1} - {2}", url.type, url.topic(), url.url_long, url.url_short);
+                Debug.WriteLine("url-cache {3} - {0} : {1} - {2}, {4}", url.type, url.topic(), url.url_long, url.url_short
+                    ,url.description);
             }
         }
-        static readonly Regex ArticleTitleDashRegex1 = new Regex(" [\\|\\-_] ", RegexOptions.Compiled);
-        static readonly Regex ArticleTitleDashRegex2 = new Regex("(.*?)[\\|\\-_].*", RegexOptions.Compiled);
-        static readonly Regex ArticleTitleDashRegex3 = new Regex("[^\\|\\-_]*[\\|\\-_](.*)", RegexOptions.Compiled);
-        static readonly Regex ArticleTitleColonRegex1 = new Regex(".*[:£º](.*)", RegexOptions.Compiled);
-        static readonly Regex ArticleTitleColonRegex2 = new Regex("[^:]*[:](.*)", RegexOptions.Compiled);    
     }
 }

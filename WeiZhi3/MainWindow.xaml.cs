@@ -94,7 +94,7 @@ namespace WeiZhi3
                 }
             }
             else
-            {
+            {                
                 var l = (ViewModelLocator) FindResource("Locator");
                 l.Profile.Add(r.AccessToken, r.ExpiresIn, r.Id);
                 l.Profile.Save();

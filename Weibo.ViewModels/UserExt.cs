@@ -86,7 +86,7 @@ status             */
             geo_enabled = data.geo_enabled;
             allow_all_act_msg = data.allow_all_act_msg;
             following = data.following;
-            created_at = WeiboStatus.time(data.created_at.ToString());//data.created_at;
+            created_at = WeiboStatus.time(data.created_at);//data.created_at;
             url = data.url;
             profile_image_url = data.profile_image_url;
             domain = data.domain;

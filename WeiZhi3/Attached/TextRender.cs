@@ -82,7 +82,6 @@ namespace WeiZhi3.Attached
 
         private static void InsertTokens(TextBlock textblock, WeiboStatus status, TextRenderContext ctx)
         {
-            //DesignerProperties.IsInDesignMode
             if (textblock == null)
                 return;
             if ((bool)textblock.GetValue(DesignerProperties.IsInDesignModeProperty))
@@ -258,6 +257,8 @@ namespace WeiZhi3.Attached
         }
         private static void OnWeiboPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(d))
+                return;
             var textblock = (TextBlock)d;
             var status = (WeiboStatus)e.NewValue;
             var ctx = new TextRenderContext();

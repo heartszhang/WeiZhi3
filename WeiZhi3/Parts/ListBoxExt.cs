@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace WeiZhi3.Parts
@@ -6,6 +7,14 @@ namespace WeiZhi3.Parts
     /*如果当前微博滚动了好几屏，为了保证图片收回的时候，还能够看见当前这个微博，需要把这条微博重新显示出来*/
     internal class ListBoxExt :ListBox
     {
+
+        public object HoveredItem
+        {
+            get { return (object)GetValue(HoveredItemProperty); }
+            set { SetValue(HoveredItemProperty, value); }
+        }
+        public static DependencyProperty HoveredItemProperty = DependencyProperty.Register("HoveredItem", typeof(object), typeof(ListBoxExt), null);
+        
         private ScrollViewer _scroll;
         public override void OnApplyTemplate()
         {
@@ -31,7 +40,8 @@ namespace WeiZhi3.Parts
                 return;
             if (e.ExtentHeightChange > 0)//长度变大，也不处理
                 return;
-            Dispatcher.BeginInvoke((Action)(() => ScrollIntoView(SelectedItem)));
+            if(HoveredItem != null)
+                Dispatcher.BeginInvoke((Action)(() => ScrollIntoView(HoveredItem)));
         }
     }
 }

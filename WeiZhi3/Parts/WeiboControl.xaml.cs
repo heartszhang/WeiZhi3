@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Weibo.ViewModels;
 
 namespace WeiZhi3.Parts
 {
@@ -24,5 +25,12 @@ namespace WeiZhi3.Parts
         {
             InitializeComponent();
         }
+
+        private void OnMouseLeftButtonDownImp(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (WeiboStatus) DataContext;
+            vm.show_editor.Execute(null);
+        }
+
     }
 }
