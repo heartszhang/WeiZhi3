@@ -54,7 +54,7 @@
             <Grid Background="Transparent" MouseLeftButtonDown="OnMouseLeftButtonDownImp">
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
-            <Grid x:Name="_doc_container" Visibility="{Binding has_url,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+            <Grid x:Name="_doc_container" Visibility="{Binding retweeted_status.url.has_document,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <!--<p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>-->
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">

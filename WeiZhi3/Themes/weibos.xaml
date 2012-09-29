@@ -50,10 +50,10 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource MetroColorFeatureFadeBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource MetroColorFeatureFadeBrush}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource MetroColorFeatureBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource MetroColorFeatureBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
@@ -139,7 +139,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#FF8ebc00" />
+                            <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Trigger.EnterActions>

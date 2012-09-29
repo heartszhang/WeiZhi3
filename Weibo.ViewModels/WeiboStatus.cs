@@ -37,9 +37,42 @@ namespace Weibo.ViewModels
     {
         
     }
+    public class WeiboUrl : ObservableObjectExt
+    {
+        private UrlInfo _data = new UrlInfo();
+        private string _music;
+        public void assing(UrlInfo ui)
+        {
+            _data = ui;
+        }
+        bool has_annotations { get { return _data != null && _data.annotations != null && _data.annotations.Length > 0; } }
+        public string topic 
+        {
+            get { return _data.topic(); } 
+        }//from urlinfo or it's annotations
+
+        public string short_path { get { return _data.url_short.Remove(0, 12); } }//not include http://t.cn/.Length == 12
+
+        public bool has_document { get { return _data.type == UrlType.Normal || _data.type == UrlType.News || _data.type == UrlType.Blog; } }
+        public bool has_music { get { return _data.type == UrlType.Music; } }
+        public bool has_video { get { return _data.type == UrlType.Video; } }
+        public UrlType type { get { return _data.type; } }
+
+        public string pic { get { return has_annotations ? _data.annotations[0].pic : null; } }
+        public string author { get { return has_annotations ? _data.annotations[0].author : null; } }
+        public string url_long { get { return _data.url_long; } }
+        public string video{ get { return has_annotations && has_video ? _data.annotations[0].url : null; } }//video url
+        public string music { get { return _music; } set { Set(ref _music, value); } }//需要初始化过程中获取
+        public string document { get { return has_document ? _data.url_short : null; } }//通过这个才能转化成flowdocument
+        public string album { get { return has_annotations ? _data.annotations[0].album : null; } }
+        public string mp4 { get { return has_annotations ? _data.annotations[0].mp4 : null; } }//used for sina video
+    }
     public class WeiboStatus : ObservableObjectExt
     {
-        private string _document;
+        //private bool _has_music;
+        //private bool _has_document;
+        //private string _mp4;
+        //private string _document;
         private WeiboEditor _editor;
         private CommentsViewModel _comments;
         public DateTime created_at { get; set; }
@@ -70,8 +103,6 @@ namespace Weibo.ViewModels
         public int thumb_pic_width { get; set; }
         public int thumb_pic_height { get; set; }
 
-        public UrlInfo url_info { get; set; }
-
         public UserExt user { get; set; }
         public WeiboStatus retweeted_status { get; set; }
 
@@ -87,13 +118,9 @@ namespace Weibo.ViewModels
         public string description { get; set; }
 
         public bool has_rt { get { return retweeted_status != null; } }
-        public bool has_url { get; set; }
-//        public string url { get; set; }
-        //public bool has_document { get; set; }
 
         public int reposts_comments_count { get; set; }
-        public string document { get { return _document; } set { Set(ref _document, value); } }
-
+        public WeiboUrl url { get; set; }
         public WeiboEditor editor { get { return _editor; } set { Set(ref _editor, value); } }
         public CommentsViewModel comments { get { return _comments; } set { Set(ref _comments, value); } }
         public ICommand show_editor { get; set; }
@@ -105,6 +132,7 @@ namespace Weibo.ViewModels
         #region constructor
         public WeiboStatus()
         {
+            url = new WeiboUrl();
             show_editor = new RelayCommand(execute_show_editor);
             show_comments = new RelayCommand<IWeiboAccessToken>(execute_show_comments);
             show_retweeted_comments = new RelayCommand<IWeiboAccessToken>(execute_show_retweeted_comments);
@@ -192,9 +220,6 @@ namespace Weibo.ViewModels
                 retweeted_status.post_initialize(false,para);
             }
             post_initialize(true, para);
-
-            //if (!string.IsNullOrEmpty(para.url) )
-                //fetch_url_info(para.url);
         }
         internal static DateTime time(string tm)
         {
@@ -291,28 +316,26 @@ namespace Weibo.ViewModels
             }
         }
 
-        void initialize_url_info(UrlInfo ui)
+        async void fetch_url_info(string uri)
         {
-            url_info = ui;
-            if (ui.type == UrlType.Blog || ui.type == UrlType.Normal || ui.type == UrlType.News || ui.type == UrlType.Media)
-            {
-                document = ui.url_short;
-            }
-            var tpc = ui.topic();
-            if(!string.IsNullOrEmpty(tpc) && !tpc.Contains("..."))//标题可能被urlshort截断
+            var mem = MemoryCache.Default;
+            var ui = (UrlInfo) mem.Get(uri);
+            if (ui == null)
+                return;
+            url.assing(ui);
+            var tpc = url.topic;
+            if (!string.IsNullOrEmpty(tpc) && !tpc.Contains("..."))//标题可能被urlshort截断
             {
                 topic = tpc;
                 topic_source = WeiboTopicSource.UrlContent;
             }
-            has_url = true;
-        }
-        void fetch_url_info(string url)
-        {
-            var mem = MemoryCache.Default;
-            var ui = (UrlInfo) mem.Get(url);
-
-            if(ui != null){
-                initialize_url_info(ui);
+            if (url.has_music)
+            {
+                var resp = await WeiboClient.widget_html5_show(ui.relative_short(), 0);
+                if(!resp.Failed())
+                {
+                    url.music =  resp.Value.mp4();
+                }
             }
         }
         protected  class InitializeParam

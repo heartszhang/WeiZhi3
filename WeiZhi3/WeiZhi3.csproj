@@ -81,8 +81,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
-    <Compile Include="Attached\ListBoxHelper.cs" />
-    <Compile Include="Behaviours\ImageStretchBehavior.cs" />
     <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
@@ -230,46 +228,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Accents\blue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\darkpurple.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\green.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\lime.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\orange.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\purple.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\red.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\silver.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\skyblue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Accents\teal.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -282,7 +240,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Light\scrollbar.xaml">
+    <Page Include="Themes\scrollbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -336,7 +294,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
+    <Folder Include="Themes\Accents\" />
     <Folder Include="Themes\Dark\" />
+    <Folder Include="Themes\Light\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Weibo.Apis\Weibo.Apis.csproj">
@@ -354,9 +314,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo3.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Themes\Accents\colors.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

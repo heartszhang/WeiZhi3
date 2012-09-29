@@ -95,19 +95,18 @@ namespace WeiZhi3.Attached
             string url;
             if(mode == 2)//thumbnail mode
             {
-                //img.SetValue(ImageModeProperty, 3);
                 mode = 3;
                 url = await HttpDownloadToLocalFile.DownloadAsync(middlepic, "bmiddle", ".jpg");
             }
             else //middle pic mode
             {
-                //img.SetValue(ImageModeProperty, 2);
                 mode = 2;
                 url = await HttpDownloadToLocalFile.DownloadAsync(thumbnailpic, "thumbnail", ".jpg");
             }
             if (string.IsNullOrEmpty(url))
                 return;
             SetImageSource(img, url, mode);
+            e.Handled = true;
         }
 
         static void UiInvoke(DispatcherObject img, Action act)
@@ -130,13 +129,11 @@ namespace WeiZhi3.Attached
                     DispatcherPriority.SystemIdle,
                     (Action) (() =>
                     {
-                        if (img.Source == null || !img.Source.Equals(bs))
-                        {
-                            img.Source = bs;
-                            img.SetValue(ImageModeProperty,mode);
-                        }
+                        if (img.Source != null && img.Source.Equals(bs)) return;
+                        img.Source = bs;
+                        img.SetValue(ImageModeProperty,mode);
                     }));
-            }catch(System.NotSupportedException e)
+            }catch(System.NotSupportedException e)//文件可能被锁住，导致出现这个异常
             {
                 Debug.WriteLine(e.Message);
             }
@@ -165,14 +162,12 @@ namespace WeiZhi3.Attached
             
 
             string url;
-            if(sz.Height > sz.Width)
+            if(sz.Height >= sz.Width)//方形的图片最好也显示小图，音乐图片都是方形的
             {//portrait
-                //UiInvoke(img, ()=>img.SetValue(ImageModeProperty, 2));
                 mode = 2;
                 url = await HttpDownloadToLocalFile.DownloadAsync(i.thumbnail_pic, "thumbnail", ".jpg");
             }else
             {
-                //UiInvoke(img, () => img.SetValue(ImageModeProperty, 3));
                 mode = 3;
                 url = await HttpDownloadToLocalFile.DownloadAsync(i.bmiddle_pic, "bmiddle", ".jpg");
             }

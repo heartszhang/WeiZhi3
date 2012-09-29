@@ -41,14 +41,13 @@ namespace Weibo.Apis.SinaV2
         //for music address
         //http://api.weibo.com/widget/show.jsonp?short_url=zOxJ9Y3&template_name=html5&source=3818214747
         //&template_name=embed, 使用html5的返回格式，可以使用media-element播放
-        public static async Task<string> widget_html5_show(string shorturl, long consumerkey)
+        public static async Task<RestResult<WidgetShow>> widget_html5_show(string shorturl, long consumerkey)
         {
             if (consumerkey == 0)
                 consumerkey = 603152360;//微游戏:603152360
             var path = string.Format("widget/show.jsonp?short_url={0}&template_name=html5&source={1}"
                 , Uri.EscapeDataString(shorturl), consumerkey);
-            var wsh = await WeiboInternal.HttpsGet<WidgetShow>(WeiboSources.SinaV1(path));
-            return wsh.Value != null ? wsh.Value.result : null;
+            return await WeiboInternal.HttpsGet<WidgetShow>(WeiboSources.SinaV1(path));
         }
 
 

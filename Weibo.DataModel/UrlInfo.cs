@@ -22,9 +22,15 @@ namespace Weibo.DataModel
         public string description { get; set; }
         [DataMember]
         public string last_modified { get; set; }
-        //annotations
+
+        [DataMember]
+        public UrlInfoAnnotations[] annotations { get; set; }
+
         public string topic()
         {
+            if (annotations != null &&annotations.Length > 0
+                && !string.IsNullOrEmpty(annotations[0].title) && string.IsNullOrEmpty(title))
+                title = annotations[0].title;
             var rtn = title;
             if (string.IsNullOrEmpty(title))
                 return rtn;
@@ -42,6 +48,10 @@ namespace Weibo.DataModel
             if (rtn.Length < 5)
                 rtn = title;
             return rtn;
+        }
+        public string relative_short()
+        {
+            return url_short.Remove(0, "http://t.cn/".Length);
         }
     }
 }
