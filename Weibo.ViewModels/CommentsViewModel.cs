@@ -42,16 +42,15 @@ namespace Weibo.ViewModels
             var rsn = string.Format("{0} comments {1}", resp.Value.total_number, resp.Reason);
             if(resp.Failed())
             {
-                //UiBeginInvoke();
-                UiInvoke(()=>reason = rsn);
+                UiBeginInvoke(()=>reason = rsn);
                 FireNotificationMessage(rsn);
                 return;
             }
             ++_page;
-            UiInvoke(()=>reason = rsn);
+            UiBeginInvoke(()=>reason = rsn);
             FireNotificationMessage(rsn);
             assign_comments(resp.Value);
-            UiInvoke(() => ((RelayCommand<IWeiboAccessToken>)show_more).RaiseCanExecuteChanged());
+            UiBeginInvoke(() => ((RelayCommand<IWeiboAccessToken>)show_more).RaiseCanExecuteChanged());
         }
         void execute_show_more(IWeiboAccessToken at)
         {
@@ -62,10 +61,10 @@ namespace Weibo.ViewModels
         {
             DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.SystemIdle, act);
         }
-        void UiInvoke(System.Action act)
+        /*void UiInvoke(System.Action act)
         {
             DispatcherHelper.UIDispatcher.Invoke(DispatcherPriority.SystemIdle, act);
-        }
+        }*/
         void assign_comments(Comments cmts)
         {
             _total_number = cmts.total_number;
@@ -83,7 +82,7 @@ namespace Weibo.ViewModels
                     continue;
                 var c = new WeiboComment();
                 c.assign_sina(cmt);
-                UiInvoke(()=> comments.Add(c));
+                UiBeginInvoke(()=> comments.Add(c));
             }
         }
     }

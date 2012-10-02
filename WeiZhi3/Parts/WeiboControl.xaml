@@ -62,6 +62,7 @@
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
                        a:ImageWeiboLocalCache.Item="{Binding Mode=OneWay}" StretchDirection="DownOnly">
                 </Image>
+                <Button Style="{StaticResource MediaPlayButtonStyle}" Visibility="{Binding url.has_media,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}" Command="MediaCommands.Play" CommandParameter="{Binding url.data,Mode=OneWay}"/>
             </Grid>
             <Grid x:Name="_edit_container" Visibility="{Binding editor,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource nn2v}}">
                 <ContentPresenter Content="{Binding editor,Mode=OneWay}">

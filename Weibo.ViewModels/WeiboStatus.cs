@@ -41,7 +41,7 @@ namespace Weibo.ViewModels
     {
         private UrlInfo _data = new UrlInfo();
         private string _music;
-        public void assing(UrlInfo ui)
+        public void assign(UrlInfo ui)
         {
             _data = ui;
         }
@@ -56,6 +56,15 @@ namespace Weibo.ViewModels
         public bool has_document { get { return _data.type == UrlType.Normal || _data.type == UrlType.News || _data.type == UrlType.Blog; } }
         public bool has_music { get { return _data.type == UrlType.Music; } }
         public bool has_video { get { return _data.type == UrlType.Video; } }
+        public bool has_media
+        {
+            get
+            {
+                return has_music || has_video;
+            }
+        }
+
+        public UrlInfo data { get { return _data; } }//used for media play
         public UrlType type { get { return _data.type; } }
 
         public string pic { get { return has_annotations ? _data.annotations[0].pic : null; } }
@@ -316,20 +325,26 @@ namespace Weibo.ViewModels
             }
         }
 
-        async void fetch_url_info(string uri)
+        void fetch_url_info(string uri)
         {
             var mem = MemoryCache.Default;
             var ui = (UrlInfo) mem.Get(uri);
             if (ui == null)
                 return;
-            url.assing(ui);
+            url.assign(ui);
             var tpc = url.topic;
             if (!string.IsNullOrEmpty(tpc) && !tpc.Contains("..."))//标题可能被urlshort截断
             {
                 topic = tpc;
                 topic_source = WeiboTopicSource.UrlContent;
             }
-            if (url.has_music)
+            if(string.IsNullOrEmpty(bmiddle_pic) && !string.IsNullOrEmpty(url.pic))
+            {
+                bmiddle_pic = url.pic;
+                thumbnail_pic = url.pic;
+                has_pic = true;
+            }
+/*            if (url.has_music)//获取了也没用，这个url会过期
             {
                 var resp = await WeiboClient.widget_html5_show(ui.relative_short(), 0);
                 if(!resp.Failed())
@@ -337,6 +352,7 @@ namespace Weibo.ViewModels
                     url.music =  resp.Value.mp4();
                 }
             }
+ * */
         }
         protected  class InitializeParam
         {

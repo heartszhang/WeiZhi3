@@ -119,6 +119,10 @@
       <DependentUpon>FlowDocumentEmbedViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\ListBoxExt.cs" />
+    <Compile Include="Parts\MiniMusicPlayerControl.xaml.cs">
+      <DependentUpon>MiniMusicPlayerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\Song.cs" />
     <Compile Include="Parts\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
@@ -189,6 +193,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Parts\FlowDocumentEmbedViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\MiniMusicPlayerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

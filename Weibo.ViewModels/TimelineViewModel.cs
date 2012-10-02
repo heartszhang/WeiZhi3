@@ -54,7 +54,7 @@ namespace Weibo.ViewModels
         }
         static void UiInvoke( Action act)
         {
-            DispatcherHelper.UIDispatcher.Invoke(DispatcherPriority.SystemIdle,act);
+            DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.SystemIdle,act);
         }
         public ObservableCollection<WeiboStatus> statuses { get; set; }
         protected TimelineViewModel()

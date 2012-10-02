@@ -117,9 +117,11 @@ namespace WeiZhi3.Attached
         {
             if (string.IsNullOrEmpty(url))
                 return;
+            var ur =new Uri(url, UriKind.Absolute);
+            Debug.Assert(ur.IsFile);
             var bmp = new BitmapImage();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(url, UriKind.Absolute);
+            bmp.UriSource = ur;
             bmp.EndInit();
             bmp.Freeze();
             var bs = (bmp.DpiX > 160.0) ? ConvertBitmapTo96Dpi(bmp) : bmp;
@@ -171,8 +173,8 @@ namespace WeiZhi3.Attached
                 mode = 3;
                 url = await HttpDownloadToLocalFile.DownloadAsync(i.bmiddle_pic, "bmiddle", ".jpg");
             }
-            if (string.IsNullOrEmpty(url))
-                url = i.thumbnail_pic;
+            //if (string.IsNullOrEmpty(url))
+              //  url = i.thumbnail_pic;
             SetImageSource(img, url, mode);
         }
 

@@ -57,10 +57,12 @@
             <Grid x:Name="_doc_container" Visibility="{Binding retweeted_status.url.has_document,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <!--<p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>-->
             </Grid>
-            <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+            <Grid DataContext="{Binding retweeted_status,Mode=OneWay}" Background="WhiteSmoke" Margin="0,0,0,8" d:Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
                        a:ImageWeiboLocalCache.Item="{Binding Mode=OneWay}" StretchDirection="DownOnly">
                 </Image>
+                <Button x:Name="_media_play" Style="{StaticResource MediaPlayButtonStyle}" Visibility="{Binding url.has_media,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}" CommandParameter="{Binding url.data,Mode=OneWay}" Command="MediaCommands.Play">
+                </Button>
             </Grid>
             <Grid x:Name="_edit_container" Visibility="{Binding editor,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource nn2v}}">
                 <ContentPresenter Content="{Binding editor,Mode=OneWay}">

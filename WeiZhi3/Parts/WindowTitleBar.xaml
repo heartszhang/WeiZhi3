@@ -14,6 +14,42 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="{StaticResource MetroColorTextLightBrush}"/>
         </Style>
+        <!-- window restore/maximize button template-->
+        <ControlTemplate TargetType="ToggleButton" x:Key="ButtonRestoreWindowTemplate">
+            <Border Background="{TemplateBinding Background}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="Pressed"/>
+                        <VisualState x:Name="MouseOver"/>
+                        <VisualState x:Name="Disabled"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckStates">
+                        <VisualState x:Name="Checked"/>
+                        <VisualState x:Name="Unchecked"/>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Path x:Name="_path" Stretch="Uniform" Margin="12,7" Data="{StaticResource PathMaximize}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource MetroColorFeatureFadeBrush}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{StaticResource MetroColorFeatureBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Data" TargetName="_path" Value="{StaticResource PathRestore}">
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="ToggleButton" x:Key="ButtonRestoreWindowStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template" Value="{StaticResource ButtonRestoreWindowTemplate}"/>
+        </Style>
         <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI Semilight, Segoe UI, Microsoft YaHei UI, Microsoft YaHei,Microsoft JhengHei UI,Microsoft JhengHei" />
             <Setter Property="FontSize" Value="26.667" />
