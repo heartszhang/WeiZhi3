@@ -54,6 +54,10 @@
         </Style>
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
         <p:ListBoxExt FocusVisualStyle="{x:Null}" x:Name="_items"
                  SelectionChanged="OnSelectionChanged" IsSynchronizedWithCurrentItem="True"
                  m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollMode="Auto" m:MouseWheel.VScrollSmoothing="Smooth"
@@ -120,5 +124,26 @@
                 </ControlTemplate>
             </ListBox.Template>
         </p:ListBoxExt>
+        <Grid Grid.Row="1" Background="Transparent" MouseEnter="OnMouseEnterToolset"/>
+        <Grid Grid.RowSpan="2" VerticalAlignment="Bottom" Background="White" x:Name="_toolset" MouseLeave="OnMouseLeaveToolset" ClipToBounds="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="{Binding ActualHeight,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Grid}}"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Button Content="&#xE016; 上一页" Style="{DynamicResource MetroPageFuncsButtonStyle}" 
+                         Command="wz:WeiZhiCommands.PreviousPage"/>
+            <Button Content="下一页 &#xE017;" Grid.Column="2" 
+                        Command="wz:WeiZhiCommands.NextPage"
+                        Style="{DynamicResource MetroPageFuncsButtonStyle}" />
+        </Grid>
     </Grid>
 </UserControl>

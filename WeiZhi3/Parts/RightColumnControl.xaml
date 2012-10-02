@@ -9,71 +9,6 @@
              d:DataContext="{d:DesignInstance dz:DesignPageHomeViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="600" d:DesignWidth="440">
     <UserControl.Resources>
-        <Style x:Key="MetroTileButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="OverridesDefaultStyle" Value="True"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Background" Value="{StaticResource MetroColorFeatureFadeBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" Tag="{TemplateBinding Tag}" RenderTransformOrigin="0.5,0.5" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter x:Name="content" Tag="{TemplateBinding Tag}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
-                            <Border.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Border.RenderTransform>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="MouseOver">
-                                        <Storyboard>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="content">
-                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.7"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="content">
-                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                                                <EasingDoubleKeyFrame KeyTime="0:0:0.05" Value="0.95">
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                                                <EasingDoubleKeyFrame KeyTime="0:0:0.05" Value="0.95">
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="content">
-                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="MetroPageFuncsButtonStyle" BasedOn="{StaticResource MetroTileButtonStyle}"
-               TargetType="Button">
-            <Setter Property="TextBlock.FontSize" Value="17pt"/>
-            <Setter Property="TextBlock.FontFamily" Value="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="0,6"/>
-        </Style>
         <Style TargetType="ScrollBar" x:Key="ScrollBarThinStyle">
             <Setter Property="Width" Value="8"/>
             <Setter Property="MinWidth" Value="8" />
@@ -193,6 +128,7 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom">
+            <p:EmbedVideoPlayerControl/>
             <p:MiniMusicPlayerControl/>
             <Grid Margin="0,2">
                 <Grid.ColumnDefinitions>
@@ -200,11 +136,11 @@
                     <ColumnDefinition Width="2"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Content="&#xE016; 上一页" Style="{DynamicResource MetroPageFuncsButtonStyle}" 
+                <Button Content="&#xE016; 上一页" Style="{StaticResource MetroPageFuncsButtonStyle}" 
                          Command="wz:WeiZhiCommands.PreviousPage"/>
                 <Button Content="下一页 &#xE017;" Grid.Column="2" 
                         Command="wz:WeiZhiCommands.NextPage"
-                        Style="{DynamicResource MetroPageFuncsButtonStyle}" />
+                        Style="{StaticResource MetroPageFuncsButtonStyle}" />
             </Grid>
             <p:NotificationControl NotificationText="Welcome"/>
         </StackPanel>

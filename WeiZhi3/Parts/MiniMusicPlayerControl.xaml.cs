@@ -30,22 +30,21 @@ namespace WeiZhi3.Parts
             var wnd = Window.GetWindow(this);
             if (wnd == null)
                 return;
-            //this would work ok?
-            wnd.CommandBindings.Remove(new CommandBinding(MediaCommands.Play, ExecuteMediaCommandsPlay));
-            wnd.CommandBindings.Remove(new CommandBinding(MediaCommands.TogglePlayPause,
-                                                       ExecuteMediaCommandsTogglePlayPause));
-            wnd.CommandBindings.Remove(new CommandBinding(MediaCommands.Pause, ExecuteMediaCommandsPause));
-            
+            wnd.CommandBindings.Remove(new CommandBinding(WeiZhiCommands.PlayMusic, ExecuteMediaCommandsPlay));
+            //wnd.CommandBindings.Remove(new CommandBinding(MediaCommands.TogglePlayPause,
+            //                                           ExecuteMediaCommandsTogglePlayPause));
+            //wnd.CommandBindings.Remove(new CommandBinding(MediaCommands.Pause, ExecuteMediaCommandsPause));
+
         }
         void MiniMusicPlayerControlLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= MiniMusicPlayerControlLoaded;
             var wnd = Window.GetWindow(this);
             Debug.Assert(wnd != null);
-            wnd.CommandBindings.Add(new CommandBinding(MediaCommands.Play, ExecuteMediaCommandsPlay));
-            wnd.CommandBindings.Add(new CommandBinding(MediaCommands.TogglePlayPause,
-                                                       ExecuteMediaCommandsTogglePlayPause));
-            wnd.CommandBindings.Add(new CommandBinding(MediaCommands.Pause, ExecuteMediaCommandsPause));
+            wnd.CommandBindings.Add(new CommandBinding(WeiZhiCommands.PlayMusic, ExecuteMediaCommandsPlay));
+            //wnd.CommandBindings.Add(new CommandBinding(MediaCommands.TogglePlayPause,
+            //                                           ExecuteMediaCommandsTogglePlayPause));
+            //wnd.CommandBindings.Add(new CommandBinding(MediaCommands.Pause, ExecuteMediaCommandsPause));
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -112,7 +111,7 @@ namespace WeiZhi3.Parts
             Prompt = "Fetching Music...";
             await Dispatcher.BeginInvoke(DispatcherPriority.SystemIdle, (Action)(() =>
             {
-                Prompt = "Done.";
+                Prompt = null;
                 _player.Source = new Uri(mp3);
                 _player.Play();
             }));

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Weibo.ViewModels;
+using Artefact.Animation;
 
 namespace WeiZhi3.Parts
 {
@@ -39,6 +40,16 @@ namespace WeiZhi3.Parts
             }
             var ws = item.DataContext;
             _items.HoveredItem = ws;
+        }
+
+        private void OnMouseEnterToolset(object sender, MouseEventArgs e)
+        {
+            _toolset.OffsetTo(0, 0, 0.2,AnimationTransitions.ExpoEaseOut,0);
+        }
+
+        private void OnMouseLeaveToolset(object sender, MouseEventArgs e)
+        {
+            _toolset.OffsetTo(0, _toolset.ActualHeight, 0.2, AnimationTransitions.ExpoEaseOut, 0);
         }
     }
 }

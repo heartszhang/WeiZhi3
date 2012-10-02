@@ -30,4 +30,7 @@
         <b:WindowChangeStateBehavior />
         <b:WindowSettingsBehavior />
     </i:Interaction.Behaviors>
+    <NavigationWindow.CommandBindings>
+        <CommandBinding Command="MediaCommands.Play" Executed="ExecuteMediaCommandsPlay"/>
+    </NavigationWindow.CommandBindings>
 </NavigationWindow>

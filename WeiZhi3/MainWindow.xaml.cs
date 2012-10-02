@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Runtime.Caching;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using WeiZhi3.ViewModel;
 using WeiZhi3.Views;
+using Weibo.DataModel;
+using Weibo.DataModel.Misc;
 using Weibo.ViewModels.DataModels;
 
 namespace WeiZhi3
@@ -136,7 +139,11 @@ namespace WeiZhi3
 
             return rtn;
         }
-
+        UrlInfo UrlInfo(string url)
+        {
+            var mem = MemoryCache.Default;
+            return (UrlInfo)mem.Get(url);
+        }
         private void OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
             var uri = e.Uri;
@@ -146,11 +153,41 @@ namespace WeiZhi3
             if(scheme.Contains("http"))
             {
                 e.Cancel = true;
+                var ui = UrlInfo(uri.AbsoluteUri);
+                if(ui != null)
+                {
+                    if(ui.type == UrlType.Music)
+                    {
+                        MediaCommands.Play.Execute(ui,this);
+                        return;
+                    }
+                    if(ui.type == UrlType.Video && ui.annotations != null && ui.annotations.Length > 0)
+                    {
+                        WeiZhiCommands.PlayVideo.Execute(ui.annotations[0].url,this);
+                        return;
+                    }
+                }
                 var psi = new ProcessStartInfo(uri.AbsoluteUri) {UseShellExecute = true};
                 using(Process.Start(psi))
                 {
-                  //  Debug.WriteLine(proc.ProcessName);
                 }
+            }
+        }
+
+        private void ExecuteMediaCommandsPlay(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var ui = (UrlInfo) e.Parameter;
+            Debug.Assert(ui != null);
+            if (ui.type == UrlType.Music)
+            {
+                WeiZhiCommands.PlayMusic.Execute(ui,this);
+                return;
+            }
+            if (ui.type == UrlType.Video && ui.annotations != null && ui.annotations.Length > 0)
+            {
+                WeiZhiCommands.PlayVideo.Execute(ui.annotations[0].url, this);
+                return;
             }
         }
     }

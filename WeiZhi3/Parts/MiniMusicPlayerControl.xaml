@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:w="clr-namespace:WeiZhi3"
              mc:Ignorable="d" Background="#FF808080" x:Name="_this"
              d:DesignWidth="440" Height="48">
     <UserControl.Resources>
@@ -23,6 +23,10 @@
             </Setter>
         </Style>
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="w:WeiZhiCommands.PlayMusic" Executed="ExecuteMediaCommandsPlay"/>
+        <CommandBinding Command="MediaCommands.TogglePlayPause" Executed="ExecuteMediaCommandsTogglePlayPause"/>
+    </UserControl.CommandBindings>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -37,7 +41,7 @@
                 <Style TargetType="ToggleButton">
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="Background" Value="#10000000"/>
-                    <Setter Property="Padding" Value="4"/>
+                    <Setter Property="Padding" Value="6"/>
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -94,18 +98,20 @@
         </ToggleButton>
         <Grid Grid.Column="1" Margin="12,0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock FontSize="18pt" Foreground="White" FontFamily="Microsoft Yahei UI" VerticalAlignment="Center">
-                    <Run Text="{Binding Current.Title,ElementName=_this,Mode=OneWay,FallbackValue='Title'}"/>
-                    <Run FontSize="11pt" Text="{Binding Current.Album,ElementName=_this,Mode=OneWay,FallbackValue='album'}"/>
-                    <Run FontSize="11pt" Text="{Binding Current.Author,ElementName=_this,Mode=OneWay,FallbackValue='Author'}"/>
+                <TextBlock FontSize="15pt" Foreground="White" FontFamily="Segoe UI , Segoe UI Symbol,Microsoft Yahei UI" VerticalAlignment="Center">
+                    <Run Text="{Binding Current.Title,ElementName=_this,Mode=OneWay}"/>
+                    <Run FontSize="11pt" Text="{Binding Current.Album,ElementName=_this,Mode=OneWay,FallbackValue='songs played here'}"/>
+                    <Run FontSize="11pt" Text="{Binding Current.Author,ElementName=_this,Mode=OneWay}"/>
                 </TextBlock>
-                <TextBlock VerticalAlignment="Center" Margin="24,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Prompt,ElementName=_this,Mode=OneWay,FallbackValue=nothing}" FontSize="11pt" FontFamily="Microsoft Yahei UI,segoe UI, Segoe UI Symbol" Foreground="WhiteSmoke"/>
+                <TextBlock VerticalAlignment="Bottom" Margin="24,11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Prompt,ElementName=_this,Mode=OneWay,FallbackValue=nothing}" FontSize="11pt" FontFamily="Microsoft Yahei UI,segoe UI, Segoe UI Symbol" Foreground="WhiteSmoke"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="2">
             <MediaElement x:Name="_player" LoadedBehavior="Manual" UnloadedBehavior="Close"
                           MediaEnded="OnMediaEnded" MediaOpened="OnMediaOpened" MediaFailed="OnMediaFailed"/>
-            <Grid Width="16" Background="#FF202020"/>
+            <Grid >
+                <TextBlock Text="&#x266c;" Foreground="White" FontSize="15pt" VerticalAlignment="Center"/>
+            </Grid>
         </Grid>
         <Grid Grid.ColumnSpan="3">
             <ProgressBar Height="3" VerticalAlignment="Bottom" Value="{Binding Progress,ElementName=_this,Mode=OneWay,FallbackValue=20}" />

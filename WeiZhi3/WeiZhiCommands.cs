@@ -60,5 +60,8 @@ namespace WeiZhi3
         public static readonly RoutedCommand PasteOrigin = new RoutedCommand("PasteOrigin", typeof(WeiZhiCommands));
         public static readonly RoutedCommand ClearContent = new RoutedCommand("ClearContent", typeof(WeiZhiCommands));
 
+        public static readonly RoutedCommand PlayVideo = new RoutedCommand("PlayVideo",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand PlayMusic = new RoutedCommand("PlayMusic", typeof(WeiZhiCommands));
+        public static readonly RoutedCommand Play = new RoutedCommand("Play",typeof(WeiZhiCommands));
     }
 }
