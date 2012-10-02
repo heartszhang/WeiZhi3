@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:p="clr-namespace:WeiZhi3.Parts"
              xmlns:wz="clr-namespace:WeiZhi3" xmlns:b="clr-namespace:Bot.Transitions;assembly=Bot"
              xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:dz="clr-namespace:WeiZhi3.Design"
-             xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib" mc:Ignorable="d" 
+             xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
+             xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance dz:DesignPageHomeViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="600" d:DesignWidth="440">
     <UserControl.Resources>
@@ -120,7 +121,7 @@
                         </ControlTemplate>
                     </ScrollViewer.Template>
                         <StackPanel>
-                        <Image Source="{Binding Mode=OneWay,Converter={StaticResource iuc},IsAsync=True}" StretchDirection="DownOnly" Stretch="Uniform"/>
+                        <Image a:ImageLocalCache.Url="{Binding Mode=OneWay}" StretchDirection="DownOnly" Stretch="Uniform"/>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

@@ -283,7 +283,7 @@ namespace NReadability
                     transcodingInput.Url,
                     out contentExtracted,
                     out extractedTitle,
-                    out nextPageUrl);
+                    out nextPageUrl, transcodingInput.BackupFilePath);
 
             string transcodedContent =
                 _sgmlDomSerializer.SerializeDocument(
@@ -315,7 +315,7 @@ namespace NReadability
         /// <param name="nextPageUrl">If the content contains a link to a subsequent page, it is returned here.</param>
         /// <returns>An XDocument containing extracted article content.</returns>
         internal XDocument TranscodeToXml(string htmlContent, string url, out bool mainContentExtracted,
-                                          out string extractedTitle, out string nextPageUrl)
+                                          out string extractedTitle, out string nextPageUrl,string backfilepath)
         {
             if (string.IsNullOrEmpty(htmlContent))
             {
@@ -341,6 +341,7 @@ namespace NReadability
 
             XElement articleTitleElement = ExtractArticleTitle(document);
             XElement articleContentElement = ExtractArticleContent(document, url);
+            articleContentElement.Save(backfilepath + ".c.htm");
 
             document = GlueDocument(document, articleTitleElement, articleContentElement);
 
@@ -352,7 +353,7 @@ namespace NReadability
                     _dontStripUnlikelys = true;
 
                     return TranscodeToXml(htmlContent, url, out mainContentExtracted, out extractedTitle,
-                                          out nextPageUrl);
+                                          out nextPageUrl,backfilepath);
                 }
                 finally
                 {

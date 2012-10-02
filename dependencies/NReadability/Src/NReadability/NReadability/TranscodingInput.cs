@@ -19,6 +19,7 @@ namespace NReadability
     public string HtmlContent { get; private set; }
 
     public string Url { get; set; }
+    public string BackupFilePath { get; set; }
 
     public DomSerializationParams DomSerializationParams
     {

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ds="clr-namespace:WeiZhi3.Design"
-             xmlns:c="clr-namespace:WeiZhi3.Converters" mc:Ignorable="d" 
+             xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
              Foreground="#FF666666" 
              x:Name="_this" 
              Height="150" d:DesignWidth="440" d:DataContext="{d:DesignInstance ds:DesignUserExt,IsDesignTimeCreatable=True}">
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="{Binding avatar_large,Mode=OneWay,Converter={StaticResource iuc},IsAsync=True}" Width="150" Height="150" Stretch="Uniform"/>
+        <Image a:ImageLocalCache.Url="{Binding avatar_large,Mode=OneWay}" Width="150" Height="150" Stretch="Uniform"/>
         <Grid Grid.Column="1" Margin="12,0">
             <StackPanel Grid.Column="1">
                 <Grid Margin="0,0,0,4">

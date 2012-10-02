@@ -54,8 +54,7 @@ namespace WeiZhi3
         public static readonly RoutedCommand GotoLatest = new RoutedCommand("GotoLatest",
             typeof(WeiZhiCommands));
 
-        public static readonly RoutedCommand NavigateWeibo = new RoutedCommand("NavigateWeibo",
-            typeof(WeiZhiCommands));
+        public static readonly RoutedCommand Navigate = new RoutedCommand("Navigate",typeof(WeiZhiCommands));
 
         public static readonly RoutedCommand PasteOrigin = new RoutedCommand("PasteOrigin", typeof(WeiZhiCommands));
         public static readonly RoutedCommand ClearContent = new RoutedCommand("ClearContent", typeof(WeiZhiCommands));

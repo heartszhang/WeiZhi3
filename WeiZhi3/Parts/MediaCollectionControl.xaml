@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:b="clr-namespace:Bot;assembly=Bot"
              xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
              xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:w="clr-namespace:WeiZhi3"
-             xmlns:ds="clr-namespace:WeiZhi3.Design" mc:Ignorable="d" 
+             xmlns:ds="clr-namespace:WeiZhi3.Design" xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance ds:MockMediaCollectionsViewModel,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <c:ImageUrlConverter x:Key="icu"/>
@@ -68,7 +68,7 @@
                             </Setter>
                         </Style>
                     </Button.Style>
-                    <Image Source="{Binding pic,Mode=OneWay,Converter={StaticResource icu}}" Stretch="Uniform"/>
+                    <Image a:ImageLocalCache.Url="{Binding pic,Mode=OneWay}" Stretch="Uniform"/>
                 </Button>
             </Grid>
         </DataTemplate>

@@ -53,5 +53,10 @@ namespace Weibo.DataModel
         {
             return url_short.Remove(0, "http://t.cn/".Length);
         }
+        public bool has_document() 
+        {
+            return type == UrlType.Normal || type == UrlType.News || type == UrlType.Blog; 
+        }
+
     }
 }

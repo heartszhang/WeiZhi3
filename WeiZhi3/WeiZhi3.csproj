@@ -80,6 +80,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Attached\ImageLocalCache.cs" />
+    <Compile Include="Attached\ImageLocalCacheBase.cs" />
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
     <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />

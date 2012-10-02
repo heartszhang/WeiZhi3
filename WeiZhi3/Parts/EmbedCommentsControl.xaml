@@ -4,7 +4,8 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:ds="clr-namespace:WeiZhi3.Design"
-	xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d"
+	xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" xmlns:a="clr-namespace:WeiZhi3.Attached"
+	mc:Ignorable="d"
 	x:Class="WeiZhi3.Parts.EmbedCommentsControl"
 	x:Name="_this" 
 	d:DesignWidth="632" d:DataContext="{d:DesignInstance ds:MockCommentsViewModel,IsDesignTimeCreatable=True}">
@@ -56,7 +57,7 @@
 						<ColumnDefinition Width="43"/>
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
-					<Image Width="28" HorizontalAlignment="Left" Source="{Binding user.profile_image_url,Mode=OneWay,IsAsync=True,Converter={StaticResource iuc}}" VerticalAlignment="Top"/>
+                    <Image Width="28" HorizontalAlignment="Left" a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" VerticalAlignment="Top"/>
 					<StackPanel Grid.Column="1">
                         <TextBlock x:Name="_body"  Margin="0,-3,0,0" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap">
                             <Run Foreground="{StaticResource MetroColorTextLightBrush}" Text="{Binding user.screen_name, StringFormat=\{0\}：}"/><Run Text=" "/><Run Text="{Binding text}"/><Run Foreground="{StaticResource MetroColorTextLightBrush}" FontSize="10pt" Text="{Binding created_at, StringFormat='   \{0\}&#x09;',Converter={StaticResource ftc}}"/>

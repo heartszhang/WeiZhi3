@@ -22,6 +22,7 @@ using WeiZhi3.ViewModel;
 using WeiZhi3.Views;
 using Weibo.DataModel;
 using Weibo.DataModel.Misc;
+using Weibo.ViewModels;
 using Weibo.ViewModels.DataModels;
 
 namespace WeiZhi3
@@ -144,8 +145,18 @@ namespace WeiZhi3
             var mem = MemoryCache.Default;
             return (UrlInfo)mem.Get(url);
         }
-        private void OnNavigating(object sender, NavigatingCancelEventArgs e)
+
+        private void ExecuteWeiZhiCommandsNavigateUrl(object sender, ExecutedRoutedEventArgs e)
         {
+            e.Handled = true;
+            var url = (string) e.Parameter;
+            var psi = new ProcessStartInfo(url) { UseShellExecute = true };
+            using (Process.Start(psi))
+            {
+            }
+        }
+        private void OnNavigating(object sender, NavigatingCancelEventArgs e)
+        {            
             var uri = e.Uri;
             if (uri == null || !uri.IsAbsoluteUri)
                 return;

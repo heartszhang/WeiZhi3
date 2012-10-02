@@ -68,6 +68,7 @@
     <Compile Include="ViewModelBase2.cs" />
     <Compile Include="WeiboComment.cs" />
     <Compile Include="WeiboStatus.cs" />
+    <Compile Include="WeiboUrl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Weibo.Apis\Weibo.Apis.csproj">

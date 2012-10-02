@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:c="clr-namespace:WeiZhi3.Converters"
              xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:ds="clr-namespace:WeiZhi3.Design"
              xmlns:p="clr-namespace:WeiZhi3.Parts"
-             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
+             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" xmlns:w="clr-namespace:WeiZhi3"
+             mc:Ignorable="d" 
              x:Name="_this"
              d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
              d:DataContext="{d:DesignInstance ds:MockWeiboRetweetStatus,IsDesignTimeCreatable=True}">
@@ -17,8 +18,10 @@
         <c:IntNZeroToVisibilityConverter x:Key="in2v"/>
         <c:StringToVisibiltyConverter x:Key="s2v"/>
     </UserControl.Resources>
-
-    <Grid x:Name="LayoutRoot"  >
+    <UserControl.CommandBindings>
+        <CommandBinding Command="w:WeiZhiCommands.Navigate" Executed="ExecuteWeiZhiCommandsNavigate"/>
+    </UserControl.CommandBindings>
+        <Grid x:Name="LayoutRoot"  >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
             <ColumnDefinition />
@@ -54,8 +57,8 @@
             <Grid Background="Transparent" MouseLeftButtonDown="OnMouseLeftButtonDownImp">
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
-            <Grid x:Name="_doc_container" Visibility="{Binding retweeted_status.url.has_document,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <!--<p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>-->
+            <Grid x:Name="_doc_container" Visibility="{Binding is_document_ready,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+                <p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>
             </Grid>
             <Grid DataContext="{Binding retweeted_status,Mode=OneWay}" Background="WhiteSmoke" Margin="0,0,0,8" d:Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        

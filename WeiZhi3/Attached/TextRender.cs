@@ -192,7 +192,7 @@ namespace WeiZhi3.Attached
         //}
         private static void InsertHyperLink(ICollection<Inline> textblock, Token token)
         {
-            var ut = token.text.Trim();
+            var ut = token.text;
             if (string.IsNullOrEmpty(ut))
                 return;
 
@@ -204,8 +204,8 @@ namespace WeiZhi3.Attached
             //create hyperlink 
             var h = new Hyperlink(new Run(run))
             {
-                NavigateUri = new Uri(ut,UriKind.Absolute),
-                //Command = WeiZhiCommands.NavigateUrlCommand,                
+              //  NavigateUri = new Uri(ut,UriKind.Absolute),
+                Command = WeiZhiCommands.Navigate,                
                 CommandParameter = ut,
                 ToolTip =  ut,
             };

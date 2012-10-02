@@ -7,7 +7,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:b="clr-namespace:WeiZhi3.Behaviours" 
              xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:p="clr-namespace:WeiZhi3.Parts"
-             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
+             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" xmlns:w="clr-namespace:WeiZhi3"
+             mc:Ignorable="d" 
              x:Name="_this"
              d:DesignHeight="600" d:DesignWidth="600" Background="Transparent"
              d:DataContext="{d:DesignInstance ds:MockWeiboStatus,IsDesignTimeCreatable=True}">
@@ -20,6 +21,9 @@
         <c:IntNZeroToVisibilityConverter x:Key="in2v"/>
         <c:StringToVisibiltyConverter x:Key="s2v"/>
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="w:WeiZhiCommands.Navigate" Executed="ExecuteWeiZhiCommandsNavigate"/>
+    </UserControl.CommandBindings>
 
     <Grid x:Name="LayoutRoot"  >
         <Grid.ColumnDefinitions>
@@ -28,7 +32,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel >
             <Image  Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Center" 
-                    Source="{Binding user.profile_image_url,Mode=OneWay,IsAsync=true,Converter={StaticResource iuc}}" />
+                     a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" />
         </StackPanel>
         <StackPanel Margin="0,0,31,0" Grid.Column="1">
             <Grid x:Name="_headernote" Margin="0,-3,0,0">
@@ -55,8 +59,8 @@
             <Grid Background="Transparent" MouseLeftButtonDown="OnMouseLeftButtonDownImp">
                 <TextBlock x:Name="_body" a:TextRender.Weibo="{Binding Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Margin="0,8"/>
             </Grid>
-            <Grid x:Name="_doc_container" Visibility="{Binding url.has_document,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <!--<p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>-->
+            <Grid x:Name="_doc_container" Visibility="{Binding is_document_ready,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
+                <p:FlowDocumentEmbedViewer Url="{Binding document,Mode=OneWay}"/>
             </Grid>
             <Grid Background="WhiteSmoke" Margin="0,0,0,8" Visibility="{Binding has_pic,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <Image x:Name="_img" MaxWidth="440" Stretch="Uniform"                        
