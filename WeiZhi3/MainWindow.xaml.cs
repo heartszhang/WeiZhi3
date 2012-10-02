@@ -163,7 +163,7 @@ namespace WeiZhi3
                     }
                     if(ui.type == UrlType.Video && ui.annotations != null && ui.annotations.Length > 0)
                     {
-                        WeiZhiCommands.PlayVideo.Execute(ui.annotations[0].url,this);
+                        WeiZhiCommands.PlayVideo.Execute(ui,this);
                         return;
                     }
                 }
@@ -186,7 +186,7 @@ namespace WeiZhi3
             }
             if (ui.type == UrlType.Video && ui.annotations != null && ui.annotations.Length > 0)
             {
-                WeiZhiCommands.PlayVideo.Execute(ui.annotations[0].url, this);
+                WeiZhiCommands.PlayVideo.Execute(ui, this);
                 return;
             }
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Caching;
+using GalaSoft.MvvmLight.Messaging;
 using Weibo.Apis;
 using Weibo.Apis.SinaV2;
 using Weibo.DataModel;
@@ -52,6 +53,8 @@ namespace Weibo.ViewModels
                 return;
             }
             FireNotificationMessage("{1} - {0} Status fetched", ses.Value.statuses.Length, PageNo);
+            Messenger.Default.Send(new WeiboMediaReset());
+
             await FetchUrlInfos(ses.Value.statuses);
 
             ReloadSinaV2(ses.Value);
@@ -69,6 +72,8 @@ namespace Weibo.ViewModels
                 return;
             }
             FireNotificationMessage("{1} - {0} Status fetched", ses.Value.statuses.Length, PageNo);
+            Messenger.Default.Send(new WeiboMediaReset());
+
             await FetchUrlInfos(ses.Value.statuses);
 
             ReloadSinaV2(ses.Value);

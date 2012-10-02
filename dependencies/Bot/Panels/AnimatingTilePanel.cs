@@ -83,7 +83,9 @@ namespace Bot
 
             // Calculate the width and height this results in
             double width = childrenPerRow * this.ItemWidth;
-            double height = this.ItemHeight * (Math.Floor((double)this.Children.Count / childrenPerRow) + 1);
+
+            var fudge = (width - childrenPerRow * ItemWidth) / childrenPerRow;
+            double height = (this.ItemHeight +fudge )* (Math.Floor((double)this.Children.Count / childrenPerRow) + 1);
             height = (height.IsValid()) ? height : 0;
             return new Size(width, height);
         }
@@ -178,15 +180,16 @@ namespace Bot
             int totalChildren)
         {
             double fudge = 0;
-            if (totalChildren > childrenPerRow)
-            {
-                fudge = (panelWidth - childrenPerRow * itemWidth) / childrenPerRow;
-                Debug.Assert(fudge >= 0);
-            }
+            fudge = (panelWidth - childrenPerRow * itemWidth) / childrenPerRow;
+            /*if (totalChildren > childrenPerRow)
+             {
+                 fudge = (panelWidth - childrenPerRow * itemWidth) / childrenPerRow;
+                 Debug.Assert(fudge >= 0);
+             }*/
 
             int row = index / childrenPerRow;
             int column = index % childrenPerRow;
-            return new Point(.5 * fudge + column * (itemWidth + fudge), row * itemHeight);
+            return new Point(.5 * fudge + column * (itemWidth + fudge), .5 * fudge + row * (itemHeight+fudge));
         }
 
         #endregion

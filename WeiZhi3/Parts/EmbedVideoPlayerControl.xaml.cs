@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Weibo.DataModel;
 
 namespace WeiZhi3.Parts
 {
@@ -14,6 +15,13 @@ namespace WeiZhi3.Parts
     /// </summary>
     public partial class EmbedVideoPlayerControl : UserControl
     {
+        public bool IsUnempty
+        {
+            get { return (bool)GetValue(IsUnemptyProperty); }
+            set { SetValue(IsUnemptyProperty, value); }
+        }
+        public static DependencyProperty IsUnemptyProperty = DependencyProperty.Register("IsUnempty", typeof(bool), typeof(EmbedVideoPlayerControl), null);
+        
         private const string empty_content = @"<!DOCTYPE html><html scroll='no'><body scroll='no' style='color:white' bgcolor='black' ></body></html>";
         private WebBrowser _wb;
         public static DependencyProperty UrlProperty = DependencyProperty.Register("Url", typeof (string), typeof (EmbedVideoPlayerControl), new PropertyMetadata(OnUrlChanged));
@@ -32,6 +40,7 @@ namespace WeiZhi3.Parts
                 return;
             if(result == null)
             {
+                IsUnempty = false;
                 _wb.NavigateToString(empty_content);
                 return;
             }
@@ -42,6 +51,7 @@ namespace WeiZhi3.Parts
                 LayoutRoot.Children.Clear();
                 LayoutRoot.Children.Add(_wb);
             }
+            IsUnempty = true;
             _wb.Navigate(result.AbsoluteUri);
         }
 
@@ -68,8 +78,9 @@ namespace WeiZhi3.Parts
         private void ExecuteWeiZhiCommandsPlayVideo(object sender, ExecutedRoutedEventArgs e)
         {
             e.Handled = true;
-            var url = (string) e.Parameter;
-            Url = url;
+            var ui = (UrlInfo) e.Parameter;
+            //var url = (string) e.Parameter;
+            Url = ui.annotations[0].url;
         }
 
         void EmbedVideoPlayer_Unloaded(object sender, RoutedEventArgs e)

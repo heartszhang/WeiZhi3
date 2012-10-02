@@ -54,6 +54,7 @@
     <Compile Include="DataModels\AuthroizeResult.cs" />
     <Compile Include="DataModels\DateTimeHelper.cs" />
     <Compile Include="DataModels\Profile.cs" />
+    <Compile Include="MediaCollectionViewModel.cs" />
     <Compile Include="ObservableObjectExt.cs" />
     <Compile Include="PageHomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using Newtonsoft.Json.Linq;
 using Weibo.Apis.SinaV2;
@@ -229,6 +230,8 @@ namespace Weibo.ViewModels
                 retweeted_status.post_initialize(false,para);
             }
             post_initialize(true, para);
+            if (url.has_media)
+                Messenger.Default.Send(url);
         }
         internal static DateTime time(string tm)
         {
@@ -344,15 +347,6 @@ namespace Weibo.ViewModels
                 thumbnail_pic = url.pic;
                 has_pic = true;
             }
-/*            if (url.has_music)//获取了也没用，这个url会过期
-            {
-                var resp = await WeiboClient.widget_html5_show(ui.relative_short(), 0);
-                if(!resp.Failed())
-                {
-                    url.music =  resp.Value.mp4();
-                }
-            }
- * */
         }
         protected  class InitializeParam
         {

@@ -149,10 +149,13 @@
                 <p:WeiboUserControl DataContext="{Binding user,Mode=OneWay}"/>
             </Grid>
         </StackPanel>
-        <b:TransitionPresenter DockPanel.Dock="Top" MinHeight="200" Content="{Binding Timeline.FocusedItem,Mode=OneWay}" ContentTemplate="{StaticResource FocusedItemTemplate}">
+        <Grid DockPanel.Dock="Top">
+            <p:MediaCollectionControl DataContext="{Binding Media,Mode=OneWay}"/>
+        <b:TransitionPresenter MinHeight="200" Content="{Binding Timeline.FocusedItem,Mode=OneWay}" ContentTemplate="{StaticResource FocusedItemTemplate}">
             <b:TransitionPresenter.Transition>
                 <b:TranslateTransition Duration="0:0:0.2" StartPoint="-1,0"/>
             </b:TransitionPresenter.Transition>
         </b:TransitionPresenter>
+        </Grid>
     </DockPanel>
 </UserControl>

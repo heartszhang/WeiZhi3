@@ -4,9 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" x:Name="_this"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="330" d:DesignWidth="440">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid Background="Black" Visibility="{Binding IsUnempty,ElementName=_this,Mode=OneWay,Converter={StaticResource b2v},FallbackValue=Collapsed}">
+            <Button HorizontalContentAlignment="Center" Width="{Binding ActualHeight,RelativeSource={RelativeSource Self}}" HorizontalAlignment="Right" TextElement.FontSize="13pt" TextElement.FontFamily="Segoe UI Symbol" Style="{StaticResource ButtonWindowCommandContrastStyle}" Content="&#xE07D;"/>
+        </Grid>
     <Grid x:Name="LayoutRoot">
-        <!--<WebBrowser x:Name="_wb"/>-->
-        
+       
     </Grid>
+    </StackPanel>
 </UserControl>

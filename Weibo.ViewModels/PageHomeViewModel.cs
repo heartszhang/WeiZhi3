@@ -9,6 +9,7 @@ namespace Weibo.ViewModels
         private TimelineViewModel _timeline;
         public long uid { get; set; }
 
+        public MediaCollectionViewModel Media { get; set; }
         public UserExt user
         {
             get { return _user; }
@@ -24,8 +25,7 @@ namespace Weibo.ViewModels
         public PageHomeViewModel(long id, string at)
         {
             uid = id;
-            //_token = at;
-            //Initialize(at);
+            Media = new MediaCollectionViewModel();
         }
         public async void Initialize(string at)
         {
@@ -50,6 +50,12 @@ namespace Weibo.ViewModels
         {
             if(Timeline != null)
                 Timeline.OnTick(token);
+        }
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            Media.Cleanup();
+            Timeline.Cleanup();
         }
     }
 }

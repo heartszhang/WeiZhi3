@@ -46,7 +46,7 @@
                     <VisualState x:Name="Disabled"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -54,16 +54,24 @@
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MetroColorFeatureBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
+                <Setter Property="Foreground" Value="{Binding BorderBrush,RelativeSource={RelativeSource Self}}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style x:Key="ButtonWindowCommandStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
         <Setter Property="Template" Value="{StaticResource ButtonWindowCommandTemplate}"/>
     </Style>
-    
+    <Style x:Key="ButtonWindowCommandContrastStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource MetroColorFeatureContrastBrush}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource ButtonWindowCommandTemplate}"/>
+    </Style>
+
     <ControlTemplate TargetType="Button" x:Key="WeiboCommandTemplate">
         <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" x:Name="_border">
             <Grid>
