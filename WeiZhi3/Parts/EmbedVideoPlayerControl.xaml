@@ -10,7 +10,7 @@
     </UserControl.Resources>
     <StackPanel>
         <Grid Background="Black" Visibility="{Binding IsUnempty,ElementName=_this,Mode=OneWay,Converter={StaticResource b2v},FallbackValue=Collapsed}">
-            <Button HorizontalContentAlignment="Center" Width="{Binding ActualHeight,RelativeSource={RelativeSource Self}}" HorizontalAlignment="Right" TextElement.FontSize="13pt" TextElement.FontFamily="Segoe UI Symbol" Style="{StaticResource ButtonWindowCommandContrastStyle}" Content="&#xE07D;"/>
+            <Button HorizontalContentAlignment="Center" Width="{Binding ActualHeight,RelativeSource={RelativeSource Self}}" HorizontalAlignment="Right" TextElement.FontSize="13pt" TextElement.FontFamily="Segoe UI Symbol" Style="{StaticResource ButtonWindowCommandContrastStyle}" Content="&#xE07D;" Click="ClickCloseThis"/>
         </Grid>
     <Grid x:Name="LayoutRoot">
        

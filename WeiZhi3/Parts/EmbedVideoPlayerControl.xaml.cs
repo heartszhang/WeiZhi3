@@ -62,13 +62,13 @@ namespace WeiZhi3.Parts
         public EmbedVideoPlayerControl()
         {
             InitializeComponent();
-            Loaded += EmbedVideoPlayerControl_Loaded;
-            Unloaded += EmbedVideoPlayer_Unloaded;
+            Loaded += EmbedVideoPlayerControlLoaded;
+            Unloaded += EmbedVideoPlayerUnloaded;
         }
 
-        void EmbedVideoPlayerControl_Loaded(object sender, RoutedEventArgs e)
+        void EmbedVideoPlayerControlLoaded(object sender, RoutedEventArgs e)
         {
-            Loaded -= EmbedVideoPlayerControl_Loaded;
+            Loaded -= EmbedVideoPlayerControlLoaded;
             var wnd = Window.GetWindow(this);
             if (wnd == null)
                 return;
@@ -83,9 +83,9 @@ namespace WeiZhi3.Parts
             Url = ui.annotations[0].url;
         }
 
-        void EmbedVideoPlayer_Unloaded(object sender, RoutedEventArgs e)
+        void EmbedVideoPlayerUnloaded(object sender, RoutedEventArgs e)
         {
-            Unloaded -= EmbedVideoPlayer_Unloaded;
+            Unloaded -= EmbedVideoPlayerUnloaded;
             if(_wb != null)
             {
                 _wb.Navigating -= OnNavigating;
@@ -109,6 +109,13 @@ namespace WeiZhi3.Parts
             var objComWebBrowser = fiComWebBrowser.GetValue(wb);
             if (objComWebBrowser == null) return;
             objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { hide });
+        }
+
+        private void ClickCloseThis(object sender, RoutedEventArgs e)
+        {
+            Url = string.Empty;
+            IsUnempty = false;
+            e.Handled = true;
         }
     }
 }

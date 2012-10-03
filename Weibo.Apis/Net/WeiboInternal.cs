@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
@@ -11,23 +12,19 @@ namespace Weibo.Apis.Net
     public class WeiboInternal
     {
         internal static async Task<RestResult<TResult>>
-            HttpsPost<TResult>(string path, NameValueCollection parameters) where TResult : class
+            HttpsPost<TResult>(string path, List<KeyValuePair<string,string>> parameters) where TResult : class
         {
             var rtn = new RestResult<TResult>();
             using (var client = new HttpClient())
             {
-                var form = new MultipartFormDataContent();
-                foreach (var k in parameters.AllKeys)
-                {
-                    form.Add(new StringContent(parameters[k]), k);
-                }
+                var form = new FormUrlEncodedContent(parameters);
 
                 var resp = await client.PostAsync(path, form);
                 rtn.StatusCode = resp.StatusCode;
                 rtn.Reason = resp.ReasonPhrase;
                 if (resp.IsSuccessStatusCode)
                     rtn.Value = JsonConvert.DeserializeObject<TResult>(await resp.Content.ReadAsStringAsync());
-                else if ((int) resp.StatusCode >= 400)
+                else if ((int)resp.StatusCode >= 400)
                 {
                     var er = JsonConvert.DeserializeObject<WeiboError>(await resp.Content.ReadAsStringAsync());
                     rtn.Reason = er.Translate();

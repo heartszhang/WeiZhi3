@@ -71,8 +71,8 @@
             <Grid x:Name="_edit_container" Visibility="{Binding editor,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource nn2v}}">
                 <ContentPresenter Content="{Binding editor,Mode=OneWay}">
                     <ContentPresenter.Resources>
-                        <DataTemplate DataType="{x:Type v:WeiboEditor}">
-                            <p:EmbedEditControl/>
+                        <DataTemplate DataType="{x:Type v:WeiboReply}">
+                            <p:EmbedReplyControl/>
                         </DataTemplate>
 
                     </ContentPresenter.Resources>

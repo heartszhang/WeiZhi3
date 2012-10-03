@@ -67,6 +67,7 @@
     <Compile Include="UserExt.cs" />
     <Compile Include="ViewModelBase2.cs" />
     <Compile Include="WeiboComment.cs" />
+    <Compile Include="WeiboReply.cs" />
     <Compile Include="WeiboStatus.cs" />
     <Compile Include="WeiboUrl.cs" />
   </ItemGroup>

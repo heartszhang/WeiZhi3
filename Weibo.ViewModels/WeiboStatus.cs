@@ -34,10 +34,6 @@ namespace Weibo.ViewModels
         UrlContent,
         Retweeted,
     }
-    public class WeiboEditor:ObservableObjectExt
-    {
-        
-    }
 
     public class WeiboStatus : ObservableObjectExt
     {
@@ -45,7 +41,7 @@ namespace Weibo.ViewModels
         private bool _is_document_ready;
         //private string _mp4;
         private string _document;
-        private WeiboEditor _editor;
+        private WeiboReply _editor;
         private CommentsViewModel _comments;
         public DateTime created_at { get; set; }
         public string text { get; set; }
@@ -93,7 +89,7 @@ namespace Weibo.ViewModels
 
         public int reposts_comments_count { get; set; }
         public WeiboUrl url { get; set; }
-        public WeiboEditor editor { get { return _editor; } set { Set(ref _editor, value); } }
+        public WeiboReply editor { get { return _editor; } set { Set(ref _editor, value); } }
         public CommentsViewModel comments { get { return _comments; } set { Set(ref _comments, value); } }
         public ICommand show_editor { get; set; }
         public ICommand show_comments { get; set; }
@@ -137,7 +133,7 @@ namespace Weibo.ViewModels
         }
         private void execute_show_editor()
         {
-            editor = _editor == null ? new WeiboEditor() : null;
+            editor = _editor == null ? new WeiboReply(id) : null;
         }
 
         #endregion

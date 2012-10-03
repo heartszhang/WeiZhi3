@@ -11,7 +11,7 @@
         <c:ImageUrlConverter x:Key="icu"/>
         <DataTemplate x:Key="MediaItemTemplate" DataType="v:WeiboUrl">
             <Grid Background="#a0000000">
-                <Button Command="MediaCommands.Play" CommandParameter="{Binding data, Mode=OneWay}">
+                <Button Command="MediaCommands.Play" CommandParameter="{Binding data, Mode=OneWay}" ToolTip="{Binding topic,Mode=OneWay}">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Foreground" Value="Transparent"/>

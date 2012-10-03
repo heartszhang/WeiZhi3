@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Weibo.Apis.Net;
 using Weibo.DataModel;
@@ -12,10 +13,10 @@ namespace Weibo.Apis.SinaV2
         {
             return await
                     WeiboInternal.HttpsPost<User>("friendships/destroy.json",
-                        new System.Collections.Specialized.NameValueCollection
+                        new List<KeyValuePair<string, string>>
                         {
-                            {"access_token",token},
-                            {"uid",uid.ToString(CultureInfo.InvariantCulture)},
+                            new KeyValuePair<string, string>("access_token",token),
+                            new KeyValuePair<string, string>("uid",uid.ToString(CultureInfo.InvariantCulture)),
                         });
 
         }
@@ -24,10 +25,10 @@ namespace Weibo.Apis.SinaV2
         {
             return await
                     WeiboInternal.HttpsPost<User>("friendships/create.json",
-                        new System.Collections.Specialized.NameValueCollection
+                        new List<KeyValuePair<string, string>>
                         {
-                            {"access_token",token},
-                            {"uid",uid.ToString(CultureInfo.InvariantCulture)},
+                            new KeyValuePair<string, string>("access_token",token),
+                            new KeyValuePair<string, string>("uid",uid.ToString(CultureInfo.InvariantCulture)),
                         });
 
         }

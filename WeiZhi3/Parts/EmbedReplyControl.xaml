@@ -1,0 +1,149 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:w="clr-namespace:WeiZhi3"
+    mc:Ignorable="d"
+    x:Class="WeiZhi3.Parts.EmbedReplyControl"
+    x:Name="_this" TextElement.FontFamily="Microsoft YaHei, Segoe UI, Segoe UI Symbol"
+    d:DesignWidth="600" >
+    <UserControl.Resources>
+        <ControlTemplate x:Key="TextBoxEmbedTemplate" TargetType="{x:Type TextBox}">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="0" Background="{TemplateBinding Background}">
+                <Grid >
+                    <ScrollViewer Margin="2,4,2,4" x:Name="PART_ContentHost" />
+                </Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Disabled"/>
+                        <VisualState x:Name="ReadOnly"/>
+                        <VisualState x:Name="MouseOver"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="FocusStates">
+                        <VisualState x:Name="Focused"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="ValidationStates">
+                        <VisualState x:Name="InvalidFocused"/>
+                        <VisualState x:Name="InvalidUnfocused"/>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource MetroColorFeatureFadeBrush}"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource MetroColorFeatureBrush}"/>
+                    <Setter Property="Background" Value="White"/>
+                </Trigger>
+
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style TargetType="TextBox">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <!--<Setter Property="Background" Value="WhiteSmoke"/>-->
+            <Setter Property="FontSize" Value="11pt"/>
+            <Setter Property="FontFamily" Value="{StaticResource UniversalFonts}"/>
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="剪切(_u)" Command="ApplicationCommands.Cut"/>
+                        <MenuItem Header="复制(_c)" Command="ApplicationCommands.Copy"/>
+                        <MenuItem Header="粘贴(_p)" Command="ApplicationCommands.Paste"/>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <AdornedElementPlaceholder />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="CheckBoxTemplate" TargetType="{x:Type CheckBox}">
+            <BulletDecorator>
+                <BulletDecorator.Bullet>
+                    <Grid>
+                        <TextBlock Text="&#xE0A2;" FontFamily="Segoe UI Symbol" Visibility="Collapsed"/>
+                        <TextBlock Text="&#xE003;" FontFamily="Segoe UI Symbol" Visibility="Visible"/>
+                        <TextBlock Text="&#xE005;" FontFamily="Segoe UI Symbol" x:Name="_checked_mark" Visibility="Collapsed"/>
+                    </Grid>
+                </BulletDecorator.Bullet>
+                <ContentPresenter Margin="6,0"/>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="MouseOver"/>
+                        <VisualState x:Name="Pressed"/>
+                        <VisualState x:Name="Disabled"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="FocusStates">
+                        <VisualState x:Name="Focused"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckStates">
+                        <VisualState x:Name="Unchecked"/>
+                        <VisualState x:Name="Checked"/>
+                        <VisualState x:Name="Indeterminate"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="ValidationStates">
+                        <VisualState x:Name="InvalidFocused"/>
+                        <VisualState x:Name="InvalidUnfocused"/>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+
+            </BulletDecorator>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter Property="Visibility" Value="Visible" TargetName="_checked_mark"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="w:WeiZhiCommands.Reply" Executed="ExecuteWeiZhiCommandsReply"/>
+        <CommandBinding Command="w:WeiZhiCommands.Retweet" Executed="ExecuteWeiZhiCommandsRetweet"/>
+        <CommandBinding Command="w:WeiZhiCommands.ToggleCommentFlag" Executed="ExecuteWeiZhiCommandsToggleCommentFlag"/>
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Command="w:WeiZhiCommands.Reply" Key="R" Modifiers="Alt"/>
+        <KeyBinding Command="w:WeiZhiCommands.Retweet" Key="T" Modifiers="Alt"/>
+        <KeyBinding Command="w:WeiZhiCommands.ToggleCommentFlag" Key="O" Modifiers="Alt"/>
+    </UserControl.InputBindings>
+        <StackPanel x:Name="LayoutRoot">
+        <Grid Height="100">
+            <TextBox x:Name="_body" Text="{Binding body}"
+                 Template="{DynamicResource TextBoxEmbedTemplate}" >
+            </TextBox>
+            <Grid Background="#A0000000" x:Name="_wait_container" Visibility="{Binding is_busying,Mode=OneWay,Converter={StaticResource b2v},FallbackValue=Collapsed}">
+                <TextBlock Text="{Binding reason_phrase,Mode=OneWay,FallbackValue='waiting...'}" TextAlignment="Center" 
+                           FontSize="11pt"
+                           VerticalAlignment="Center" Foreground="WhiteSmoke"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="_toolset" Margin="0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox x:Name="_reply_to_original" ToolTip="alt + o"
+                      IsChecked="{Binding reply_to_original}"
+                      Content="评论给原作者" TextBlock.FontSize="10pt"
+                      Template="{DynamicResource CheckBoxTemplate}" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <Button x:Name="_more"  CommandTarget="{Binding ElementName=_body}"
+                        CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
+                        Content="&#x25bc;" Style="{StaticResource MetroButtonStyle}" Padding="4" Margin="-1,0"/>
+                <Button x:Name="_reply" Command="w:WeiZhiCommands.Reply"  
+                        CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
+                        CommandTarget="{Binding ElementName=_body}"
+                        Content="&#xe200; 评论(R)" ToolTip="alt + r"
+                        Margin="2,0" Style="{StaticResource MetroButtonStyle}" TextElement.FontFamily="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, Microsoft JhengHei UI,Microsoft JhengHei"/>
+                <Button x:Name="_retweet" Command="w:WeiZhiCommands.Retweet"
+                        CommandTarget="{Binding ElementName=_body}" ToolTip="alt + t"
+                        CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
+                        Content="&#xe1f2; 转发(T)" TextElement.FontFamily="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, Microsoft JhengHei UI,Microsoft JhengHei" Style="{StaticResource MetroDefaultButtonStyle}" IsDefault="True"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

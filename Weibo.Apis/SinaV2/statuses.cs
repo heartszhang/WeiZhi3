@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
@@ -143,30 +144,41 @@ namespace Weibo.Apis.SinaV2
 
         public static async Task<RestResult<Status>> statuses_update_async(string token,string post, long replyto )
         {
-            var data = new NameValueCollection { { "access_token", token }, { "status", post } };
-            return await WeiboInternal.HttpsPost<Status>("statuses/update.json", data);
-        }
-
-        public static async Task<RestResult<Status>> statuses_repost_async(string post
-            , long statusid, int iscomment, string token)
-        {
-            var data = new NameValueCollection
+            var data = new List<KeyValuePair<string, string>>
             {
-                { "access_token", token },
-                {"id", statusid.ToString(CultureInfo.InvariantCulture)},
+                new KeyValuePair<string, string>( "access_token", token ),
+                new KeyValuePair<string, string>( "status", post ),
+            };
+            return await WeiboInternal.HttpsPost<Status>(WeiboSources.SinaV2("statuses/update.json"), data);
+        }
+        [Flags]
+        public enum StatusesRepostIsCommentFlag
+        {
+            NoComment = 0,
+            CommentCurrent = 1,
+            CommentOrignal = 2,
+            CommentAll = CommentCurrent | CommentOrignal,
+        }
+        public static async Task<RestResult<Status>> statuses_repost_async(string post
+            , long statusid, StatusesRepostIsCommentFlag iscomment, string token)
+        {
+            var data = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>( "access_token", token ),
+                new KeyValuePair<string, string>("id", statusid.ToString(CultureInfo.InvariantCulture)),
             };
             if (!string.IsNullOrEmpty(post))
             {
-                data.Add("status", post);
-                data.Add("is_comment", iscomment.ToString(CultureInfo.InvariantCulture));
+                data.Add(new KeyValuePair<string, string>("status", post));
             }
-            return await WeiboInternal.HttpsPost<Status>("statuses/repost.json", data);
+            data.Add(new KeyValuePair<string, string>("is_comment", ((int)iscomment).ToString(CultureInfo.InvariantCulture)));
+            return await WeiboInternal.HttpsPost<Status>(WeiboSources.SinaV2("statuses/repost.json"), data);
         }
 
         public static async Task<RestResult<Status>> statuses_destroy_async(long statusid, string token)
         {
             var path = string.Format("statuses/destroy.json?access_token={0}&id={1}", token, statusid);
-            return await WeiboInternal.HttpsPost<Status>(path, new NameValueCollection());
+            return await WeiboInternal.HttpsPost<Status>(WeiboSources.SinaV2(path), new List<KeyValuePair<string, string>>());
         }
         public static async Task<RestResult<Statuses>> statuses_public_timeline_async(long consumerkey
             , int count, int page, int base_app = 0)

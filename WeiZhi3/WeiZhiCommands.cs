@@ -41,18 +41,13 @@ namespace WeiZhi3
         public static readonly RoutedCommand SwitchView
             = new RoutedCommand("SwitchView", typeof(WeiZhiCommands));
 
-        public static readonly RoutedCommand DeleteComment = new RoutedCommand("DeleteCommentCommand",
-            typeof(WeiZhiCommands));
-        public static readonly RoutedCommand DeleteTweet = new RoutedCommand("DeleteTweet",
-            typeof(WeiZhiCommands));
-        public static readonly RoutedCommand Favorite = new RoutedCommand("Favorite",
-            typeof(WeiZhiCommands));
+        public static readonly RoutedCommand DeleteComment = new RoutedCommand("DeleteCommentCommand",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand DeleteTweet = new RoutedCommand("DeleteTweet",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand Favorite = new RoutedCommand("Favorite",typeof(WeiZhiCommands));
 
-        public static readonly RoutedCommand CreateTweet = new RoutedCommand("CreateTweet",
-            typeof(WeiZhiCommands));
+        public static readonly RoutedCommand CreateTweet = new RoutedCommand("CreateTweet",typeof(WeiZhiCommands));
 
-        public static readonly RoutedCommand GotoLatest = new RoutedCommand("GotoLatest",
-            typeof(WeiZhiCommands));
+        public static readonly RoutedCommand GotoLatest = new RoutedCommand("GotoLatest",typeof(WeiZhiCommands));
 
         public static readonly RoutedCommand Navigate = new RoutedCommand("Navigate",typeof(WeiZhiCommands));
 
@@ -62,5 +57,7 @@ namespace WeiZhi3
         public static readonly RoutedCommand PlayVideo = new RoutedCommand("PlayVideo",typeof(WeiZhiCommands));
         public static readonly RoutedCommand PlayMusic = new RoutedCommand("PlayMusic", typeof(WeiZhiCommands));
         public static readonly RoutedCommand Play = new RoutedCommand("Play",typeof(WeiZhiCommands));
+
+        public static readonly RoutedCommand ToggleCommentFlag = new RoutedCommand("ToggleCommentFlag", typeof(WeiZhiCommands));
     }
 }

@@ -115,8 +115,8 @@
     <Compile Include="Parts\EmbedCommentsControl.xaml.cs">
       <DependentUpon>EmbedCommentsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="obj\EmbedEditControl.xaml.cs">
-      <DependentUpon>EmbedEditControl.xaml</DependentUpon>
+    <Compile Include="Parts\EmbedReplyControl.xaml.cs">
+      <DependentUpon>EmbedReplyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\EmbedVideoPlayerControl.xaml.cs">
       <DependentUpon>EmbedVideoPlayerControl.xaml</DependentUpon>
@@ -197,7 +197,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="obj\EmbedEditControl.xaml">
+    <Page Include="Parts\EmbedReplyControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -319,6 +319,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
+    <Folder Include="obj\" />
     <Folder Include="Themes\Accents\" />
     <Folder Include="Themes\Dark\" />
     <Folder Include="Themes\Light\" />

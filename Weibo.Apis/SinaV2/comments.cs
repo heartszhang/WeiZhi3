@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Threading.Tasks;
 using Weibo.Apis.Net;
@@ -59,38 +60,35 @@ namespace Weibo.Apis.SinaV2
             , long statusid, string comment
             , int withoutmention, int commentori, string token)
         {
-            var data = new NameValueCollection
+            var data = new List<KeyValuePair<string, string>>
             {
-                { "access_token", token }, 
-                { "comment", comment },
-                {"id", statusid.ToString(CultureInfo.InvariantCulture)},
-                {"cid", cid.ToString(CultureInfo.InvariantCulture)},
-                {"without_mention", withoutmention.ToString(CultureInfo.InvariantCulture)},
-                {"comment_ori", commentori.ToString(CultureInfo.InvariantCulture)},
+                new KeyValuePair<string, string>( "access_token", token ), 
+                new KeyValuePair<string, string>( "comment", comment ),
+                new KeyValuePair<string, string>("id", statusid.ToString(CultureInfo.InvariantCulture)),
+                new KeyValuePair<string, string>("cid", cid.ToString(CultureInfo.InvariantCulture)),
+                new KeyValuePair<string, string>("without_mention", withoutmention.ToString(CultureInfo.InvariantCulture)),
+                new KeyValuePair<string, string>("comment_ori", commentori.ToString(CultureInfo.InvariantCulture)),
             };
             return await WeiboInternal.HttpsPost<Comment>(WeiboSources.SinaV2("comments/reply.json"), data);
         }
         public static async Task<RestResult<Comment>> comments_create_async(string comment
             , long comment_status_id
-            , long reply_to_id
-            , int comment_ori, long without_mention, string token)
+            , bool comment_ori, string token)
         {
-            var data = new NameValueCollection
+            var data = new List<KeyValuePair<string, string>>
             {
-                { "access_token", token }, 
-                { "comment", comment },
-                {"id", comment_status_id.ToString(CultureInfo.InvariantCulture)},
+                new KeyValuePair<string, string>( "access_token", token ), 
+                new KeyValuePair<string, string>( "comment", comment ),
+                new KeyValuePair<string, string>("id", comment_status_id.ToString(CultureInfo.InvariantCulture)),
             };
-            if (comment_ori != -1)
-            {
-                data.Add("comment_ori", comment_ori.ToString(CultureInfo.InvariantCulture));
-            }
+            if(comment_ori)
+                data.Add(new KeyValuePair<string, string>("comment_ori", "1" ));
             return await WeiboInternal.HttpsPost<Comment>(WeiboSources.SinaV2("comments/create.json"), data);
         }
         public static async Task<RestResult<Comment>> comments_destroy(long cid, string token)
         {
             var path = string.Format("comments/destroy.json?cid={0}&access_token={1}", cid, token);
-            return await WeiboInternal.HttpsPost<Comment>(WeiboSources.SinaV2(path), new NameValueCollection());
+            return await WeiboInternal.HttpsPost<Comment>(WeiboSources.SinaV2(path), new List<KeyValuePair<string, string>>());
         }
         public static async Task<RestResult<Comments>> comments_show_refresh_async(long statusid, long sinceid
             , int count, int page, string token)
