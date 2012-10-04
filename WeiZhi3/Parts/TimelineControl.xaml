@@ -7,7 +7,7 @@
              xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
              xmlns:p="clr-namespace:WeiZhi3.Parts" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:a="clr-namespace:WeiZhi3.Attached"
-             mc:Ignorable="d" Background="White"
+             xmlns:bt="clr-namespace:Bot;assembly=Bot" mc:Ignorable="d" Background="White"
              x:Name="_this"
              d:DesignHeight="257" d:DesignWidth="560">
     <UserControl.Resources>
@@ -66,16 +66,21 @@
                  ScrollViewer.PanningMode="VerticalOnly" ScrollViewer.IsDeferredScrollingEnabled="True"
                  VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizing="False"
                  ItemsSource="{Binding statuses,IsAsync=True,Mode=OneWay}"
-                 ItemTemplateSelector="{StaticResource wts}"
+                 ItemTemplateSelector="{StaticResource wts}" 
                   ItemContainerStyle="{StaticResource WeiboItemContainerStyle}">
             <i:Interaction.Behaviors>
                 <b:ListBoxScrollToTopWhenResetBehavior/>
             </i:Interaction.Behaviors>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel HorizontalAlignment="Stretch" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.Template>
                 <ControlTemplate TargetType="ListBox">
                     <Grid>
                         <ScrollViewer FocusVisualStyle="{x:Null}" x:Name="_scroll">
-                            <VirtualizingStackPanel IsItemsHost="True" HorizontalAlignment="Stretch" />
+                            <ItemsPresenter/>
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="ScrollViewer">
                                     <Grid>

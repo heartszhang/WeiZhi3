@@ -59,5 +59,8 @@ namespace WeiZhi3
         public static readonly RoutedCommand Play = new RoutedCommand("Play",typeof(WeiZhiCommands));
 
         public static readonly RoutedCommand ToggleCommentFlag = new RoutedCommand("ToggleCommentFlag", typeof(WeiZhiCommands));
+
+        public static readonly RoutedCommand Submit  = new RoutedCommand("Submit", typeof(WeiZhiCommands));
+        public static readonly RoutedCommand SelectImage = new RoutedCommand("SelectImage",typeof(WeiZhiCommands));
     }
 }

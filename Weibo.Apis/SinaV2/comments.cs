@@ -58,7 +58,7 @@ namespace Weibo.Apis.SinaV2
 
         public static async Task<RestResult<Comment>> comments_reply_async(long cid
             , long statusid, string comment
-            , int withoutmention, int commentori, string token)
+            , bool withoutmention, bool commentori, string token)
         {
             var data = new List<KeyValuePair<string, string>>
             {
@@ -66,8 +66,8 @@ namespace Weibo.Apis.SinaV2
                 new KeyValuePair<string, string>( "comment", comment ),
                 new KeyValuePair<string, string>("id", statusid.ToString(CultureInfo.InvariantCulture)),
                 new KeyValuePair<string, string>("cid", cid.ToString(CultureInfo.InvariantCulture)),
-                new KeyValuePair<string, string>("without_mention", withoutmention.ToString(CultureInfo.InvariantCulture)),
-                new KeyValuePair<string, string>("comment_ori", commentori.ToString(CultureInfo.InvariantCulture)),
+                new KeyValuePair<string, string>("without_mention", withoutmention?"0":"1"),
+                new KeyValuePair<string, string>("comment_ori", commentori ? "1":"0"),
             };
             return await WeiboInternal.HttpsPost<Comment>(WeiboSources.SinaV2("comments/reply.json"), data);
         }

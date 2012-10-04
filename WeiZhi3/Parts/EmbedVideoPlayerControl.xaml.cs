@@ -42,6 +42,7 @@ namespace WeiZhi3.Parts
             {
                 IsUnempty = false;
                 _wb.NavigateToString(empty_content);
+                _wb.Height = 0.0;
                 return;
             }
             if(_wb == null)
@@ -50,6 +51,10 @@ namespace WeiZhi3.Parts
                 _wb.Navigating += OnNavigating;
                 LayoutRoot.Children.Clear();
                 LayoutRoot.Children.Add(_wb);
+            }
+            else
+            {
+                _wb.Height = 330.0;
             }
             IsUnempty = true;
             _wb.Navigate(result.AbsoluteUri);
@@ -79,7 +84,6 @@ namespace WeiZhi3.Parts
         {
             e.Handled = true;
             var ui = (UrlInfo) e.Parameter;
-            //var url = (string) e.Parameter;
             Url = ui.annotations[0].url;
         }
 

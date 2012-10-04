@@ -83,6 +83,7 @@
     <Compile Include="Attached\ImageLocalCache.cs" />
     <Compile Include="Attached\ImageLocalCacheBase.cs" />
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
+    <Compile Include="Behaviours\ClipboardMonitorBehavior.cs" />
     <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
@@ -92,7 +93,9 @@
     <Compile Include="Converters\IntZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\ImageUrlConverter.cs" />
     <Compile Include="Converters\NotNullToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibiltyConverter.cs" />
+    <Compile Include="Converters\StringToWeiboLengthLeftConverter.cs" />
     <Compile Include="Converters\UriInfoToHasDocumentConverter.cs" />
     <Compile Include="Design\DesignDialogMessageBox.cs" />
     <Compile Include="Design\DesignPageHomeViewModel.cs" />
@@ -111,6 +114,9 @@
     </Compile>
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\WeiboCommentControl.xaml.cs">
+      <DependentUpon>WeiboCommentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\EmbedCommentsControl.xaml.cs">
       <DependentUpon>EmbedCommentsControl.xaml</DependentUpon>
@@ -162,6 +168,9 @@
       <DependentUpon>DialogMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\WeiZhiAssemblyInfo.cs" />
+    <Compile Include="Views\WeiboEditWindow.xaml.cs">
+      <DependentUpon>WeiboEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WeiboTemplateSelector.cs" />
     <Compile Include="WeiZhiCommands.cs" />
     <Page Include="MainWindow.xaml">
@@ -192,6 +201,10 @@
     <Page Include="Pages\PageAuthorizing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\WeiboCommentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Parts\EmbedCommentsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -274,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DialogMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WeiboEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

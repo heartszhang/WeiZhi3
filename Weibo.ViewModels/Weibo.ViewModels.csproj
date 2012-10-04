@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentReply.cs" />
     <Compile Include="CommentsViewModel.cs" />
     <Compile Include="DataModels\Account.cs" />
     <Compile Include="DataModels\AuthroizeResult.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="UserExt.cs" />
     <Compile Include="ViewModelBase2.cs" />
     <Compile Include="WeiboComment.cs" />
+    <Compile Include="WeiboEditViewModel.cs" />
     <Compile Include="WeiboReply.cs" />
     <Compile Include="WeiboStatus.cs" />
     <Compile Include="WeiboUrl.cs" />

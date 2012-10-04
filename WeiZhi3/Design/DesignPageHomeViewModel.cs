@@ -9,4 +9,8 @@ namespace WeiZhi3.Design
             user = new DesignUserExt();
         }
     }
+    internal class MockWeiboEditViewModel : WeiboEditViewModel
+    {
+        
+    }
 }

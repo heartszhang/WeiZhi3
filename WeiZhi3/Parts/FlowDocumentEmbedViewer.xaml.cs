@@ -59,7 +59,7 @@ namespace WeiZhi3.Parts
             var u = (string)e.NewValue;
             if (string.IsNullOrEmpty(u))
                 return;
-            UiInvoke(() => ReasonPhrase = u);
+            UiInvoke(() => ReasonPhrase = "下载");
             var fp = await HttpDownloadToLocalFile.DownloadAsync(u, "html", ".htm","text/html", 1*1024* 1024);
             if(string.IsNullOrEmpty(fp) || !File.Exists(fp))
             {
@@ -76,15 +76,15 @@ namespace WeiZhi3.Parts
                 }
                 var enc = string.IsNullOrEmpty(charset) ? Encoding.GetEncoding(936) : Encoding.GetEncoding(charset);
 
-                UiInvoke(()=>ReasonPhrase = "Converting...");
+                UiInvoke(()=>ReasonPhrase = "格式化...");
                 var result = new NReadabilityTranscoder().Transcode(new TranscodingInput(File.ReadAllText(fp,enc)) { Url = u });
                 if(result.ContentExtracted)
                 {
                     File.WriteAllText(fdocn,result.ExtractedContent);
-                    UiInvoke(()=>ReasonPhrase = "Flow document ready");
+                    UiInvoke(()=>ReasonPhrase = "ready");
                 }else
                 {
-                    UiInvoke(()=>ReasonPhrase = "Converte failed");
+                    UiInvoke(()=>ReasonPhrase = "转换失败，请直接浏览原始网页");
                     return;
                 }
 

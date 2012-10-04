@@ -8,7 +8,6 @@ namespace WeiZhi3.Design
         {
             comments.Add(new MockWeiboComment());
             comments.Add(new MockWeiboComment());
-            comments.Add(new MockWeiboComment());
         }
     }
 }

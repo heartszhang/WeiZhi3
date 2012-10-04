@@ -5,6 +5,7 @@ namespace Weibo.ViewModels
 {
     public class WeiboComment : ObservableObjectExt
     {
+        private CommentReply _replier;
         public UserExt user { get; set; }
         public DateTime created_at { get; set; }
         public string text { get; set; }
@@ -17,6 +18,7 @@ namespace Weibo.ViewModels
         public Status status { get; set; }
         public Comment reply_comment { get; set; }
 
+        public CommentReply replier { get { return _replier; } set { Set(ref _replier, value); } }
         public void assign_sina(Comment data)
         {
             created_at = WeiboStatus.time(data.created_at);

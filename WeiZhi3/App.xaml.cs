@@ -14,7 +14,7 @@ namespace WeiZhi3
     /// </summary>
     public partial class App : Application
     {
-        private static ColorAccent[] _accents= new ColorAccent[] 
+        private static readonly ColorAccent[] _accents= new ColorAccent[] 
             {
                 Accent(Color.FromRgb(0x00,0x82,0x99), Color.FromRgb(0x00,0xA0,0xB1)),//Teal
                 Accent(Color.FromRgb(0x26,0x72,0xEC), Color.FromRgb(0x2E,0x8D,0xEF)),//Blue

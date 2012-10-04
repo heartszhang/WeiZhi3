@@ -142,7 +142,7 @@ namespace Weibo.Apis.SinaV2
             return rtn;
         }
 
-        public static async Task<RestResult<Status>> statuses_update_async(string token,string post, long replyto )
+        public static async Task<RestResult<Status>> statuses_update_async(string token,string post)
         {
             var data = new List<KeyValuePair<string, string>>
             {
