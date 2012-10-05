@@ -24,9 +24,10 @@ namespace Weibo.ViewModels
                 return;
             }
             FireNotificationMessage("{0} Status fetched", ses.Value.statuses.Length);
+            Messenger.Default.Send(new WeiboMediaReset());
             await FetchUrlInfos(ses.Value.statuses);
 
-            ReloadSinaV2(ses.Value);
+            ReloadSinaV2(ses.Value,true);
 
             MaxId = long.MinValue;
             MinId = long.MaxValue;
@@ -46,7 +47,7 @@ namespace Weibo.ViewModels
         }
         public override async void NextPage(string token)
         {
-            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token,PageNo+1 );
+            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token,1,MinId );
             if(ses.Failed())
             {
                 FireNotificationMessage("{0} - timeline {1}", ses.Error(), ses.Reason);
@@ -57,27 +58,25 @@ namespace Weibo.ViewModels
 
             await FetchUrlInfos(ses.Value.statuses);
 
-            ReloadSinaV2(ses.Value);
+            ReloadSinaV2(ses.Value,true);
             ++PageNo;
             SetMinMaxIds(ses.Value);
         }
 
-        public override async void PreviousPage(string token)
+        public override async void MorePage(string token)
         {
-            var pg = Math.Max(1, PageNo - 1);
-            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token, pg);
+            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token, 1,MinId);
             if (ses.Failed())
             {
                 FireNotificationMessage("{0} - timeline {1}", ses.Error(), ses.Reason);
                 return;
             }
             FireNotificationMessage("{1} - {0} Status fetched", ses.Value.statuses.Length, PageNo);
-            Messenger.Default.Send(new WeiboMediaReset());
+            //Messenger.Default.Send(new WeiboMediaReset());
 
             await FetchUrlInfos(ses.Value.statuses);
 
-            ReloadSinaV2(ses.Value);
-            PageNo = pg;
+            ReloadSinaV2(ses.Value,false);
             SetMinMaxIds(ses.Value);
         }
     }

@@ -43,7 +43,6 @@ namespace Weibo.ViewModels
                 await
                 WeiboClient.comments_reply_async(_comment_id, _status_id, _body, _without_mention, _comment_ori,
                                                  token.get());
-            //var resp = await WeiboClient.comments_create_async(body, _status_id, reply_to_original, token.get());
             DispatcherHelper.CheckBeginInvokeOnUI(() => reason_phrase = resp.Reason);
             await Task.Delay(5000);
             DispatcherHelper.CheckBeginInvokeOnUI(() => is_busying = false);

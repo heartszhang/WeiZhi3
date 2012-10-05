@@ -6,7 +6,7 @@
     xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:c="clr-namespace:WeiZhi3.Converters"
     xmlns:ds="clr-namespace:WeiZhi3.Design" xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
     x:Class="WeiZhi3.Parts.WeiboCommentControl"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
     x:Name="_this" Background="White"
     d:DesignWidth="632" d:DataContext="{d:DesignInstance ds:MockWeiboComment,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
@@ -36,7 +36,7 @@
         <c:FriendlyTimeConverter x:Key="ftc"/>
         <c:StringToWeiboLengthLeftConverter x:Key="stowlc"/>
         <DataTemplate DataType="{x:Type v:CommentReply}" >
-            <Grid>
+            <Grid FocusManager.FocusedElement="{Binding ElementName=_box}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto"/>
@@ -44,14 +44,26 @@
                 <TextBox x:Name="_box" TextWrapping="Wrap" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                          ScrollViewer.VerticalScrollBarVisibility="Disabled" FontFamily="{StaticResource UniversalFonts}" 
                          FontSize="14.667" RenderTransformOrigin="0.5,0.5" TextBlock.LineHeight="22"
-                         KeyDown="OnCommentContainerKeyDown" 
-                         Template="{StaticResource SimpleTextBoxTemplate}" />
+                         KeyDown="OnCommentContainerKeyDown" Text="{Binding body,UpdateSourceTrigger=PropertyChanged}"
+                         Template="{StaticResource SimpleTextBoxTemplate}" >
+                    <TextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="剪切(_u)" Command="ApplicationCommands.Cut"/>
+                            <MenuItem Header="复制(_c)" Command="ApplicationCommands.Copy"/>
+                            <MenuItem Header="粘贴(_p)" Command="ApplicationCommands.Paste"/>
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
                 <TextBlock HorizontalAlignment="Right" Text="{Binding Text,ElementName=_box,Mode=OneWay,FallbackValue='140',Converter={StaticResource stowlc}}" Foreground="LightGray" VerticalAlignment="Bottom" FontSize="16pt" />
                 <StackPanel Orientation="Horizontal" Grid.Column="1" >
-                    <Button Content="&#xE18f; 回复" Margin="4" TextElement.FontSize="10pt" Style="{StaticResource MetroDefaultButtonStyle}" TextElement.FontFamily="{StaticResource UniversalFonts}" ToolTip="Enter"/>
+                    <Button Content="&#xE18f; 回复" Margin="4" TextElement.FontSize="10pt" 
+                            Style="{StaticResource MetroDefaultButtonStyle}"
+                            Command="{Binding reply,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator}}"
+                            TextElement.FontFamily="{StaticResource UniversalFonts}" ToolTip="Enter"/>
                 </StackPanel>
-                <Grid Background="#80000000" Visibility="Collapsed" Grid.ColumnSpan="2">
-                    <TextBlock Text="reason" Foreground="WhiteSmoke" FontSize="11pt" TextAlignment="Center"/>
+                <Grid Background="#80000000" Visibility="{Binding is_busying,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}"
+                      Grid.ColumnSpan="2">
+                    <TextBlock Text="{Binding reason_phrase,Mode=OneWay}" Foreground="WhiteSmoke" FontSize="11pt" TextAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -63,7 +75,8 @@
                 <ColumnDefinition Width="43"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Width="28" HorizontalAlignment="Left" a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" VerticalAlignment="Top"/>
+            <Image Width="28" HorizontalAlignment="Left" 
+                   a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" VerticalAlignment="Top"/>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="_body" Margin="0,-2,0,0" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap" Background="Transparent" MouseLeftButtonUp="CommentContainerMouseLeftButtonUp">
                             <Run Foreground="{StaticResource MetroColorTextLightBrush}" Text="{Binding user.screen_name, StringFormat=\{0\}：}"/><Run Text=" "/><Run Text="{Binding text}"/><Run Foreground="{StaticResource MetroColorTextLightBrush}" FontSize="10pt" Text="{Binding created_at, StringFormat='   \{0\}&#x09;',Converter={StaticResource ftc}}"/>

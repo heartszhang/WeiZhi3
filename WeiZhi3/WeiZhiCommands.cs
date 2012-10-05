@@ -62,5 +62,8 @@ namespace WeiZhi3
 
         public static readonly RoutedCommand Submit  = new RoutedCommand("Submit", typeof(WeiZhiCommands));
         public static readonly RoutedCommand SelectImage = new RoutedCommand("SelectImage",typeof(WeiZhiCommands));
+
+        public static readonly RoutedCommand ScrollUp = new RoutedCommand("ScrollUp",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand ScrollDown = new RoutedCommand("ScrollDown", typeof(WeiZhiCommands));
     }
 }

@@ -12,8 +12,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/colors.xaml"/>
                 <ResourceDictionary Source="Themes/geometries.xaml"/>
-                <ResourceDictionary Source="Themes/generic.xaml"/>
+                <ResourceDictionary Source="Themes/generic.xaml"/>                
                 <ResourceDictionary Source="Themes/scrollbar.xaml"/>
+                <ResourceDictionary Source="Themes/contextmenu.xaml"/>
                 <ResourceDictionary Source="Themes/weibos.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

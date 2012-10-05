@@ -6,17 +6,17 @@
              xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
              Foreground="#FF666666" 
              x:Name="_this" 
-             Height="150" d:DesignWidth="440" d:DataContext="{d:DesignInstance ds:DesignUserExt,IsDesignTimeCreatable=True}">
+             Height="120" d:DesignWidth="440" d:DataContext="{d:DesignInstance ds:DesignUserExt,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:IntFriendlyConverter x:Key="ifc"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="{Binding ActualHeight,ElementName=_this}"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image a:ImageLocalCache.Url="{Binding avatar_large,Mode=OneWay}" Width="150" Height="150" Stretch="Uniform"/>
+        <Image a:ImageLocalCache.Url="{Binding avatar_large,Mode=OneWay}" Stretch="Uniform"/>
         <Grid Grid.Column="1" Margin="12,0">
             <StackPanel Grid.Column="1">
                 <Grid Margin="0,0,0,4">
@@ -46,13 +46,13 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border>
-                    <TextBlock TextAlignment="Center" ><Run Foreground="{StaticResource MetroColorFeatureBrush}" FontWeight="Bold" Text="{Binding followers_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>粉丝</TextBlock>
+                    <TextBlock TextAlignment="Left" ><Run Foreground="{StaticResource MetroColorFeatureBrush}" FontWeight="Bold" Text="{Binding followers_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>粉丝</TextBlock>
                 </Border>
                 <Border Grid.Column="1" >
-                    <TextBlock TextAlignment="Center" ><Run FontWeight="Bold" Text="{Binding friends_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>关注</TextBlock>
+                    <TextBlock TextAlignment="Left" ><Run FontWeight="Bold" Text="{Binding friends_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>关注</TextBlock>
                 </Border>
                 <Border Grid.Column="2">
-                    <TextBlock TextAlignment="Center" ><Run FontWeight="Bold" Text="{Binding statuses_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>微博</TextBlock>
+                    <TextBlock TextAlignment="Left" ><Run FontWeight="Bold" Text="{Binding statuses_count,Mode=OneWay,Converter={StaticResource ifc},FallbackValue=不知道}"/><LineBreak/>微博</TextBlock>
                 </Border>
             </Grid>
 

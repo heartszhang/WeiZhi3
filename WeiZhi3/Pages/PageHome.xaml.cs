@@ -135,15 +135,15 @@ namespace WeiZhi3.Pages
             return vm.Timeline;
         }
 
-        private void OnNextPageExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void ExecuteNextPage(object sender, ExecutedRoutedEventArgs e)
         {
             var tvm = GetTimeline();
             tvm.NextPage(Token());
         }
 
-        private void OnPreviousPageExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void ExecuteReload(object sender, ExecutedRoutedEventArgs e)
         {
-            GetTimeline().PreviousPage(Token());
+            GetTimeline().Reload(Token());
         }
 
         private void CanCommandExecuted(object sender, CanExecuteRoutedEventArgs e)

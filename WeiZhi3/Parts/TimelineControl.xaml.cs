@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using WeiZhi3.ViewModel;
 using Weibo.ViewModels;
 using Artefact.Animation;
 
@@ -39,7 +40,7 @@ namespace WeiZhi3.Parts
                 return;
             }
             var ws = item.DataContext;
-            _items.HoveredItem = ws;
+            _items.HoveredItem = ws;            
         }
 
         private void OnMouseEnterToolset(object sender, MouseEventArgs e)
@@ -50,6 +51,27 @@ namespace WeiZhi3.Parts
         private void OnMouseLeaveToolset(object sender, MouseEventArgs e)
         {
             _toolset.OffsetTo(0, _toolset.ActualHeight, 0.2, AnimationTransitions.ExpoEaseOut, 0);
+        }
+
+        private void ExecuteWeiZhiCommandsScrollDown(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var alpha = Properties.Settings.Default.ScrollAlpha;
+            _items.Scroll(alpha);
+        }
+        private void ExecuteWeiZhiCommandsScrollUp(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var alpha = Properties.Settings.Default.ScrollAlpha;
+            _items.Scroll(-alpha);
+        }
+
+        private void OnLastPage(object sender, RoutedEventArgs e)
+        {
+            var at = ((ViewModelLocator) FindResource("Locator")).AccessToken;
+            var mv = (TimelineViewModel) DataContext;
+            mv.MorePage(at.get());
+            e.Handled = true;
         }
     }
 }

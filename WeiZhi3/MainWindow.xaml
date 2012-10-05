@@ -12,13 +12,15 @@
                   Source="/Pages/PageBootstrap.xaml">
     <NavigationWindow.Template>
         <ControlTemplate TargetType="NavigationWindow">
-            <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="{StaticResource MetroColorFeatureFadeBrush}">
+            <Border Background="{TemplateBinding Background}" 
+                  FocusManager.FocusedElement="{Binding ElementName=_content}"
+                    BorderThickness="1" BorderBrush="{StaticResource MetroColorFeatureFadeBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ContentPresenter Grid.Row="1" />
+                    <ContentPresenter Grid.Row="1" x:Name="_content"/>
                     <p:WindowTitleBar Title="{TemplateBinding Title}" />
                 </Grid>
             </Border>
@@ -33,5 +35,9 @@
     <NavigationWindow.CommandBindings>
         <CommandBinding Command="MediaCommands.Play" Executed="ExecuteMediaCommandsPlay"/>
         <CommandBinding Command="w:WeiZhiCommands.NavigateUrl" Executed="ExecuteWeiZhiCommandsNavigateUrl"/>
+        <CommandBinding Command="w:WeiZhiCommands.CreateTweet" Executed="ExecuteWeiZhiCommandsCreateTweet"/>        
     </NavigationWindow.CommandBindings>
+    <NavigationWindow.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="w:WeiZhiCommands.CreateTweet"/>
+    </NavigationWindow.InputBindings>
 </NavigationWindow>

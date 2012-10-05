@@ -39,11 +39,14 @@ namespace WeiZhi3.Parts
             if (e.Key == Key.Escape && IsExpanded)
             {
                 IsExpanded = false;
-            }if(e.Key == Key.Enter)
+            }
+            else if(e.Key == Key.Enter)
 	        {
 	            Debug.WriteLine("should submit");
 	            var locator = (ViewModelLocator) FindResource("Locator");
-                WeiZhiCommands.ReplyComment.Execute(locator.AccessToken,this);
+	            var tb = (TextBox) sender;
+	            var mv = (CommentReply) tb.DataContext;
+                mv.reply.Execute(locator.AccessToken);
 	        }
 	    }
 	}

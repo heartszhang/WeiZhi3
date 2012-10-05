@@ -60,6 +60,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style x:Key="ButtonWindowCommandStyle" TargetType="Button">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -207,7 +208,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style x:Key="MetroButtonStyle" TargetType="Button">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusStyle}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="LightGray"/>
@@ -216,7 +217,7 @@
     </Style>
     <Style x:Key="MetroDefaultButtonStyle" TargetType="Button" BasedOn="{StaticResource MetroButtonStyle}">
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Background" Value="{StaticResource MetroColorFeatureBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource MetroColorFeatureBrush}"/>
     </Style>
 
     <Style TargetType="Button" x:Key="MediaPlayButtonStyle">

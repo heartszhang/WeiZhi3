@@ -10,6 +10,14 @@
     <SolidColorBrush x:Key="MetroColorFadeTextBrush" Color="{StaticResource MetroColorFadeTextColor}"/>
     <SolidColorBrush x:Key="MetroColorTextLightBrush" Color="{StaticResource MetroColorTextLight}"  />
 
+    <ControlTemplate x:Key="FocusTemplate" >
+        <Rectangle Margin="-3" Stroke="{StaticResource MetroColorFeatureContrastBrush}" StrokeThickness="2" >
+        </Rectangle>
+    </ControlTemplate>
+    <Style x:Key="FocusStyle" TargetType="{x:Type Control}">
+        <Setter Property="Template" Value="{StaticResource FocusTemplate}"/>
+    </Style>
+    
     <Style x:Key="BasicTextStyle" TargetType="TextBlock">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="#FF464646" />

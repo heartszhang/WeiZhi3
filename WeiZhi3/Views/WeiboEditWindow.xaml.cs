@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Weibo.ViewModels;
 
 namespace WeiZhi3.Views
 {
@@ -26,7 +28,26 @@ namespace WeiZhi3.Views
 
         private void ExecuteCloseWindow(object sender, ExecutedRoutedEventArgs e)
         {
+            Owner.Activate();
             Close();
         }
+
+        /*
+        private void ExecuteWeiZhiCommandsSubmit(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var vm = (WeiboEditViewModel) DataContext;
+            vm.submit.Execute(e.Parameter);
+        }*/
+
+        //private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key != Key.Enter)
+        //        return;
+        //    var tb = (TextBox)sender;
+        //    var be = tb.GetBindingExpression(TextBox.TextProperty);
+        //    Debug.Assert(be != null);
+        //    be.UpdateSource();            
+        //}
     }
 }

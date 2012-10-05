@@ -26,7 +26,8 @@ namespace Weibo.Apis.Net
                     rtn.Value = JsonConvert.DeserializeObject<TResult>(await resp.Content.ReadAsStringAsync());
                 else if ((int)resp.StatusCode >= 400)
                 {
-                    var er = JsonConvert.DeserializeObject<WeiboError>(await resp.Content.ReadAsStringAsync());
+                    var cont = await resp.Content.ReadAsStringAsync();
+                    var er = JsonConvert.DeserializeObject<WeiboError>(cont);
                     rtn.Reason = er.Translate();
                 }
             }

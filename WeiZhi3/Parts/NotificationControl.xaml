@@ -9,11 +9,11 @@
     <UserControl.Resources>
         <c:IntNZeroToVisibilityConverter x:Key="inz2v"/>
         <DataTemplate x:Key="NotificationBodyTemplate" DataType="s:String">
-            <StackPanel Background="{StaticResource MetroColorFeatureBrush}">
+            <StackPanel >
                 <TextBlock Text="{Binding Mode=OneWay}" 
                            Visibility="{Binding Length,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource inz2v}}"
                            FontFamily="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, Segoe UI Symbol, Microsoft JhengHei UI,Microsoft JhengHei"
-                           TextWrapping="Wrap" FontSize="11pt" Foreground="#FFFFFFFF" Margin="16,8"/>
+                           TextWrapping="Wrap" FontSize="11pt" Foreground="{StaticResource MetroColorTextLightBrush}" Margin="16,6"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>

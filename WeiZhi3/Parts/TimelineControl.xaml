@@ -8,7 +8,7 @@
              xmlns:p="clr-namespace:WeiZhi3.Parts" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:a="clr-namespace:WeiZhi3.Attached"
              xmlns:bt="clr-namespace:Bot;assembly=Bot" mc:Ignorable="d" Background="White"
-             x:Name="_this"
+             x:Name="_this" FocusManager.FocusedElement="{Binding ElementName=_items}"
              d:DesignHeight="257" d:DesignWidth="560">
     <UserControl.Resources>
         <DataTemplate x:Key="SimpleWeiboTemplate" DataType="{x:Type v:WeiboStatus}">
@@ -53,10 +53,14 @@
             <EventSetter Event="MouseEnter" Handler="OnMouseEnterItemContainer"/>
         </Style>
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="wz:WeiZhiCommands.ScrollUp" Executed="ExecuteWeiZhiCommandsScrollUp"/>
+        <CommandBinding Command="wz:WeiZhiCommands.ScrollDown" Executed="ExecuteWeiZhiCommandsScrollDown"/>
+    </UserControl.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="24"/>
+            <RowDefinition Height="28"/>
         </Grid.RowDefinitions>
         <p:ListBoxExt FocusVisualStyle="{x:Null}" x:Name="_items"
                  SelectionChanged="OnSelectionChanged" IsSynchronizedWithCurrentItem="True"
@@ -67,13 +71,15 @@
                  VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizing="False"
                  ItemsSource="{Binding statuses,IsAsync=True,Mode=OneWay}"
                  ItemTemplateSelector="{StaticResource wts}" 
+                      LastPage="OnLastPage"
                   ItemContainerStyle="{StaticResource WeiboItemContainerStyle}">
             <i:Interaction.Behaviors>
                 <b:ListBoxScrollToTopWhenResetBehavior/>
             </i:Interaction.Behaviors>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel HorizontalAlignment="Stretch" />
+                    <bt:AnimatingStackPanel HorizontalAlignment="Stretch"/>
+                    <!--<VirtualizingStackPanel HorizontalAlignment="Stretch" />-->
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.Template>
@@ -144,8 +150,8 @@
                     <TranslateTransform Y="{Binding ActualHeight,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Grid}}"/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <Button Content="&#xE016; 上一页" Style="{DynamicResource MetroPageFuncsButtonStyle}" 
-                         Command="wz:WeiZhiCommands.PreviousPage"/>
+            <Button Content="&#xE016; 首页" Style="{DynamicResource MetroPageFuncsButtonStyle}" 
+                         Command="wz:WeiZhiCommands.Reload"/>
             <Button Content="下一页 &#xE017;" Grid.Column="2" 
                         Command="wz:WeiZhiCommands.NextPage"
                         Style="{DynamicResource MetroPageFuncsButtonStyle}" />

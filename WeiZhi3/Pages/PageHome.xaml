@@ -4,13 +4,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dz="clr-namespace:WeiZhi3.Design"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:b="clr-namespace:WeiZhi3.Behaviours"
-	xmlns:wz="clr-namespace:WeiZhi3" x:Class="WeiZhi3.Pages.PageHome"
+	xmlns:wz="clr-namespace:WeiZhi3" x:Class="WeiZhi3.Pages.PageHome" 
+    FocusManager.FocusedElement="{Binding ElementName=_timeline}"
 	x:Name="_this"  mc:Ignorable="d" d:DataContext="{d:DesignInstance dz:DesignPageHomeViewModel, IsDesignTimeCreatable=True}"
 	WindowTitle="钥匙就在那阳光里">
     <Page.CommandBindings>
-        <CommandBinding Command="wz:WeiZhiCommands.NextPage" Executed="OnNextPageExecuted" CanExecute="CanCommandExecuted"/>
-        <CommandBinding Command="wz:WeiZhiCommands.PreviousPage" Executed="OnPreviousPageExecuted" CanExecute="CanCommandExecuted"/>
+        <CommandBinding Command="wz:WeiZhiCommands.NextPage" Executed="ExecuteNextPage" CanExecute="CanCommandExecuted"/>
+        <CommandBinding Command="wz:WeiZhiCommands.Reload" Executed="ExecuteReload" CanExecute="CanCommandExecuted"/>
     </Page.CommandBindings>
+    <Page.InputBindings>
+        <KeyBinding Key="PageDown" Command="wz:WeiZhiCommands.NextPage"/>
+        <KeyBinding Key="PageUp" Command="wz:WeiZhiCommands.Reload"/>
+    </Page.InputBindings>
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="_center" MaxWidth="1120">
             <Grid.ColumnDefinitions>
@@ -21,7 +26,7 @@
                 <p:RightColumnControl/>
             </Grid>
             <Grid x:Name="_main_container">
-                <p:TimelineControl DataContext="{Binding Timeline,Mode=OneWay}"/>
+                <p:TimelineControl DataContext="{Binding Timeline,Mode=OneWay}" x:Name="_timeline"/>
             </Grid>
         </Grid>
         <Grid HorizontalAlignment="Right" Width="50" Background="Transparent" MouseEnter="ToolsetPopup" Height="100" VerticalAlignment="Top" x:Name="_left_tool_hint"/>

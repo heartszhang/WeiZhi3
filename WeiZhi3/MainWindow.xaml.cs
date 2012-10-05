@@ -201,5 +201,12 @@ namespace WeiZhi3
                 return;
             }
         }
+
+        private void ExecuteWeiZhiCommandsCreateTweet(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var wnd = new WeiboEditWindow() {Owner = this, DataContext = new WeiboEditViewModel(),ShowInTaskbar = false};
+            wnd.Show();
+        }
     }
 }

@@ -32,7 +32,7 @@
                                                 </Grid.RenderTransform>
                                                 <ContentPresenter/>
                                                 <Grid Margin="{TemplateBinding Padding}">
-                                                    <Ellipse StrokeThickness="3" Stroke="{TemplateBinding Foreground}" x:Name="_circle"/>
+                                                    <!--<Ellipse StrokeThickness="3" Stroke="{TemplateBinding Foreground}" x:Name="_circle" />-->
                                                     <TextBlock Foreground="{TemplateBinding Foreground}" Text="&#xE102;" FontFamily="Segoe UI Symbol" FontSize="28pt" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                 </Grid>
                                             </Grid>
@@ -59,7 +59,7 @@
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Background" Value="#30000000"/>
                                                 <Setter Property="Foreground" Value="White"/>
-                                                <Setter Property="Fill" Value="#30000000" TargetName="_circle"/>
+                                                <!--<Setter Property="Fill" Value="#30000000" TargetName="_circle"/>-->
                                             </Trigger>
 
                                         </ControlTemplate.Triggers>
@@ -78,7 +78,7 @@
         <ItemsControl ItemTemplate="{DynamicResource MediaItemTemplate}" ItemsSource="{Binding Medias,Mode=OneWay,IsAsync=True}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <b:AnimatingTilePanel ItemWidth="108" ItemHeight="108"/>
+                    <b:AnimatingTilePanel ItemWidth="144" ItemHeight="108"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

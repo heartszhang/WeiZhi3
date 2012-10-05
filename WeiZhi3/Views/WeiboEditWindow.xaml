@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:w="clr-namespace:WeiZhi3" xmlns:ds="clr-namespace:WeiZhi3.Design"
         xmlns:ws="clr-namespace:WeiZhi3.Converters" xmlns:bs="clr-namespace:WeiZhi3.Behaviours"
-        mc:Ignorable="d"
+        mc:Ignorable="d" FocusManager.FocusedElement="{Binding ElementName=_body}"
         BorderBrush="{DynamicResource MetroColorFeatureBrush}" BorderThickness="1"
         WindowStyle="None" WindowStartupLocation="CenterOwner" 
         ResizeMode="NoResize" SizeToContent="WidthAndHeight" MaxWidth="640"
@@ -132,20 +132,22 @@
     </i:Interaction.Behaviors>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="ExecuteCloseWindow"/>
+        <!--<CommandBinding Command="w:WeiZhiCommands.Submit" Executed="ExecuteWeiZhiCommandsSubmit"/>-->
     </Window.CommandBindings>
     <Window.InputBindings>
-        <KeyBinding Command="w:WeiZhiCommands.Submit" Key="S" Modifiers="Alt"/>
+        <KeyBinding Command="{Binding submit,Mode=OneWay}" Key="S" Modifiers="Alt"/>
         <KeyBinding Command="w:WeiZhiCommands.SelectImage" Key="I" Modifiers="Alt"/>
+        <KeyBinding Command="ApplicationCommands.Close" Key="Escape"/>
     </Window.InputBindings>
     <StackPanel x:Name="LayoutRoot">
-        <Grid Height="24">
+        <Grid x:Name="_title_container" Height="24">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonWindowCommandStyle}" Command="ApplicationCommands.Close" 
-                        Padding="12,0" Content="&#x2716;">
+                        Padding="12,0" Content="&#x2716;" IsTabStop="False">
                     <!--<Path Stretch="Uniform" Data="{StaticResource PathClose}" Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Button}}}" />-->
                 </Button>
 
@@ -160,12 +162,16 @@
             </Button>
         </Grid>
         <Grid Margin="0,0,0,12">
-            <TextBox Height="160" Width="560" Text="{Binding body}" TextWrapping="Wrap" Template="{StaticResource TextBoxEmbedTemplate}"/>
+            <TextBox Height="160" Width="560" Text="{Binding body, UpdateSourceTrigger=PropertyChanged}"
+                     FontFamily="{StaticResource UniversalFonts}" FontSize="11pt" x:Name="_body"
+                     TextWrapping="Wrap" Template="{StaticResource TextBoxEmbedTemplate}"/>
             <Grid Background="#b0000000" Visibility="{Binding is_busying,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
-                <TextBlock Text="{Binding reason,Mode=OneWay,FallbackValue='Loading...'}"/>
+                <TextBlock Text="{Binding reason,Mode=OneWay,FallbackValue='Loading...'}"
+                           FontFamily="{StaticResource UniversalFonts}" FontSize="10pt"
+                           TextAlignment="Center" VerticalAlignment="Center" Foreground="WhiteSmoke"/>
             </Grid>
         </Grid>
-        <Grid Margin="16,0,16,16" TextElement.FontSize="10pt" TextElement.FontFamily="{StaticResource UniversalFonts}">
+        <Grid Margin="16,0,16,16" TextElement.FontSize="10pt" TextElement.FontFamily="{StaticResource UniversalFonts}" x:Name="_toolset">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
@@ -177,15 +183,10 @@
                 <Button Content="选择图片文件(_i)" Style="{StaticResource MetroButtonStyle}" Margin="1,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="1">
-                <Button Content="发布微博" Command="w:WeiZhiCommands.Submit" IsDefault="True"
+                <Button Content="&#xE088; 发布微博" Command="{Binding submit,Mode=OneWay}" IsDefault="True" ToolTip="Enter"
                         CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
                         Style="{StaticResource MetroDefaultButtonStyle}"/>
             </StackPanel>
-
-
-        </Grid>
-        <Grid>
-
         </Grid>
     </StackPanel>
 </Window>

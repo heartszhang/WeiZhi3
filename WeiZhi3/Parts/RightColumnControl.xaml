@@ -131,14 +131,14 @@
         <StackPanel DockPanel.Dock="Bottom">
             <p:EmbedVideoPlayerControl/>
             <p:MiniMusicPlayerControl/>
-            <Grid Margin="0,2">
+            <Grid Margin="0,2" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="2"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Content="&#xE016; 上一页" Style="{StaticResource MetroPageFuncsButtonStyle}" 
-                         Command="wz:WeiZhiCommands.PreviousPage"/>
+                <Button Content="&#xE016; 首页" Style="{StaticResource MetroPageFuncsButtonStyle}" 
+                         Command="wz:WeiZhiCommands.Reload"/>
                 <Button Content="下一页 &#xE017;" Grid.Column="2" 
                         Command="wz:WeiZhiCommands.NextPage"
                         Style="{StaticResource MetroPageFuncsButtonStyle}" />
@@ -149,6 +149,7 @@
             <Grid x:Name="_profile_container" Visibility="{Binding user,Mode=OneWay,Converter={StaticResource nn2v},FallbackValue=Collapsed}">
                 <p:WeiboUserControl DataContext="{Binding user,Mode=OneWay}"/>
             </Grid>
+            <Button Content="&#xE088; WRITE WEIBO" Foreground="#ff111111" FontWeight="SemiBold" Style="{DynamicResource MetroButtonStyle}" FontFamily="{StaticResource UniversalFonts}"/>
         </StackPanel>
         <Grid DockPanel.Dock="Top">
             <p:MediaCollectionControl DataContext="{Binding Media,Mode=OneWay}"/>

@@ -94,5 +94,17 @@ namespace WeiZhi3.Properties {
                 this["TimelineTickInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int ScrollAlpha {
+            get {
+                return ((int)(this["ScrollAlpha"]));
+            }
+            set {
+                this["ScrollAlpha"] = value;
+            }
+        }
     }
 }

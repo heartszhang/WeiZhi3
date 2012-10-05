@@ -21,7 +21,7 @@ namespace Weibo.ViewModels
         public abstract void Reload(string token);
 
         public abstract void NextPage(string token);
-        public abstract void PreviousPage(string token);
+        public abstract void MorePage(string token);
 
         internal long previous_cursor { get; set; }
         internal long next_cursor { get; set; }
@@ -38,13 +38,14 @@ namespace Weibo.ViewModels
             set { Set(ref _focusedItem, value); }
         }
 
-        internal void ReloadSinaV2(Statuses result)
+        internal void ReloadSinaV2(Statuses result,bool reload )
         {
             previous_cursor = result.previous_cursor;
             next_cursor = result.next_cursor;
             total_number = result.total_number;
 
-            UiInvoke(() => statuses.Clear());
+            if(reload)
+                UiInvoke(() => statuses.Clear());
             foreach (var s in result.statuses)
             {
                 var ws = new WeiboStatus();

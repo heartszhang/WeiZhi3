@@ -22,6 +22,109 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- slider-->
+        <SolidColorBrush x:Key="MetroSliderBg" Color="#FFCCCCCC"  />
+        <SolidColorBrush x:Key="MetroSliderThumb" Color="#FF666666"  />
+        <SolidColorBrush x:Key="MetroSliderBorder" Color="#FFFFFFFF"  />
+        <Color x:Key="MetroSliderThumbHover" >#FF111111</Color>
+        <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="Transparent" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderButtonStyleLeft" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="Transparent">
+                            <Border Background="{TemplateBinding Foreground}" Height="4" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="Width" Value="7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border 
+                      Name="Thumb" 
+                      Background="{TemplateBinding Foreground}"
+		              BorderBrush="{TemplateBinding BorderBrush}"
+		              BorderThickness="0,0,1,0" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
+            <Grid>
+                <Border Name="TrackBackground" Margin="0" Height="4" Grid.Row="1" Background="{DynamicResource MetroSliderBg}" />
+                <Track Name="PART_Track">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Name="SliderLeft"
+                      Foreground="{DynamicResource MetroSliderThumb}"
+                      Style="{StaticResource SliderButtonStyleLeft}"
+                      Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Name="SliderThumb" Foreground="{DynamicResource MetroSliderThumb}" BorderBrush="{DynamicResource MetroSliderBorder}" Style="{StaticResource SliderThumbStyle}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton 
+                      Style="{StaticResource SliderButtonStyle}"
+                      Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualStateGroup.Transitions>
+                            <VisualTransition To="Normal" GeneratedDuration="0:0:0.1"/>
+                        </VisualStateGroup.Transitions>
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground.Color" Storyboard.TargetName="SliderThumb">
+                                    <EasingColorKeyFrame KeyTime="0:0:0.1" Value="{StaticResource MetroSliderThumbHover}"/>
+                                </ColorAnimationUsingKeyFrames>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground.Color" Storyboard.TargetName="SliderLeft">
+                                    <EasingColorKeyFrame KeyTime="0:0:0.1" Value="{StaticResource MetroSliderThumbHover}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="Slider">
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Height" Value="16"/>
+                    <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <UserControl.CommandBindings>
         <CommandBinding Command="w:WeiZhiCommands.PlayMusic" Executed="ExecuteMediaCommandsPlay"/>
@@ -105,12 +208,17 @@
                 </TextBlock>
                 <TextBlock VerticalAlignment="Bottom" Margin="24,11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Prompt,ElementName=_this,Mode=OneWay,FallbackValue=nothing}" FontSize="11pt" FontFamily="Microsoft Yahei UI,segoe UI, Segoe UI Symbol" Foreground="WhiteSmoke"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="&#xE15D; " FontFamily="Segoe UI Symbol" FontSize="11pt" Foreground="WhiteSmoke"/>
+                <Slider Width="100" Maximum="1" Value="{Binding Volume,ElementName=_player}" LargeChange="0.2"/>
+            </StackPanel>
+
         </Grid>
         <Grid Grid.Column="2">
             <MediaElement x:Name="_player" LoadedBehavior="Manual" UnloadedBehavior="Close"
                           MediaEnded="OnMediaEnded" MediaOpened="OnMediaOpened" MediaFailed="OnMediaFailed"/>
             <Grid >
-                <TextBlock Text="&#x266c;" Foreground="White" FontSize="15pt" VerticalAlignment="Center"/>
+                <TextBlock Text=" &#x266c; " Foreground="White" FontSize="15pt" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
         <Grid Grid.ColumnSpan="3">

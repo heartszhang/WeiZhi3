@@ -107,7 +107,7 @@
     </UserControl.CommandBindings>
     <UserControl.InputBindings>
         <KeyBinding Command="w:WeiZhiCommands.Reply" Key="R" Modifiers="Alt"/>
-        <KeyBinding Command="w:WeiZhiCommands.Retweet" Key="T" Modifiers="Alt"/>
+        <KeyBinding Command="w:WeiZhiCommands.Retweet" Key="S" Modifiers="Control"/>
         <KeyBinding Command="w:WeiZhiCommands.ToggleCommentFlag" Key="O" Modifiers="Alt"/>
     </UserControl.InputBindings>
         <StackPanel x:Name="LayoutRoot">
@@ -129,6 +129,7 @@
             <CheckBox x:Name="_reply_to_original" ToolTip="alt + o"
                       IsChecked="{Binding reply_to_original}"
                       Content="评论给原作者" TextBlock.FontSize="10pt"
+                      FocusVisualStyle="{x:Null}"
                       Template="{DynamicResource CheckBoxTemplate}" VerticalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <Button x:Name="_more"  CommandTarget="{Binding ElementName=_body}"
@@ -140,7 +141,7 @@
                         Content="&#xe200; 评论(R)" ToolTip="alt + r"
                         Margin="2,0" Style="{StaticResource MetroButtonStyle}" TextElement.FontFamily="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, Microsoft JhengHei UI,Microsoft JhengHei"/>
                 <Button x:Name="_retweet" Command="w:WeiZhiCommands.Retweet"
-                        CommandTarget="{Binding ElementName=_body}" ToolTip="alt + t"
+                        CommandTarget="{Binding ElementName=_body}" ToolTip="ctrl + s"
                         CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
                         Content="&#xe1f2; 转发(T)" TextElement.FontFamily="Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, Microsoft JhengHei UI,Microsoft JhengHei" Style="{StaticResource MetroDefaultButtonStyle}" IsDefault="True"/>
             </StackPanel>
