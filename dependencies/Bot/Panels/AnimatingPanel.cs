@@ -145,7 +145,7 @@ namespace Bot
 
                 data.Current = ProcessNewChild(child, bounds);
             }
-            Debug.Assert(child.RenderTransform == data.Transform);
+            Debug.Assert(Equals(child.RenderTransform, data.Transform));
 
             //set the location attached DP
             data.Target = bounds.Location;

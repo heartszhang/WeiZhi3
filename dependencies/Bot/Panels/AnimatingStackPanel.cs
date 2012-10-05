@@ -714,7 +714,7 @@ namespace Bot
             }
 
             child.BeginAnimation(OpacityProperty, _m_item_opacity_animation);
-            startLocation -= new Vector(providedBounds.Width, 0);
+            //startLocation -= new Vector(providedBounds.Width, 0);
 
             return startLocation;
         }
