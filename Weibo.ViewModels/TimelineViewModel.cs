@@ -17,25 +17,19 @@ namespace Weibo.ViewModels
 {
     public abstract class TimelineViewModel:ViewModelBase2
     {
-        public abstract void OnTick(string token);
-        public abstract void Reload(string token);
+        public abstract void OnTick(IWeiboAccessToken token);
+        public abstract void Reload(IWeiboAccessToken token);
 
-        public abstract void NextPage(string token);
-        public abstract void MorePage(string token);
+        public abstract void NextPage(IWeiboAccessToken token);
+        public abstract void MorePage(IWeiboAccessToken token);
 
-        internal long previous_cursor { get; set; }
-        internal long next_cursor { get; set; }
-        internal long total_number { get; set; }
-
-        private object _focusedItem;
-        protected long MinId = long.MaxValue;
-        protected long MaxId = long.MinValue;
+        private object _focused;
         protected int PageNo = 1;
 
         public object FocusedItem
         {
-            get { return _focusedItem; }
-            set { Set(ref _focusedItem, value); }
+            get { return _focused; }
+            set { Set(ref _focused, value); }
         }
 
         internal void ReloadSinaV2(Statuses result,bool reload )
@@ -43,6 +37,7 @@ namespace Weibo.ViewModels
             previous_cursor = result.previous_cursor;
             next_cursor = result.next_cursor;
             total_number = result.total_number;
+            Debug.WriteLine("noti: {3}, timeline total: {0},prev: {1},next: {2}",total_number,previous_cursor, next_cursor, notifications);
 
             if(reload)
                 UiInvoke(() => statuses.Clear());
@@ -53,10 +48,6 @@ namespace Weibo.ViewModels
                 UiInvoke(() => statuses.Add(ws));
             }
         }
-        static void UiInvoke( Action act)
-        {
-            DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.SystemIdle,act);
-        }
         public ObservableCollection<WeiboStatus> statuses { get; set; }
         protected TimelineViewModel()
         {
@@ -66,13 +57,16 @@ namespace Weibo.ViewModels
         {
             if (ses == null || ses.Length == 0)
                 return;
+            var mem = MemoryCache.Default;
+
             var urls = new HashSet<string>();
             foreach (var s in ses)
             {
                 var us = Utils.ExtractUrlFromWeibo(s.text);
                 foreach(var url in us)
                 {
-                    urls.Add(url);
+                    if (mem.Get("http://t.cn/" + url) == null)
+                        urls.Add(url);
                 }
                 //urls.Add(us);
                 if (s.retweeted_status != null)
@@ -80,7 +74,8 @@ namespace Weibo.ViewModels
                     var rus = Utils.ExtractUrlFromWeibo(s.retweeted_status.text);
                     foreach (var url in rus)
                     {
-                        urls.Add(url);
+                        if (mem.Get("http://t.cn/" + url) == null)
+                            urls.Add(url);
                     }
                 }
             }

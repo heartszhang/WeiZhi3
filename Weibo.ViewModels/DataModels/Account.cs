@@ -4,7 +4,7 @@ using Weibo.DataModel;
 namespace Weibo.ViewModels.DataModels
 {
     [DataContract]
-    public class Account
+    public class Account : IWeiboAccessToken
     {
         [DataMember]
         public long Id { get; set; }
@@ -17,5 +17,40 @@ namespace Weibo.ViewModels.DataModels
 
         [DataMember]
         public WeiboSourcesType Source { get; set; }
+
+        [DataMember]
+        public int TimelineTotalNumber { get; set; }
+
+        [DataMember]
+        public int CommentsTimelineTotalNumber { get; set; }
+
+        #region Implementation of IWeiboAccessToken
+
+        string IWeiboAccessToken.get()
+        {
+            return AccessToken;
+        }
+
+        long IWeiboAccessToken.id()
+        {
+            return Id;
+        }
+
+        int IWeiboAccessToken.count_per_page()
+        {
+            return 50;
+        }
+
+        int IWeiboAccessToken.comments_timeline_total_number()
+        {
+            return 0;
+        }
+
+        int IWeiboAccessToken.timeline_total_number()
+        {
+            return 0;
+        }
+
+        #endregion
     }
 }

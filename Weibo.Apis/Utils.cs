@@ -32,7 +32,6 @@ namespace Weibo.Apis
                 }
                 rtn.Add(x);
                 c = fi ;
-                Debug.WriteLine(x);
             }
             return rtn.ToArray();
         }

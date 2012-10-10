@@ -25,12 +25,15 @@ namespace Weibo.ViewModels.DataModels
         {
             return Accounts == null || Accounts.Length == 0;
         }
-        public Account Account()
+        public Account Account( long userid = 0)
         {
             if (Accounts == null || Accounts.Length == 0)
                 return null;
-            return Accounts[0];
+            if(userid == 0)
+                return Accounts[0];
+            return Accounts.First((a) => a.Id == userid);
         }
+        
         public async Task VerifyAccounts()
         {
             if(Accounts == null || Accounts.Length == 0)

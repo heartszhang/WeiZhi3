@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeiZhi3.Design
 {
-    internal class DesignDialogMessageBox
+    internal class MockDialogMessageBox
     {
         public string Title { get { return "Hello"; } }
         public string Message { get { return "Dialog Message "; } }

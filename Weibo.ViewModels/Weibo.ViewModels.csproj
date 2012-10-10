@@ -49,13 +49,20 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentlineByMeViewModel.cs" />
+    <Compile Include="CommentlineToMeViewModel.cs" />
+    <Compile Include="CommentlineViewModel.cs" />
     <Compile Include="CommentReply.cs" />
+    <Compile Include="CommentsTimelineNavigationItem.cs" />
     <Compile Include="CommentsViewModel.cs" />
+    <Compile Include="CommentTimelineViewModel.cs" />
     <Compile Include="DataModels\Account.cs" />
     <Compile Include="DataModels\AuthroizeResult.cs" />
     <Compile Include="DataModels\DateTimeHelper.cs" />
     <Compile Include="DataModels\Profile.cs" />
+    <Compile Include="HomeTimelineNavigationItem.cs" />
     <Compile Include="MediaCollectionViewModel.cs" />
+    <Compile Include="NavigationItem.cs" />
     <Compile Include="ObservableObjectExt.cs" />
     <Compile Include="PageHomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

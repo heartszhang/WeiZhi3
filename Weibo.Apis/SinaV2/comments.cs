@@ -20,38 +20,84 @@ namespace Weibo.Apis.SinaV2
                                      page);
             return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
         }
-
-        public static async Task<RestResult<Comments>> comments_to_me_refresh_async(long sinceid,
-            int count,
-            int page, string token)
+        public enum comments_filter_by_source
         {
-            var path = string.Format("comments/to_me.json?since_id={0}&count={1}&page={2}&access_token={3}",
+            all = 0,
+            from_status = 1,
+            from_group = 2
+        }
+        public static async Task<RestResult<Comments>> comments_by_me_next_page_async(string token,long maxid,
+            int count,
+            int page, comments_filter_by_source filter = comments_filter_by_source.all)
+        {
+            var path = string.Format("comments/by_me.json?max_id={0}&count={1}&page={2}&access_token={3}&filter_by_source={4}",
+                                     maxid,
+                                     count,
+                                     page, token,(int)filter);
+
+            return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
+        }
+        public static async Task<RestResult<Comments>> comments_by_me_refresh_async(string token,long sinceid,
+            int count,
+            int page, comments_filter_by_source filter = comments_filter_by_source.all)
+        {
+            var path = string.Format("comments/by_me.json?since_id={0}&count={1}&page={2}&access_token={3}",
                                      sinceid,
                                      count,
                                      page, token);
 
             return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
         }
-        public static async Task<RestResult<Comments>> comments_timeline_refresh_async(long sinceid,
-            int count,
-            int page, string token)
+        public enum comments_filter_by_author
         {
-            var path = string.Format("comments/timeline.json?since_id={0}&count={1}&page={2}&access_token={3}",
-                                     sinceid,
+            all = 0,
+            from_followed = 1,
+            from_stranger = 2
+        }
+        public static async Task<RestResult<Comments>> comments_to_me_next_page_async(string token,long maxid,
+            int count,
+            int page, comments_filter_by_author author_filter = comments_filter_by_author.all,
+            comments_filter_by_source source_filter = comments_filter_by_source.all)
+        {
+            var path = string.Format("comments/to_me.json?max_id={0}&count={1}&page={2}&access_token={3}&filter_by_author={4}&filter_by_source={5}",
+                                     maxid,
                                      count,
-                                     page, token);
+                                     page, token, (int)author_filter, (int)source_filter);
 
             return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
         }
-        public static async Task<RestResult<Comments>> comments_timeline_next_page_async(long maxid,
+        public static async Task<RestResult<Comments>> comments_to_me_refresh_async(string token,long sinceid,
             int count,
-            int page, string token)
+            int page, comments_filter_by_author author_filter = comments_filter_by_author.all,
+            comments_filter_by_source source_filter = comments_filter_by_source.all)
         {
-            var path = string.Format("comments/timeline.json?max_id={0}&count={1}&page={2}&access_token={3}",
+            var path = string.Format("comments/to_me.json?since_id={0}&count={1}&page={2}&access_token={3}&filter_by_author={4}&filter_by_source={5}",
+                                     sinceid,
+                                     count,
+                                     page, token,(int)author_filter,(int)source_filter);
+
+            return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
+        }
+        public static async Task<RestResult<Comments>> comments_timeline_refresh_async(string token,long sinceid,
+            int count,
+            int page, bool trim_user= false)
+        {
+            var path = string.Format("comments/timeline.json?since_id={0}&count={1}&page={2}&access_token={3}&trim_user={4}",
+                                     sinceid,
+                                     count,
+                                     page, token,trim_user ? 1: 0);
+
+            return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
+        }
+        public static async Task<RestResult<Comments>> comments_timeline_next_page_async(string token,long maxid,
+            int count,
+            int page, bool trim_user = false)
+        {
+            var path = string.Format("comments/timeline.json?max_id={0}&count={1}&page={2}&access_token={3}&trim_user={4}",
                                      maxid,
                                      count,
                                      page,
-                                     token);
+                                     token,trim_user ? 1: 0);
 
             return await WeiboInternal.HttpsGet<Comments>(WeiboSources.SinaV2(path));
         }

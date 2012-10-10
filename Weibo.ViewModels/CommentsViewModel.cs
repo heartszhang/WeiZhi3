@@ -12,9 +12,6 @@ namespace Weibo.ViewModels
     public class CommentsViewModel : ViewModelBase2
     {
 #region private members
-        private long _previous_cursor;
-        private long _next_cursor;
-        private int _total_number = int.MaxValue;
         private int _page = 1;
         private const int item_per_page = 20;
         private string _reason = "\u2205; 正在获取微博...";
@@ -67,9 +64,9 @@ namespace Weibo.ViewModels
         }*/
         void assign_comments(Comments cmts)
         {
-            _total_number = cmts.total_number;
-            _next_cursor = cmts.next_cursor;
-            _previous_cursor = cmts.previous_cursor;
+            total_number = cmts.total_number;
+            next_cursor = cmts.next_cursor;
+            previous_cursor = cmts.previous_cursor;
             //cmts.comments.Sort((l, r) => { return -1; });
             foreach(var c in cmts.comments)
             {

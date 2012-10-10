@@ -23,6 +23,9 @@ namespace Weibo.ViewModels
     {
         string get();
         long id();
+        int count_per_page();
+        int comments_timeline_total_number();
+        int timeline_total_number();
     }
     public enum WeiboTopicSource
     {
@@ -306,6 +309,10 @@ namespace Weibo.ViewModels
                 bmiddle_pic = url.pic;
                 thumbnail_pic = url.pic;
                 has_pic = true;
+            }
+            //微博有图片，但是url中没有图片
+            if(string.IsNullOrEmpty(url.pic) && has_pic)
+            {
             }
         }
         protected  class InitializeParam

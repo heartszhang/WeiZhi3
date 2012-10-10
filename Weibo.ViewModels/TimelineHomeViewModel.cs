@@ -11,13 +11,13 @@ namespace Weibo.ViewModels
 {
     public class TimelineHomeViewModel : TimelineViewModel
     {
-        public override void OnTick(string token)
+        public override void OnTick(IWeiboAccessToken token)
         {
 
         }
-        public override async void Reload(string token)
+        public override async void Reload(IWeiboAccessToken token)
         {
-            var ses = await WeiboClient.statuses_friends_timeline_refresh_async(token);
+            var ses = await WeiboClient.statuses_friends_timeline_refresh_async(token.get());
             if (ses.Failed())
             {
                 FireNotificationMessage("{0} - timeline {1}", ses.Error(), ses.Reason);
@@ -45,27 +45,20 @@ namespace Weibo.ViewModels
                     MinId = s.id;
             }
         }
-        public override async void NextPage(string token)
+        public override void NextPage(IWeiboAccessToken token)
         {
-            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token,1,MinId );
-            if(ses.Failed())
+            SecondPage(token.get(),true);
+            ++PageNo;
+        }
+        async void SecondPage(string token, bool reload)
+        {
+            if (next_cursor == 0)
             {
-                FireNotificationMessage("{0} - timeline {1}", ses.Error(), ses.Reason);
+                FireNotificationMessage("nothing should be fetched", 0);
                 return;
             }
-            FireNotificationMessage("{1} - {0} Status fetched", ses.Value.statuses.Length, PageNo);
-            Messenger.Default.Send(new WeiboMediaReset());
 
-            await FetchUrlInfos(ses.Value.statuses);
-
-            ReloadSinaV2(ses.Value,true);
-            ++PageNo;
-            SetMinMaxIds(ses.Value);
-        }
-
-        public override async void MorePage(string token)
-        {
-            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token, 1,MinId);
+            var ses = await WeiboClient.statuses_friends_timeline_next_page_async(token, 1, MinId);
             if (ses.Failed())
             {
                 FireNotificationMessage("{0} - timeline {1}", ses.Error(), ses.Reason);
@@ -76,8 +69,12 @@ namespace Weibo.ViewModels
 
             await FetchUrlInfos(ses.Value.statuses);
 
-            ReloadSinaV2(ses.Value,false);
+            ReloadSinaV2(ses.Value, reload);
             SetMinMaxIds(ses.Value);
+        }
+        public override void MorePage(IWeiboAccessToken token)
+        {
+            SecondPage(token.get(), false);
         }
     }
 }

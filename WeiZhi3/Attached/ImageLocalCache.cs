@@ -46,14 +46,14 @@ namespace WeiZhi3.Attached
                 return;
             var ur = new Uri(filepath, UriKind.Absolute);
             Debug.Assert(ur.IsFile);
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.UriSource = ur;
-            bmp.EndInit();
-            bmp.Freeze();
-            var bs = (bmp.DpiX > 160.0) ? ConvertBitmapTo96Dpi(bmp) : bmp;
             try
             {
+                var bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.UriSource = ur;
+                bmp.EndInit();
+                bmp.Freeze();
+                var bs = (bmp.DpiX > 160.0) ? ConvertBitmapTo96Dpi(bmp) : bmp;
                 img.Dispatcher.BeginInvoke(
                     DispatcherPriority.SystemIdle,
                     (Action)(() =>
