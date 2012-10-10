@@ -4,10 +4,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dz="clr-namespace:WeiZhi3.Design"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:b="clr-namespace:WeiZhi3.Behaviours"
-	xmlns:wz="clr-namespace:WeiZhi3" x:Class="WeiZhi3.Pages.PageHome" 
+	xmlns:wz="clr-namespace:WeiZhi3" xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
+	x:Class="WeiZhi3.Pages.PageHome" 
     FocusManager.FocusedElement="{Binding ElementName=_timeline}"
-	x:Name="_this"  mc:Ignorable="d" d:DataContext="{d:DesignInstance dz:DesignPageHomeViewModel, IsDesignTimeCreatable=True}"
+	x:Name="_this"  mc:Ignorable="d" d:DataContext="{d:DesignInstance dz:MockPageHomeViewModel, IsDesignTimeCreatable=True}"
 	WindowTitle="钥匙就在那阳光里">
+    <Page.Resources>
+        <DataTemplate DataType="{x:Type v:TimelineViewModel}">
+            <p:TimelineControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type v:CommentlineViewModel}">
+            <p:CommentlineControl/>
+        </DataTemplate>
+    </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding Command="wz:WeiZhiCommands.NextPage" Executed="ExecuteNextPage" CanExecute="CanCommandExecuted"/>
         <CommandBinding Command="wz:WeiZhiCommands.Reload" Executed="ExecuteReload" CanExecute="CanCommandExecuted"/>
@@ -26,7 +35,8 @@
                 <p:RightColumnControl/>
             </Grid>
             <Grid x:Name="_main_container">
-                <p:TimelineControl DataContext="{Binding Timeline,Mode=OneWay}" x:Name="_timeline"/>
+                <ContentPresenter Content="{Binding Content,Mode=OneWay}"  x:Name="_timeline"/>
+                <!--<p:TimelineControl DataContext="{Binding Timeline,Mode=OneWay}"/>-->
             </Grid>
         </Grid>
         <Grid HorizontalAlignment="Right" Width="50" Background="Transparent" MouseEnter="ToolsetPopup" Height="100" VerticalAlignment="Top" x:Name="_left_tool_hint"/>
@@ -41,7 +51,7 @@
             </Grid.RenderTransform>
                 <p:ToolsetBar/>
             </Grid>
-		<Grid HorizontalAlignment="Left" Width="50" Background="Transparent" MouseEnter="NavisetPopup" Height="180" VerticalAlignment="Top" x:Name="_navi_hint"/>
+		<Grid HorizontalAlignment="Left" Width="50" Background="Transparent" MouseEnter="NavisetPopup" x:Name="_navi_hint"/>
         <Grid x:Name="_navi_container" Width="300" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MouseLeave="NavisetSlideout">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -51,7 +61,7 @@
                     <TranslateTransform X="-300"/>
                 </TransformGroup>
             </Grid.RenderTransform>
-                <p:NavigationBar/>
+                <p:NavigationBar />
             </Grid>
 
 	</Grid>

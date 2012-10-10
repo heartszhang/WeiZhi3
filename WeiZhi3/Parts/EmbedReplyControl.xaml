@@ -40,6 +40,8 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
         <Style TargetType="TextBox">
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <!--<Setter Property="Background" Value="WhiteSmoke"/>-->
             <Setter Property="FontSize" Value="11pt"/>
@@ -113,6 +115,8 @@
         <StackPanel x:Name="LayoutRoot">
         <Grid Height="100">
             <TextBox x:Name="_body" Text="{Binding body}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                  Template="{DynamicResource TextBoxEmbedTemplate}" >
             </TextBox>
             <Grid Background="#A0000000" x:Name="_wait_container" Visibility="{Binding is_busying,Mode=OneWay,Converter={StaticResource b2v},FallbackValue=Collapsed}">

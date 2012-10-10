@@ -11,16 +11,16 @@ namespace WeiZhi3.Parts
 	/// <summary>
 	/// Interaction logic for CommentReplyControl.xaml
 	/// </summary>
-	public partial class WeiboCommentControl : UserControl
+	public partial class EmbedCommentControl : UserControl
 	{
         public bool IsExpanded
         {
             get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, value); }
         }
-        public static DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(WeiboCommentControl), null);
+        public static DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(EmbedCommentControl), null);
         
-		public WeiboCommentControl()
+		public EmbedCommentControl()
 		{
 			this.InitializeComponent();
 		}

@@ -2,20 +2,36 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" VerticalAlignment="Stretch"
-             d:DesignHeight="800" d:DesignWidth="300">
-    
-    <StackPanel Background="Black">
-        <Grid Height="120" Background="#643EBF">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:p="clr-namespace:WeiZhi3.Parts"
+             xmlns:ds="clr-namespace:WeiZhi3.Design" mc:Ignorable="d" VerticalAlignment="Stretch" Background="Black"
+             d:DesignHeight="800" d:DesignWidth="300" d:DataContext="{d:DesignInstance ds:MockPageHomeViewModel,IsDesignTimeCreatable=True}">
 
+    <StackPanel TextElement.FontFamily="{StaticResource UniversalFonts}" TextElement.FontSize="20pt" VerticalAlignment="Top">
+        <StackPanel.Resources>
+            <Style TargetType="Grid" x:Key="WrapGridStyle" >
+                <Setter Property="Height" Value="120"/>
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource MetroButtonNaviStyle}"/>
+        </StackPanel.Resources>
+
+        <Grid Style="{StaticResource WrapGridStyle}"  Background="#30FFFFFF">
+            <Button Command="{Binding ShowHomeTimeline,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}">
+                <Grid DataContext="{Binding HomeTimelineItem,Mode=OneWay}">
+                    <TextBlock Text="{Binding tag,Mode=OneWay}"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40pt"/>
+                    <TextBlock Text="{Binding notifications,Mode=OneWay}" Margin="4" FontSize="10pt" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
         </Grid>
-        <Grid Height="120" Background="#BF1E4B">
-
+        <Grid  Style="{StaticResource WrapGridStyle}" Background="#40FFFFFF">
+            <p:NavigationItemControl DataContext="{Binding CommentsTimelineItem,Mode=OneWay}"
+                                     Foreground="WhiteSmoke"/>
         </Grid>
-        <Grid Height="120" Background="#DC572E">
-
+        <Grid  Style="{StaticResource WrapGridStyle}" Background="#30FFFFFF">
+            <Button Command="{Binding ShowCommentsTimeline,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}">
+                <p:NavigationItemControl DataContext="{Binding CommentsTimelineItem,Mode=OneWay}"
+                                     Foreground="WhiteSmoke" IsHitTestVisible="False" />
+            </Button>
         </Grid>
-
     </StackPanel>
 </UserControl>

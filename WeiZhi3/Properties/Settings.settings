@@ -18,10 +18,13 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="TimelineTickInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">240000</Value>
+      <Value Profile="(Default)">3197</Value>
     </Setting>
     <Setting Name="ScrollAlpha" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="PageSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
     </Setting>
   </Settings>
 </SettingsFile>

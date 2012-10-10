@@ -47,6 +47,8 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
         <Style TargetType="TextBox">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Padding" Value="12,4"/>
             <Setter Property="BorderThickness" Value="0,1"/>
@@ -164,6 +166,7 @@
         <Grid Margin="0,0,0,12">
             <TextBox Height="160" Width="560" Text="{Binding body, UpdateSourceTrigger=PropertyChanged}"
                      FontFamily="{StaticResource UniversalFonts}" FontSize="11pt" x:Name="_body"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      TextWrapping="Wrap" Template="{StaticResource TextBoxEmbedTemplate}"/>
             <Grid Background="#b0000000" Visibility="{Binding is_busying,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}">
                 <TextBlock Text="{Binding reason,Mode=OneWay,FallbackValue='Loading...'}"

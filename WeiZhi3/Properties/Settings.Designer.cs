@@ -85,7 +85,7 @@ namespace WeiZhi3.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("240000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3197")]
         public int TimelineTickInterval {
             get {
                 return ((int)(this["TimelineTickInterval"]));
@@ -104,6 +104,18 @@ namespace WeiZhi3.Properties {
             }
             set {
                 this["ScrollAlpha"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int PageSize {
+            get {
+                return ((int)(this["PageSize"]));
+            }
+            set {
+                this["PageSize"] = value;
             }
         }
     }

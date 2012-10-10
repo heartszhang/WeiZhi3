@@ -5,32 +5,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:a="clr-namespace:WeiZhi3.Attached" xmlns:c="clr-namespace:WeiZhi3.Converters"
     xmlns:ds="clr-namespace:WeiZhi3.Design" xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
-    x:Class="WeiZhi3.Parts.WeiboCommentControl"
+    x:Class="WeiZhi3.Parts.EmbedCommentControl"
     mc:Ignorable="d" 
     x:Name="_this" Background="White"
     d:DesignWidth="632" d:DataContext="{d:DesignInstance ds:MockWeiboComment,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <ControlTemplate x:Key="SimpleTextBoxTemplate" TargetType="{x:Type TextBox}">
-            <Border BorderThickness="0">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Disabled"/>
-                        <VisualState x:Name="ReadOnly"/>
-                        <VisualState x:Name="MouseOver"/>
-                    </VisualStateGroup>
-                    <VisualStateGroup x:Name="FocusStates">
-                        <VisualState x:Name="Focused"/>
-                    </VisualStateGroup>
-                    <VisualStateGroup x:Name="ValidationStates">
-                        <VisualState x:Name="InvalidFocused"/>
-                        <VisualState x:Name="InvalidUnfocused"/>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-
-                <ScrollViewer x:Name="PART_ContentHost"  Margin="4"/>
-
-            </Border>
-        </ControlTemplate>
         <BooleanToVisibilityConverter x:Key="b2v"/>
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:FriendlyTimeConverter x:Key="ftc"/>

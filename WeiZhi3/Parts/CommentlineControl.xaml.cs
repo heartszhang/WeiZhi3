@@ -1,22 +1,31 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Threading;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Artefact.Animation;
 using WeiZhi3.ViewModel;
 using Weibo.ViewModels;
-using Artefact.Animation;
 
 namespace WeiZhi3.Parts
 {
     /// <summary>
-    /// Interaction logic for PartMainContent.xaml
+    /// Interaction logic for CommentlineControl.xaml
     /// </summary>
-    public partial class TimelineControl : UserControl
+    public partial class CommentlineControl : UserControl
     {
-        public TimelineControl()
+        public CommentlineControl()
         {
             InitializeComponent();
-            
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -33,19 +42,19 @@ namespace WeiZhi3.Parts
 
         private void OnMouseEnterItemContainer(object sender, MouseEventArgs e)
         {
-            var item = (ListBoxItem) sender;
+            var item = (ListBoxItem)sender;
             if (item == null)
             {
                 _items.HoveredItem = null;
                 return;
             }
             var ws = item.DataContext;
-            _items.HoveredItem = ws;            
+            _items.HoveredItem = ws;
         }
 
         private void OnMouseEnterToolset(object sender, MouseEventArgs e)
         {
-            _toolset.OffsetTo(0, 0, 0.2,AnimationTransitions.ExpoEaseOut,0);
+            _toolset.OffsetTo(0, 0, 0.2, AnimationTransitions.ExpoEaseOut, 0);
         }
 
         private void OnMouseLeaveToolset(object sender, MouseEventArgs e)
@@ -68,9 +77,9 @@ namespace WeiZhi3.Parts
 
         private void OnLastPage(object sender, RoutedEventArgs e)
         {
-            var at = ((ViewModelLocator) FindResource("Locator")).AccessToken;
-            var mv = (TimelineViewModel) DataContext;
-            mv.MorePage(at);
+            var at = ((ViewModelLocator)FindResource("Locator")).AccessToken;
+            var vm = (CommentlineViewModel) DataContext;
+            vm.MorePage(at.get());
             e.Handled = true;
         }
     }

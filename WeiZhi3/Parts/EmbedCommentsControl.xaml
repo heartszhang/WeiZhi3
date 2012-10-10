@@ -11,7 +11,7 @@
 	d:DesignWidth="632" d:DataContext="{d:DesignInstance ds:MockCommentsViewModel,IsDesignTimeCreatable=True}">
 	<UserControl.Resources>
 		<DataTemplate x:Key="CommentTemplate" DataType="v:WeiboComment">
-            <p:WeiboCommentControl/>
+            <p:EmbedCommentControl/>
 		</DataTemplate>
 		<Geometry x:Key="PathWarning">F1 M 509.048,238.436C 508.374,238.436 507.752,238.077 507.416,237.494C 507.079,236.911 507.079,236.192 507.416,235.609L 519.931,213.931C 520.268,213.348 520.89,212.989 521.563,212.989C 522.237,212.989 522.859,213.348 523.195,213.931L 535.711,235.609C 536.047,236.192 536.047,236.911 535.711,237.494C 535.374,238.077 534.752,238.436 534.079,238.436L 509.048,238.436 Z M 519.463,220.021L 520.044,229.788L 523.083,229.788L 523.663,220.021L 519.463,220.021 Z M 519.692,232.451L 519.692,235.217L 523.444,235.217L 523.444,232.451L 519.692,232.451 Z</Geometry>
         <c:IntZeroToVisibilityConverter x:Key="iz2v"/>

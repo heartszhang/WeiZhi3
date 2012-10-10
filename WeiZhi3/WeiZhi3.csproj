@@ -13,6 +13,29 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://localhost/weizhi3/</InstallUrl>
+    <ProductName>WeiZhi3</ProductName>
+    <PublisherName>zion</PublisherName>
+    <SuiteName>weizhi</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>weizhi3.htm</WebPage>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +58,18 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logo3.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>4FFCF440EFB0C904784E2137B6BDE718260E04B7</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>WeiZhi3_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Artefact">
@@ -97,12 +132,14 @@
     <Compile Include="Converters\StringToVisibiltyConverter.cs" />
     <Compile Include="Converters\StringToWeiboLengthLeftConverter.cs" />
     <Compile Include="Converters\UriInfoToHasDocumentConverter.cs" />
-    <Compile Include="Design\DesignDialogMessageBox.cs" />
-    <Compile Include="Design\DesignPageHomeViewModel.cs" />
-    <Compile Include="Design\DesignUserExt.cs" />
+    <Compile Include="Design\MockDialogMessageBox.cs" />
+    <Compile Include="Design\MockWeiboEditViewModel.cs" />
+    <Compile Include="Design\MockPageHomeViewModel.cs" />
+    <Compile Include="Design\MockUserExt.cs" />
     <Compile Include="Attached\TextRender.cs" />
     <Compile Include="Design\MockCommentsViewModel.cs" />
     <Compile Include="Design\MockMediaCollectionsViewModel.cs" />
+    <Compile Include="Design\MockNavigationItem.cs" />
     <Compile Include="Design\MockWeiboComment.cs" />
     <Compile Include="Design\MockWeiboRetweetStatus.cs" />
     <Compile Include="Design\MockWeiboStatus.cs" />
@@ -115,8 +152,14 @@
     <Compile Include="Pages\PageAuthorizing.xaml.cs">
       <DependentUpon>PageAuthorizing.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Parts\WeiboCommentControl.xaml.cs">
-      <DependentUpon>WeiboCommentControl.xaml</DependentUpon>
+    <Compile Include="Parts\CommentControl.xaml.cs">
+      <DependentUpon>CommentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\CommentlineControl.xaml.cs">
+      <DependentUpon>CommentlineControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\EmbedCommentControl.xaml.cs">
+      <DependentUpon>EmbedCommentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\EmbedCommentsControl.xaml.cs">
       <DependentUpon>EmbedCommentsControl.xaml</DependentUpon>
@@ -136,6 +179,9 @@
     </Compile>
     <Compile Include="Parts\MiniMusicPlayerControl.xaml.cs">
       <DependentUpon>MiniMusicPlayerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\NavigationItemControl.xaml.cs">
+      <DependentUpon>NavigationItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\Song.cs" />
     <Compile Include="Parts\TimelineControl.xaml.cs">
@@ -202,7 +248,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Parts\WeiboCommentControl.xaml">
+    <Page Include="Parts\CommentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\CommentlineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\EmbedCommentControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -229,6 +283,10 @@
     <Page Include="Parts\MiniMusicPlayerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Parts\NavigationItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Parts\TimelineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -286,6 +344,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\textbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\weibos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -334,6 +396,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="WeiZhi3_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -361,6 +424,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WeiZhi3.Parts.NavigationItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ds="clr-namespace:WeiZhi3.Design"
+             xmlns:c="clr-namespace:WeiZhi3.Converters"
+             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
+             TextElement.FontFamily="{StaticResource UniversalFonts}" TextElement.FontSize="11pt" 
+             d:DesignHeight="120" d:DesignWidth="300" TextElement.Foreground="{Binding Foreground,RelativeSource={RelativeSource Self}}"
+             d:DataContext="{d:DesignInstance ds:MockNavigationItem,IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <c:ImageUrlConverter x:Key="iuc"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid x:Name="_content">
+            <Image Stretch="UniformToFill" Source="{Binding image,Mode=OneWay,Converter={StaticResource iuc}}" Visibility="Collapsed"/>
+            <TextBlock Text="{Binding text,Mode=OneWay}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="12,8"/>
+        </Grid>
+        <Grid x:Name="_info" Height="40" VerticalAlignment="Bottom" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding tag,Mode=OneWay}" FontSize="21pt" VerticalAlignment="Center" Margin="4,0"/>
+            </StackPanel>
+            <Grid Grid.Column="1">
+                <TextBlock FontSize="10pt" Text="{Binding notifications,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4,0"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

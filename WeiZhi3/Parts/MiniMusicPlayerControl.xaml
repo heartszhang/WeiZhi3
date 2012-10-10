@@ -66,7 +66,7 @@
                       Name="Thumb" 
                       Background="{TemplateBinding Foreground}"
 		              BorderBrush="{TemplateBinding BorderBrush}"
-		              BorderThickness="0,0,1,0" />
+		              BorderThickness="0" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -139,7 +139,7 @@
         <ToggleButton Command="MediaCommands.TogglePlayPause" 
                       CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}" 
                       IsChecked="{Binding IsPlaying,ElementName=_this}"
-                      ToolTip="{Binding Current.Pic,Mode=OneWay}">
+                      ToolTip="{Binding Current.Pic,ElementName=_this,Mode=OneWay}">
             <ToggleButton.Style>
                 <Style TargetType="ToggleButton">
                     <Setter Property="Foreground" Value="White"/>

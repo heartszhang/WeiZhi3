@@ -6,7 +6,7 @@
              xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
              Foreground="#FF666666" 
              x:Name="_this" 
-             Height="120" d:DesignWidth="440" d:DataContext="{d:DesignInstance ds:DesignUserExt,IsDesignTimeCreatable=True}">
+             Height="120" d:DesignWidth="440" d:DataContext="{d:DesignInstance ds:MockUserExt,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:IntFriendlyConverter x:Key="ifc"/>

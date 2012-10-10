@@ -9,6 +9,7 @@ using System.Windows.Navigation;
 using System.Windows.Threading;
 using Artefact.Animation;
 using WeiZhi3.ViewModel;
+using Weibo.DataModel;
 using Weibo.ViewModels;
 using System.Runtime.Caching;
 
@@ -71,6 +72,7 @@ namespace WeiZhi3.Pages
 
             var settings = Properties.Settings.Default;
             _timer = new Timer(OnTimerCallback, DataContext, settings.TimelineTickInterval, settings.TimelineTickInterval);
+            
 	    }
 
 	    private void OnTimerCallback(object state)
@@ -81,10 +83,10 @@ namespace WeiZhi3.Pages
             vm.OnTick(Token());
         }
 
-        string Token()
+        IWeiboAccessToken Token()
         {
             var locator = (ViewModelLocator)FindResource("Locator");
-            return locator.Profile.Token(_user_id);            
+            return locator.UserAccessToken(_user_id);            
         }
 	    void InitializePageHome(string src)
         {
@@ -106,7 +108,7 @@ namespace WeiZhi3.Pages
 	        CacheToken(at);
             var vm = new PageHomeViewModel(uid,at);
             DataContext = vm;
-            vm.Initialize(at);
+            vm.Initialize(locator.UserAccessToken(uid));
         }
         void CacheToken(string token)
         {
