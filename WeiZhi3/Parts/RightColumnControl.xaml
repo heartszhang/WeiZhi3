@@ -6,7 +6,8 @@
              xmlns:wz="clr-namespace:WeiZhi3" xmlns:b="clr-namespace:Bot.Transitions;assembly=Bot"
              xmlns:c="clr-namespace:WeiZhi3.Converters" xmlns:dz="clr-namespace:WeiZhi3.Design"
              xmlns:m="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
-             xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d" 
+             xmlns:a="clr-namespace:WeiZhi3.Attached"
+             xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance dz:MockPageHomeViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="600" d:DesignWidth="440">
     <UserControl.Resources>
@@ -93,6 +94,34 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <DataTemplate DataType="{x:Type v:WeiboStatus}">
+            <ScrollViewer Background="White" m:MouseWheel.Enhanced="True" m:MouseWheel.VScrollSmoothing="Smooth" 
+                          m:MouseWheel.PhysicalScrollIncrement="24*" 
+                              HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer.Template>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="8"/>
+
+                            </Grid.ColumnDefinitions>
+                            <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" Grid.ColumnSpan="2"/>
+                            <ScrollBar Name="PART_VerticalScrollBar" Grid.Column="1" Style="{StaticResource ScrollBarThinStyle}"
+										Value="{TemplateBinding VerticalOffset}" ViewportSize="{TemplateBinding ViewportHeight}"
+										Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+										Maximum="{TemplateBinding ScrollableHeight}">
+
+                            </ScrollBar>
+                        </Grid>
+                    </ControlTemplate>
+                </ScrollViewer.Template>
+                <p:WeiboControlThin Padding="8" BorderThickness="1,0,0,0" BorderBrush="WhiteSmoke"/>
+            </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type v:Recomendations}">
+            <p:TimelineControl/>
+        </DataTemplate>
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:NotNullToVisibilityConverter x:Key="nn2v"/>
         <DataTemplate x:Key="FocusedItemTemplate">
@@ -149,13 +178,22 @@
             <Grid x:Name="_profile_container" Visibility="{Binding user,Mode=OneWay,Converter={StaticResource nn2v},FallbackValue=Collapsed}">
                 <p:WeiboUserControl DataContext="{Binding user,Mode=OneWay}"/>
             </Grid>
-            <Button Content="&#xE088; WRITE WEIBO" Foreground="#ff111111" FontWeight="SemiBold" Style="{DynamicResource MetroButtonStyle}" FontFamily="{StaticResource UniversalFonts}"/>
-        </StackPanel>
-        <Grid DockPanel.Dock="Top">
+            <Button Content="&#xE088; 写新微博" 
+                    Foreground="#ff111111" Command="wz:WeiZhiCommands.CreateTweet" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
+                    FontWeight="SemiBold" Style="{DynamicResource MetroButtonStyle}"
+                    FontFamily="{StaticResource UniversalFonts}"/>
             <p:MediaCollectionControl DataContext="{Binding Media,Mode=OneWay}"/>
-        <b:TransitionPresenter MinHeight="200" Content="{Binding Timeline.FocusedItem,Mode=OneWay}" ContentTemplate="{StaticResource FocusedItemTemplate}">
+        </StackPanel>
+        <b:TransitionPresenter DockPanel.Dock="Top" Content="{Binding SecondContent,Mode=OneWay}" Margin="0,12,0,0">
             <b:TransitionPresenter.Transition>
-                <b:TranslateTransition Duration="0:0:0.2" StartPoint="-1,0"/>
+                <b:TranslateTransition Duration="0:0:0.3" StartPoint="1,0"/>
+            </b:TransitionPresenter.Transition>
+        </b:TransitionPresenter>
+
+        <Grid DockPanel.Dock="Top">
+        <b:TransitionPresenter MinHeight="200"  >
+            <b:TransitionPresenter.Transition>
+                <b:TranslateTransition Duration="0:0:0.4" StartPoint="-1,0"/>
             </b:TransitionPresenter.Transition>
         </b:TransitionPresenter>
         </Grid>

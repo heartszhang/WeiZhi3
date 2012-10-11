@@ -8,5 +8,6 @@ namespace WeiZhi3.Design
         {
             user = new MockUserExt();
         }
+
     }
 }

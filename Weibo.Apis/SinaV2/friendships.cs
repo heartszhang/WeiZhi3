@@ -12,7 +12,7 @@ namespace Weibo.Apis.SinaV2
             friendships_destroy_async(long uid, string token)
         {
             return await
-                    WeiboInternal.HttpsPost<User>("friendships/destroy.json",
+                    WeiboInternal.HttpsPost<User>(WeiboSources.SinaV2("friendships/destroy.json"),
                         new List<KeyValuePair<string, string>>
                         {
                             new KeyValuePair<string, string>("access_token",token),
@@ -24,7 +24,7 @@ namespace Weibo.Apis.SinaV2
             friendships_create_async(long uid, string token)
         {
             return await
-                    WeiboInternal.HttpsPost<User>("friendships/create.json",
+                    WeiboInternal.HttpsPost<User>(WeiboSources.SinaV2("friendships/create.json"),
                         new List<KeyValuePair<string, string>>
                         {
                             new KeyValuePair<string, string>("access_token",token),
@@ -41,7 +41,7 @@ namespace Weibo.Apis.SinaV2
                                      count,
                                      token,
                                      userid, cursor);
-            return await WeiboInternal.HttpsGet<Users>(path);
+            return await WeiboInternal.HttpsGet<Users>(WeiboSources.SinaV2(path));
         }
         public static async Task<RestResult<Users>>
             friendships_followers_active_async(long userid,
@@ -51,7 +51,7 @@ namespace Weibo.Apis.SinaV2
                                      count,
                                      token,
                                      userid);
-            return await WeiboInternal.HttpsGet<Users>(path);
+            return await WeiboInternal.HttpsGet<Users>(WeiboSources.SinaV2(path));
         }
         public static async Task<RestResult<Users>>
             friendships_friends_chain_followers_async(long userid,
@@ -61,7 +61,7 @@ namespace Weibo.Apis.SinaV2
                                      count,
                                      token,
                                      userid, page);
-            return await WeiboInternal.HttpsGet<Users>(path);
+            return await WeiboInternal.HttpsGet<Users>(WeiboSources.SinaV2(path));
 
         }
         public static async Task<RestResult<Users>>
@@ -69,7 +69,7 @@ namespace Weibo.Apis.SinaV2
         {
             var path = string.Format("friendships/friends.json?count={0}&cursor={1}&uid={2}&access_token={3}&trim_status=0"
                 , count, cursor, userid, token);
-            return await WeiboInternal.HttpsGet<Users>(path);
+            return await WeiboInternal.HttpsGet<Users>(WeiboSources.SinaV2(path));
         }
 
         public static async Task<RestResult<Users>>
@@ -77,7 +77,7 @@ namespace Weibo.Apis.SinaV2
         {
             var path = string.Format("friendships/friends/in_common.json?count={0}&page={1}&uid={2}&access_token={3}"
                 , count, page, userid, token);
-            return await WeiboInternal.HttpsGet<Users>(path);
+            return await WeiboInternal.HttpsGet<Users>(WeiboSources.SinaV2(path));
         }
 
         public static async Task<RestResult<Users>>
@@ -85,7 +85,7 @@ namespace Weibo.Apis.SinaV2
         {
             var path = string.Format("friendships/friends/bilateral.json?count={0}&page={1}&uid={2}&access_token={3}"
                 , count, page, userid, token);
-            return await WeiboInternal.HttpsGet<Users>(path);
+            return await WeiboInternal.HttpsGet<Users>(WeiboSources.SinaV2(path));
         }
 
         public static async Task<RestResult<UserIds>> friendships_followers_ids_async(long userid,
@@ -96,7 +96,7 @@ namespace Weibo.Apis.SinaV2
                                      count,
                                      token);
 
-            return await WeiboInternal.HttpsGet<UserIds>(path);
+            return await WeiboInternal.HttpsGet<UserIds>(WeiboSources.SinaV2(path));
         }
     }
 }

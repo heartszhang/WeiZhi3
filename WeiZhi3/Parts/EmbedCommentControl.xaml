@@ -7,7 +7,7 @@
     xmlns:ds="clr-namespace:WeiZhi3.Design" xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels"
     x:Class="WeiZhi3.Parts.EmbedCommentControl"
     mc:Ignorable="d" 
-    x:Name="_this" Background="White"
+    x:Name="_this" 
     d:DesignWidth="632" d:DataContext="{d:DesignInstance ds:MockWeiboComment,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>

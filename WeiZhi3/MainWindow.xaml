@@ -36,6 +36,10 @@
         <CommandBinding Command="MediaCommands.Play" Executed="ExecuteMediaCommandsPlay"/>
         <CommandBinding Command="w:WeiZhiCommands.NavigateUrl" Executed="ExecuteWeiZhiCommandsNavigateUrl"/>
         <CommandBinding Command="w:WeiZhiCommands.CreateTweet" Executed="ExecuteWeiZhiCommandsCreateTweet"/>        
+        <CommandBinding Command="w:WeiZhiCommands.CopyTweet" Executed="ExecuteWeiZhiCommandsCopyTweet"/>
+        <CommandBinding Command="w:WeiZhiCommands.CopyName" Executed="ExecuteWeiZhiCommandsCopyName"/>
+        <CommandBinding Command="w:WeiZhiCommands.ViewUserViaWeb" Executed="ExecuteWeiZhiCommandsViewUserViaWeb"/>
+        <CommandBinding Command="w:WeiZhiCommands.FollowUnfollow" Executed="ExecuteWeiZhiCommandsFollowUnfollow"/>
     </NavigationWindow.CommandBindings>
     <NavigationWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="w:WeiZhiCommands.CreateTweet"/>

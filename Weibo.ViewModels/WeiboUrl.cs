@@ -17,7 +17,8 @@ namespace Weibo.ViewModels
             get { return _data.topic(); } 
         }//from urlinfo or it's annotations
 
-        public string short_path { get { return _data.url_short.Remove(0, 12); } }//not include http://t.cn/.Length == 12
+        public string short_path { get { return  _data.url_short.Remove(0, 12); } }//not include http://t.cn/.Length == 12
+        public string url_short { get { return _data.url_short; } }
 
         public bool has_document { get { return _data.type == UrlType.Normal || _data.type == UrlType.News || _data.type == UrlType.Blog; } }
         public bool has_music { get { return _data.type == UrlType.Music; } }
@@ -41,5 +42,6 @@ namespace Weibo.ViewModels
         public string document { get { return has_document ? _data.url_short : null; } }//通过这个才能转化成flowdocument
         public string album { get { return has_annotations ? _data.annotations[0].album : null; } }
         public string mp4 { get { return has_annotations ? _data.annotations[0].mp4 : null; } }//used for sina video
+        public bool is_empty { get { return string.IsNullOrEmpty(_data.url_short); } }
     }
 }

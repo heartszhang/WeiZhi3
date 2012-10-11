@@ -65,7 +65,9 @@
     <Compile Include="NavigationItem.cs" />
     <Compile Include="ObservableObjectExt.cs" />
     <Compile Include="PageHomeViewModel.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recomendations.cs" />
     <Compile Include="StatusRender\CharHelper.cs" />
     <Compile Include="StatusRender\Token.cs" />
     <Compile Include="StatusRender\WeiboParser.cs" />

@@ -29,8 +29,9 @@ namespace WeiZhi3
         public static readonly RoutedCommand Reload
             = new RoutedCommand("Reload", typeof(WeiZhiCommands));
 
-        public static readonly RoutedCommand Follow
-            = new RoutedCommand("Follow", typeof(WeiZhiCommands));
+
+        public static readonly RoutedCommand FollowUnfollow
+            = new RoutedCommand("FollowUnfollow", typeof(WeiZhiCommands));
 
         public static readonly RoutedCommand ShowDetail
            = new RoutedCommand("ShowDetail", typeof(WeiZhiCommands));
@@ -65,5 +66,12 @@ namespace WeiZhi3
 
         public static readonly RoutedCommand ScrollUp = new RoutedCommand("ScrollUp",typeof(WeiZhiCommands));
         public static readonly RoutedCommand ScrollDown = new RoutedCommand("ScrollDown", typeof(WeiZhiCommands));
+
+        public static readonly RoutedCommand CopyTweet = new RoutedCommand("CopyTweet",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand CopyName = new RoutedCommand("CopyName",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand ViewWeiboViaWeb = new RoutedCommand("ViewWeiboViaWeb",typeof(WeiZhiCommands));
+        public static readonly RoutedCommand ViewUserViaWeb = new RoutedCommand("ViewUserViaWeb", typeof(WeiZhiCommands));
+        public static readonly RoutedCommand CommentRetweet = new RoutedCommand("CommentRetweet", typeof(WeiZhiCommands));
+
     }
 }

@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using WeiZhi3.ViewModel;
 using WeiZhi3.Views;
+using Weibo.Apis.SinaV2;
 using Weibo.DataModel;
 using Weibo.DataModel.Misc;
 using Weibo.ViewModels;
@@ -207,6 +208,63 @@ namespace WeiZhi3
             e.Handled = true;
             var wnd = new WeiboEditWindow() {Owner = this, DataContext = new WeiboEditViewModel(),ShowInTaskbar = false};
             wnd.Show();
+        }
+
+        private void ExecuteWeiZhiCommandsCopyName(object sender, ExecutedRoutedEventArgs e)
+        {
+            var name = (string) e.Parameter;
+            Clipboard.SetText("@"+name);
+            e.Handled = true;
+        }
+
+        private void ExecuteWeiZhiCommandsCopyTweet(object sender, ExecutedRoutedEventArgs e)
+        {
+            var ws = (WeiboStatus) e.Parameter;
+            var txt = "//@" + ws.user.screen_name + ": " + ws.text;
+            Clipboard.SetText(txt);
+            e.Handled = true;
+        }
+
+        private void ExecuteWeiZhiCommandsViewUserViaWeb(object sender, ExecutedRoutedEventArgs e)
+        {
+            var user = (UserExt) e.Parameter;
+            var url = "http://weibo.com/u/" + user.id;
+            var psi = new ProcessStartInfo(url) { UseShellExecute = true };
+            using (Process.Start(psi))
+            {
+            }
+            e.Handled = true;
+        }
+
+        private async void ExecuteWeiZhiCommandsUnfollow(UserExt user, string token)
+        {
+            var resp = await WeiboClient.friendships_destroy_async(user.id, token);
+            var caption = string.Format("取消关注 @{0}", user.screen_name);
+            DialogMessageBox.Show(resp.Failed() ? resp.Reason : "成功", caption, MessageBoxButton.OK, MessageBoxResult.OK);
+            if (!resp.Failed())
+                user.following = false;
+        }
+
+        private async void ExecuteWeiZhiCommandsFollow(UserExt user, string token)
+        {
+            var resp = await WeiboClient.friendships_create_async(user.id, token);
+            var caption = string.Format("关注 @{0}", user.screen_name);
+            DialogMessageBox.Show(resp.Failed() ? resp.Reason : "成功", caption, MessageBoxButton.OK, MessageBoxResult.OK);
+            if (!resp.Failed())
+                user.following = true;
+        }
+
+        private void ExecuteWeiZhiCommandsFollowUnfollow(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var token = ((ViewModelLocator)FindResource("Locator")).AccessToken.get();
+            var user = (UserExt)e.Parameter;
+            if (!user.following)
+                ExecuteWeiZhiCommandsFollow(user,token);
+            else
+            {
+                ExecuteWeiZhiCommandsUnfollow(user, token);
+            }
         }
     }
 }

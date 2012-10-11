@@ -85,7 +85,7 @@ namespace Bot
             double width = childrenPerRow * this.ItemWidth;
 
             var fudge = (width - childrenPerRow * ItemWidth) / childrenPerRow;
-            double height = (this.ItemHeight +fudge )* (Math.Floor((double)this.Children.Count / childrenPerRow) + 1);
+            double height = (this.ItemHeight +fudge )* (Math.Floor((double)(this.Children.Count +childrenPerRow - 1) / childrenPerRow) );
             height = (height.IsValid()) ? height : 0;
             return new Size(width, height);
         }

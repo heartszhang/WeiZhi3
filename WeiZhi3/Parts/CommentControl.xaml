@@ -22,7 +22,7 @@
                          ScrollViewer.VerticalScrollBarVisibility="Disabled" FontFamily="{StaticResource UniversalFonts}" 
                          FontSize="14.667" RenderTransformOrigin="0.5,0.5" TextBlock.LineHeight="22"
                          KeyDown="OnCommentContainerKeyDown" Text="{Binding body,UpdateSourceTrigger=PropertyChanged}"
-                         Template="{StaticResource SimpleTextBoxTemplate}" >
+                         Template="{StaticResource SimpleTextBoxTemplate}"  >
                     <TextBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="剪切(_u)" Command="ApplicationCommands.Cut"/>

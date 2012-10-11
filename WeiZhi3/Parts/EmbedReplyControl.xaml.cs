@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WeiZhi3.ViewModel;
@@ -41,6 +42,11 @@ namespace WeiZhi3.Parts
 	    {
 	        _reply_to_original.IsChecked = !_reply_to_original.IsChecked;
 	        e.Handled = true;
+	    }
+
+	    private void OnEmbedReplyControlLoad(object sender, RoutedEventArgs e)
+	    {
+            _body.Focus();
 	    }
 	}
 }

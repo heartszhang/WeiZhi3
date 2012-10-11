@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -7,16 +8,21 @@ namespace Weibo.ViewModels
 {
     public class PageHomeViewModel : ViewModelBase2
     {
+        private readonly Recomendations _recomendations;
         private ViewModelBase2 _content;
         private CommentlineViewModel _comments;
         private UserExt _user;
         private TimelineViewModel _timeline;
         public long uid { get; set; }
 
+        private object _second_content;
+        public object SecondContent { get { return _second_content; } set { Set(ref _second_content, value); } }
+
        // public NavigationItem CommentsToMeItem { get; set; }
         //public NavigationItem CommentsByMeItem { get; set; }
         public NavigationItem CommentsTimelineItem { get; set; }
         public NavigationItem HomeTimelineItem { get; set; }
+        public Recomendations Recomendations { get { return _recomendations; } }
 
         private readonly RelayCommand<IWeiboAccessToken> _show_comments_to_me;
         public ICommand ShowCommentsToMe { get { return _show_comments_to_me; } }
@@ -59,6 +65,7 @@ namespace Weibo.ViewModels
 //            CommentsByMeItem = new NavigationItem("X");
             CommentsTimelineItem = new CommentsTimelineNavigationItem();
             HomeTimelineItem = new HomeTimelineNavigationItem();
+            _recomendations = new Recomendations();
         }
 
         private void ExecuteShowHomeTimeline(IWeiboAccessToken obj)
@@ -114,16 +121,30 @@ namespace Weibo.ViewModels
 
         public void OnTick(IWeiboAccessToken token)
         {
+            SwitchSecondContent();
             if(Timeline != null)
                 Timeline.OnTick(token);
             CommentsTimelineItem.OnTick(token);
             HomeTimelineItem.OnTick(token);
+            Recomendations.OnTick(token);
         }
         public override void Cleanup()
         {
             base.Cleanup();
             Media.Cleanup();
             Timeline.Cleanup();
+        }
+
+        private int _switch_second_tick;
+        void SwitchSecondContent()
+        {
+            if (_switch_second_tick++%11 != 5)
+                return;
+            if (Recomendations.statuses.Count == 0)
+                return;
+            var ws = Recomendations.statuses.LastOrDefault();
+            Recomendations.statuses.Remove(ws);
+            SecondContent = ws;
         }
     }
 }

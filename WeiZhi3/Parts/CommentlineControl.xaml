@@ -23,7 +23,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border Padding="0,15,15,15" ClipToBounds="True" RenderOptions.ClearTypeHint="Enabled" 
+                        <Border Padding="0,15,31,15" ClipToBounds="True" RenderOptions.ClearTypeHint="Enabled" 
                                 BorderBrush="#40464646" BorderThickness="0,0,0,1" Background="Transparent" x:Name="_border">
                             <ContentPresenter/>
                             <VisualStateManager.VisualStateGroups>

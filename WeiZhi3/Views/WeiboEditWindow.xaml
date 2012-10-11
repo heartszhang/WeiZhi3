@@ -37,10 +37,10 @@
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="#FFa0b955"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource MetroColorFeatureFadeBrush}"/>
                 </Trigger>
                 <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="BorderBrush" Value="#FF8ebc00"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource MetroColorFeatureBrush}"/>
                     <Setter Property="Background" Value="White"/>
                 </Trigger>
 

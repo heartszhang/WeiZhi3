@@ -122,6 +122,7 @@
     <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />
     <Compile Include="Behaviours\WeiboAuthorizeBehavior.cs" />
+    <Compile Include="Converters\FollowCommandConverter.cs" />
     <Compile Include="Converters\FriendlyTimeConverter.cs" />
     <Compile Include="Converters\IntFriendlyConverter.cs" />
     <Compile Include="Converters\IntNZeroToVisibilityConverter.cs" />
@@ -201,6 +202,10 @@
     </Compile>
     <Compile Include="Parts\WeiboControl.xaml.cs">
       <DependentUpon>WeiboControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parts\WeiboControlBase.cs" />
+    <Compile Include="Parts\WeiboControlThin.xaml.cs">
+      <DependentUpon>WeiboControlThin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parts\WeiboRetweetControl.xaml.cs">
       <DependentUpon>WeiboRetweetControl.xaml</DependentUpon>
@@ -309,6 +314,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Parts\WeiboControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Parts\WeiboControlThin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

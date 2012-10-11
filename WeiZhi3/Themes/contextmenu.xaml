@@ -16,7 +16,8 @@
     <Style TargetType="{x:Type ContextMenu}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Foreground" Value="{StaticResource MetroMenuText}"/>
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="10pt" />
+        <Setter Property="FontFamily" Value="{StaticResource UniversalFonts}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">

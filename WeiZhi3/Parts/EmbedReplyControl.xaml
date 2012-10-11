@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:w="clr-namespace:WeiZhi3"
     mc:Ignorable="d"
-    x:Class="WeiZhi3.Parts.EmbedReplyControl"
+    x:Class="WeiZhi3.Parts.EmbedReplyControl" Loaded="OnEmbedReplyControlLoad"
     x:Name="_this" TextElement.FontFamily="Microsoft YaHei, Segoe UI, Segoe UI Symbol"
     d:DesignWidth="600" >
     <UserControl.Resources>

@@ -284,7 +284,7 @@ namespace Weibo.ViewModels
             while (tokens.Count > 0)
             {
                 var tag =tokens[0].tag;
-                if ( tag== TokenTypes.Punctuation || tag == TokenTypes.Break)
+                if ( (tag== TokenTypes.Punctuation || tag == TokenTypes.Break) && tokens[0].text != "《")
                     tokens.RemoveAt(0);
                 else
                     break;
