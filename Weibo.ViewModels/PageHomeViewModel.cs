@@ -138,7 +138,7 @@ namespace Weibo.ViewModels
         private int _switch_second_tick;
         void SwitchSecondContent()
         {
-            if (_switch_second_tick++%11 != 5)
+            if (_switch_second_tick++%47 != 5)
                 return;
             if (Recomendations.statuses.Count == 0)
                 return;

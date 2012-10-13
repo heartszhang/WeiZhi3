@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:w="clr-namespace:WeiZhi3"
-    mc:Ignorable="d"
+    xmlns:a="clr-namespace:WeiZhi3.Attached" mc:Ignorable="d"
     x:Class="WeiZhi3.Parts.EmbedReplyControl" Loaded="OnEmbedReplyControlLoad"
     x:Name="_this" TextElement.FontFamily="Microsoft YaHei, Segoe UI, Segoe UI Symbol"
     d:DesignWidth="600" >
@@ -114,9 +114,11 @@
     </UserControl.InputBindings>
         <StackPanel x:Name="LayoutRoot">
         <Grid Height="100">
-            <TextBox x:Name="_body" Text="{Binding body}"
+            <TextBox x:Name="_body" Text="{Binding body}" a:TabCompletionInterService.References="{Binding refer,Mode=OneWay}"
+                     a:TabCompletionInterService.MentionOne="{Binding mention,Mode=OneWay}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                     ScrollViewer.PanningMode="VerticalOnly" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                     TextWrapping="Wrap"
                  Template="{DynamicResource TextBoxEmbedTemplate}" >
             </TextBox>
             <Grid Background="#A0000000" x:Name="_wait_container" Visibility="{Binding is_busying,Mode=OneWay,Converter={StaticResource b2v},FallbackValue=Collapsed}">

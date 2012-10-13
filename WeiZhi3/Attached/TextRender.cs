@@ -204,7 +204,7 @@ namespace WeiZhi3.Attached
             //create hyperlink 
             var h = new Hyperlink(new Run(run))
             {
-              //  NavigateUri = new Uri(ut,UriKind.Absolute),
+             //   NavigateUri = new Uri(ut,UriKind.Absolute),使用这个会直接调用到navigationservice中
                 Command = WeiZhiCommands.Navigate,                
                 CommandParameter = ut,
                 ToolTip =  ut,
@@ -267,5 +267,4 @@ namespace WeiZhi3.Attached
         }
         #endregion
     }
-
 }

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -161,21 +162,28 @@ namespace WeiZhi3.Attached
             var sz = await Utils.FetchImageSizeAsync(i.thumbnail_pic);
             if (sz.Height * sz.Width == 0)
                 return;
-            
 
-            string url;
-            if(sz.Height >= sz.Width)//方形的图片最好也显示小图，音乐图片都是方形的
-            {//portrait
-                mode = 2;
-                url = await HttpDownloadToLocalFile.DownloadAsync(i.thumbnail_pic, "thumbnail", ".jpg");
-            }else
+            try
             {
-                mode = 3;
-                url = await HttpDownloadToLocalFile.DownloadAsync(i.bmiddle_pic, "bmiddle", ".jpg");
+                string url;
+                if (sz.Height >= sz.Width) //方形的图片最好也显示小图，音乐图片都是方形的
+                {
+//portrait
+                    mode = 2;
+                    url = await HttpDownloadToLocalFile.DownloadAsync(i.thumbnail_pic, "thumbnail", ".jpg");
+                }
+                else
+                {
+                    mode = 3;
+                    url = await HttpDownloadToLocalFile.DownloadAsync(i.bmiddle_pic, "bmiddle", ".jpg");
+                }
+                //if (string.IsNullOrEmpty(url))
+                //  url = i.thumbnail_pic;
+                SetImageSource(img, url, mode);
+            }catch(HttpRequestException ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
-            //if (string.IsNullOrEmpty(url))
-              //  url = i.thumbnail_pic;
-            SetImageSource(img, url, mode);
         }
 
         #endregion

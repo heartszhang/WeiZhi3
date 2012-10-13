@@ -118,6 +118,8 @@
     <Compile Include="Attached\ImageLocalCache.cs" />
     <Compile Include="Attached\ImageLocalCacheBase.cs" />
     <Compile Include="Attached\ImageWeiboLocalCache.cs" />
+    <Compile Include="Attached\TabCompletionInterService.cs" />
+    <Compile Include="Attached\TabCompletionService.cs" />
     <Compile Include="Behaviours\ClipboardMonitorBehavior.cs" />
     <Compile Include="Behaviours\ListBoxPinCurrentItemBehavior.cs" />
     <Compile Include="Behaviours\ListBoxScrollToTopWhenResetBehavior.cs" />

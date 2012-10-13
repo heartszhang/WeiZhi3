@@ -73,5 +73,11 @@ namespace WeiZhi3.Parts
             mv.MorePage(at);
             e.Handled = true;
         }
+
+        private void OnTimelineControlLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnTimelineControlLoaded;
+            Focus();
+        }
     }
 }

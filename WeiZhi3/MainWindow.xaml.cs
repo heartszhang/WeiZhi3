@@ -157,7 +157,7 @@ namespace WeiZhi3
             }
         }
         private void OnNavigating(object sender, NavigatingCancelEventArgs e)
-        {            
+        {
             var uri = e.Uri;
             if (uri == null || !uri.IsAbsoluteUri)
                 return;
@@ -257,13 +257,31 @@ namespace WeiZhi3
         private void ExecuteWeiZhiCommandsFollowUnfollow(object sender, ExecutedRoutedEventArgs e)
         {
             e.Handled = true;
-            var token = ((ViewModelLocator)FindResource("Locator")).AccessToken.get();
             var user = (UserExt)e.Parameter;
             if (!user.following)
-                ExecuteWeiZhiCommandsFollow(user,token);
+                ExecuteWeiZhiCommandsFollow(user,Token().get());
             else
             {
-                ExecuteWeiZhiCommandsUnfollow(user, token);
+                ExecuteWeiZhiCommandsUnfollow(user, Token().get());
+            }
+        }
+        IWeiboAccessToken Token()
+        {
+            var token = ((ViewModelLocator)FindResource("Locator")).AccessToken;
+            return token;
+        }
+        private async void ExecuteWeiZhiCommandsRetweetDirectly(object sender, ExecutedRoutedEventArgs e)
+        {
+            var ws = (WeiboStatus) e.Parameter;
+            var resp = await WeiboClient.statuses_repost_async(string.Empty, ws.id,
+                                                         WeiboClient.StatusesRepostIsCommentFlag.NoComment,
+                                                         Token().get());
+            if (resp.Failed())
+                DialogMessageBox.Show(resp.Reason, string.Format("转发 @{0} 的微博", ws.user.screen_name),
+                                      MessageBoxButton.OK, MessageBoxResult.OK);
+            else
+            {
+                Messenger.Default.Send(new NotificationMessage(string.Format("已经转发 @{0} 的微博", ws.user.screen_name)), "noti");
             }
         }
     }

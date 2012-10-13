@@ -136,7 +136,7 @@ namespace Weibo.ViewModels
         }
         private void execute_show_editor()
         {
-            editor = _editor == null ? new WeiboReply(id) : null;
+            editor = _editor == null ? new WeiboReply(id, text, user.screen_name) : null;
         }
 
         #endregion

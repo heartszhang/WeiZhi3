@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.Caching;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,7 +39,7 @@ namespace WeiZhi3.Parts
             {
                 var wnd = Window.GetWindow(this) as NavigationWindow;
                 Debug.Assert(wnd != null);
-                wnd.NavigationService.Navigate((string)e.Parameter);
+                wnd.NavigationService.Navigate(new Uri((string)e.Parameter,UriKind.Absolute));
             }
         }
 

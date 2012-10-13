@@ -40,6 +40,7 @@
         <CommandBinding Command="w:WeiZhiCommands.CopyName" Executed="ExecuteWeiZhiCommandsCopyName"/>
         <CommandBinding Command="w:WeiZhiCommands.ViewUserViaWeb" Executed="ExecuteWeiZhiCommandsViewUserViaWeb"/>
         <CommandBinding Command="w:WeiZhiCommands.FollowUnfollow" Executed="ExecuteWeiZhiCommandsFollowUnfollow"/>
+        <CommandBinding Command="w:WeiZhiCommands.RetweetDirectly" Executed="ExecuteWeiZhiCommandsRetweetDirectly"/>
     </NavigationWindow.CommandBindings>
     <NavigationWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="w:WeiZhiCommands.CreateTweet"/>

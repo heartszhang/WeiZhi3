@@ -9,6 +9,7 @@
              xmlns:b="clr-namespace:WeiZhi3.Behaviours" xmlns:a="clr-namespace:WeiZhi3.Attached"
              xmlns:bt="clr-namespace:Bot;assembly=Bot" mc:Ignorable="d" Background="White"
              x:Name="_this" FocusManager.FocusedElement="{Binding ElementName=_items}"
+             Loaded="OnTimelineControlLoaded"
              d:DesignHeight="257" d:DesignWidth="560">
     <UserControl.Resources>
         <DataTemplate x:Key="SimpleWeiboTemplate" DataType="{x:Type v:WeiboStatus}">

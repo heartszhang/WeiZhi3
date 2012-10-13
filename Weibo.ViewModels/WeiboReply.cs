@@ -24,12 +24,16 @@ namespace Weibo.ViewModels
         public ICommand retweet { get { return _retweet; }  }
         public string body { get { return _body; } set { Set(ref _body, value); } }
         public string reason_phrase { get { return _reason_phrase; } set { Set(ref _reason_phrase, value); } }
+        public string mention { get; set; }
+        public string refer { get; set; }
 
-        public WeiboReply(long sid)
+        public WeiboReply(long sid, string text, string user)
         {
             _status_id = sid;
             _reply = new RelayCommand<IWeiboAccessToken>(ExecuteReply, CanExecuteReply);
             _retweet = new RelayCommand<IWeiboAccessToken>(ExecuteRetweet, CanExecuteRetweet);
+            mention = user;
+            refer = user + "£º" + text;
         }
 
         private bool CanExecuteRetweet(IWeiboAccessToken arg)

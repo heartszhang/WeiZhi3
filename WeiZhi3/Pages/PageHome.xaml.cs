@@ -24,7 +24,7 @@ namespace WeiZhi3.Pages
 		{
 			this.InitializeComponent();
 		    Loaded += OnPageHomeLoaded;
-            Unloaded += OnPageHomeUnloaded;
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
 		}
 
         #region UserScreenName (Attached DependencyProperty)
@@ -50,17 +50,14 @@ namespace WeiZhi3.Pages
 
         #endregion
 
-
-        void OnPageHomeUnloaded(object sender, RoutedEventArgs e)
+        void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            Unloaded -= OnPageHomeUnloaded;
-
-            if(_timer != null)
+            Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+            if (_timer != null)
             {
                 _timer.Dispose();
                 _timer = null;
             }
-            //do some cleanup here
         }
 
         private void OnPageHomeLoaded(object sender, RoutedEventArgs e)
