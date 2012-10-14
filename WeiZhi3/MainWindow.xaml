@@ -41,6 +41,7 @@
         <CommandBinding Command="w:WeiZhiCommands.ViewUserViaWeb" Executed="ExecuteWeiZhiCommandsViewUserViaWeb"/>
         <CommandBinding Command="w:WeiZhiCommands.FollowUnfollow" Executed="ExecuteWeiZhiCommandsFollowUnfollow"/>
         <CommandBinding Command="w:WeiZhiCommands.RetweetDirectly" Executed="ExecuteWeiZhiCommandsRetweetDirectly"/>
+        <CommandBinding Command="w:WeiZhiCommands.DestroyStatus" Executed="ExecuteWeiZhiCommandsDestroyStatus"/>
     </NavigationWindow.CommandBindings>
     <NavigationWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="w:WeiZhiCommands.CreateTweet"/>

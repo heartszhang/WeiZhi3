@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Weibo.Api2
@@ -56,7 +58,10 @@ namespace Weibo.Api2
         public static async Task<ImageSize> FetchImageSizeAsync(string imgurl)
         {
             var rtn = new ImageSize();
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
             {
                 var resp = await client.GetAsync(imgurl, HttpCompletionOption.ResponseHeadersRead);
                 if (!resp.IsSuccessStatusCode)

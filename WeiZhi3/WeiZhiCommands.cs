@@ -43,7 +43,7 @@ namespace WeiZhi3
             = new RoutedCommand("SwitchView", typeof(WeiZhiCommands));
 
         public static readonly RoutedCommand DeleteComment = new RoutedCommand("DeleteCommentCommand",typeof(WeiZhiCommands));
-        public static readonly RoutedCommand DeleteTweet = new RoutedCommand("DeleteTweet",typeof(WeiZhiCommands));
+        //public static readonly RoutedCommand DeleteTweet = new RoutedCommand("DeleteTweet",typeof(WeiZhiCommands));
         public static readonly RoutedCommand Favorite = new RoutedCommand("Favorite",typeof(WeiZhiCommands));
 
         public static readonly RoutedCommand CreateTweet = new RoutedCommand("CreateTweet",typeof(WeiZhiCommands));
@@ -73,5 +73,6 @@ namespace WeiZhi3
         public static readonly RoutedCommand ViewUserViaWeb = new RoutedCommand("ViewUserViaWeb", typeof(WeiZhiCommands));
         public static readonly RoutedCommand CommentRetweet = new RoutedCommand("CommentRetweet", typeof(WeiZhiCommands));
 
+        public static readonly RoutedCommand DestroyStatus = new RoutedCommand("DestroyStatus",typeof(WeiZhiCommands));
     }
 }

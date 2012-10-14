@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WeiZhi3.Behaviours;
 using Weibo.ViewModels;
 
 namespace WeiZhi3.Views
@@ -49,5 +50,32 @@ namespace WeiZhi3.Views
         //    Debug.Assert(be != null);
         //    be.UpdateSource();            
         //}
+
+        private void ExecuteWeiZhiCommandsSelectImage(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".jpg",
+                Filter = "Image Files (.jpg)|*.jpg;*.jpeg;*.png|All Files(.*)|*.*",
+            };
+
+            // Show open file dialog box
+            var result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Open document 
+                //string filename = dlg.FileName;
+                ClipboardMonitorBehavior.SetImageLocalFilePath(this, dlg.FileName);
+            }
+        }
+
+        private void ExecuteClearImage(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            ClipboardMonitorBehavior.SetImageLocalFilePath(this, null);
+        }
     }
 }

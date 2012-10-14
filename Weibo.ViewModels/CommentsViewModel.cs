@@ -58,10 +58,7 @@ namespace Weibo.ViewModels
         {
             DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.SystemIdle, act);
         }
-        /*void UiInvoke(System.Action act)
-        {
-            DispatcherHelper.UIDispatcher.Invoke(DispatcherPriority.SystemIdle, act);
-        }*/
+
         void assign_comments(Comments cmts)
         {
             total_number = cmts.total_number;
@@ -75,7 +72,7 @@ namespace Weibo.ViewModels
             System.Array.Sort(cmts.comments, (l, r) => r.score.CompareTo(l.score));
             foreach(var cmt in cmts.comments)
             {
-                if (cmt.score < 4)
+                if (cmts.comments.Length >= item_per_page && cmt.score < 4)
                     continue;
                 var c = new WeiboComment();
                 c.assign_sina(cmt);

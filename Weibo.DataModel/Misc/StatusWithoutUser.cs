@@ -63,15 +63,15 @@ namespace Weibo.DataModel.Misc
         [DataMember]
         public string url_long { get; set; }
 
-        [DataMember]
-        public string widget { get; set; }
+        //[DataMember]
+        //public string widget { get; set; }
 
-        [DataMember]
-        public int mark { get; set; }
-        [DataMember]
-        public string html_file_path { get; set; }
+        //[DataMember]
+        //public int mark { get; set; }
+        //[DataMember]
+        //public string html_file_path { get; set; }
 
-        [DataMember]
-        public bool is_touched { get; set; }
+        //[DataMember]
+        //public bool is_touched { get; set; }
     }
 }

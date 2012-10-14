@@ -6,12 +6,6 @@ namespace Weibo.ViewModels
     {
         protected string _text;
         protected string _image;
-        protected int _total_number;
-        protected int total_number { get { return _total_number; }
-            set { if (_total_number != 0) notifications = value - _total_number;
-                _total_number = value;
-            }
-        }
         protected int _notifications;
 
         public string text

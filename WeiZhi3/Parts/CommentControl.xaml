@@ -51,7 +51,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid>
-            <Image Source="{Binding user.profile_image_url,Mode=OneWay,Converter={StaticResource iuc}}" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image Source="{Binding user.profile_image_url,Mode=OneWay,Converter={StaticResource iuc}}" 
+                   Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top"
+                   ToolTip="{Binding user.description,Mode=OneWay}"/>
         </Grid>
         <StackPanel Grid.Column="1">
             <StackPanel.Resources>
@@ -59,7 +61,8 @@
                     
                 </Style>
             </StackPanel.Resources>
-            <TextBlock Text="{Binding user.screen_name,Mode=OneWay}" Foreground="{StaticResource MetroColorTextLightBrush}"/>
+            <TextBlock Text="{Binding user.screen_name,Mode=OneWay}" Foreground="{StaticResource MetroColorTextLightBrush}"
+                       ToolTip="{Binding user.description,Mode=OneWay}"/>
             <TextBlock Text="{Binding text,Mode=OneWay}" Background="Transparent" MouseLeftButtonUp="CommentContainerMouseLeftButtonUp"/>
             <TextBlock Text="{Binding references,Mode=OneWay}"  Foreground="{StaticResource MetroColorTextLightBrush}" TextWrapping="NoWrap"/>
             <Border x:Name="_reply_container" Margin="0,6" BorderBrush="WhiteSmoke" BorderThickness="1" 

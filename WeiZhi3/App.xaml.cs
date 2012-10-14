@@ -42,10 +42,11 @@ namespace WeiZhi3
         {
             DispatcherHelper.Initialize();
         }
+        static readonly Random _seed = new Random((int)DateTime.Now.Ticks);
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var v = (DateTime.Now.Ticks + DateTime.Now.Ticks / 100000) % _accents.Length;
+            var v = _seed.Next(_accents.Length);
             Resources["MetroColorFeatureBrush"] = new SolidColorBrush(_accents[v].Feature);
             Resources["MetroColorFeatureFadeBrush"] = new SolidColorBrush(_accents[v].Light);
         }
@@ -53,6 +54,10 @@ namespace WeiZhi3
         {
             return new ColorAccent() { Feature = color1, Light = color2 };
 
+        }
+        public static Color RandomColor()
+        {
+            return _accents[_seed.Next(_accents.Length)].Feature;
         }
         struct ColorAccent
         {

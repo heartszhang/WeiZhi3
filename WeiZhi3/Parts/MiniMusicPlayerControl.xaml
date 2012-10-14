@@ -208,7 +208,7 @@
                 </TextBlock>
                 <TextBlock VerticalAlignment="Bottom" Margin="24,11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Prompt,ElementName=_this,Mode=OneWay,FallbackValue=nothing}" FontSize="11pt" FontFamily="Microsoft Yahei UI,segoe UI, Segoe UI Symbol" Foreground="WhiteSmoke"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed">
                 <TextBlock Text="&#xE15D; " FontFamily="Segoe UI Symbol" FontSize="11pt" Foreground="WhiteSmoke"/>
                 <Slider Width="100" Maximum="1" Value="{Binding Volume,ElementName=_player}" LargeChange="0.2"/>
             </StackPanel>

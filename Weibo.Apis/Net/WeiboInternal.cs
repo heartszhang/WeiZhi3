@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Weibo.DataModel;
@@ -15,8 +16,13 @@ namespace Weibo.Apis.Net
             HttpsPost<TResult>(string path, List<KeyValuePair<string,string>> parameters) where TResult : class
         {
             var rtn = new RestResult<TResult>();
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler()
             {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
+            {
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate"));
                 var form = new FormUrlEncodedContent(parameters);
 
                 var resp = await client.PostAsync(path, form);
@@ -39,8 +45,13 @@ namespace Weibo.Apis.Net
         {
             Debug.WriteLine(url);
             var rtn = new RestResult<TResult>();
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler()
             {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
+            {
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate")); 
                 for (var r = 0; r < 2; ++r)
                 {
                     try

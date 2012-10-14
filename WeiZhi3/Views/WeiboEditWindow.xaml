@@ -8,13 +8,14 @@
         xmlns:ws="clr-namespace:WeiZhi3.Converters" xmlns:bs="clr-namespace:WeiZhi3.Behaviours"
         mc:Ignorable="d" FocusManager.FocusedElement="{Binding ElementName=_body}"
         BorderBrush="{DynamicResource MetroColorFeatureBrush}" BorderThickness="1"
-        WindowStyle="None" WindowStartupLocation="CenterOwner" 
+        WindowStyle="None" WindowStartupLocation="CenterOwner" x:Name="_this"
         ResizeMode="NoResize" SizeToContent="WidthAndHeight" MaxWidth="640"
         Title="WeiboEditWindow" bs:ClipboardMonitorBehavior.ImageLocalFilePath="{Binding image,Mode=OneWayToSource}"
         d:DataContext="{d:DesignInstance ds:MockWeiboEditViewModel,IsDesignTimeCreatable=True}">
     <Window.Resources>
         <ws:ImageUrlConverter x:Key="iuc"/>
         <ws:StringToVisibilityConverter x:Key="s2v"/>
+        <ws:StringToWeiboLengthLeftConverter x:Key="slc"/>
         <ControlTemplate x:Key="TextBoxEmbedTemplate" TargetType="{x:Type TextBox}">
             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                 <Grid >
@@ -135,6 +136,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="ExecuteCloseWindow"/>
         <!--<CommandBinding Command="w:WeiZhiCommands.Submit" Executed="ExecuteWeiZhiCommandsSubmit"/>-->
+        <CommandBinding Command="w:WeiZhiCommands.SelectImage" Executed="ExecuteWeiZhiCommandsSelectImage"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Command="{Binding submit,Mode=OneWay}" Key="S" Modifiers="Alt"/>
@@ -147,6 +149,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="6,0">
+                <TextBlock Text="{Binding body,Mode=OneWay,StringFormat='发表新微博 还可继续输入{0}字',Converter={StaticResource slc}}" FontSize="11pt" FontFamily="{StaticResource UniversalFonts}" 
+                           Foreground="Gray" VerticalAlignment="Center"/>
+            </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonWindowCommandStyle}" Command="ApplicationCommands.Close" 
                         Padding="12,0" Content="&#x2716;" IsTabStop="False">
@@ -157,10 +163,11 @@
 
         </Grid>
         <Grid x:Name="_attatchment_container">
-            <Button Style="{StaticResource ImageDropButtonStyle}" Visibility="{Binding (bs:ClipboardMonitorBehavior.ImageLocalFilePath),ElementName=_this,Converter={StaticResource s2v},FallbackValue=Collapsed}" >
+            <Button Style="{StaticResource ImageDropButtonStyle}" Click="ExecuteClearImage"
+                    Visibility="{Binding (bs:ClipboardMonitorBehavior.ImageLocalFilePath),ElementName=_this,Converter={StaticResource s2v},FallbackValue=Collapsed}" >
                 <Image 
                     Source="{Binding (bs:ClipboardMonitorBehavior.ImageLocalFilePath),ElementName=_this,Mode=OneWay,Converter={StaticResource iuc}}"
-                    Stretch="Uniform" x:Name="_image"/>
+                    Stretch="Uniform" x:Name="_image" MaxHeight="240"/>
             </Button>
         </Grid>
         <Grid Margin="0,0,0,12">
@@ -183,7 +190,7 @@
                 <Button x:Name="_more"  CommandTarget="{Binding ElementName=_body}"
                         CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}"
                         Content="&#x25bc;" Style="{StaticResource MetroButtonStyle}" Padding="4" />
-                <Button Content="选择图片文件(_i)" Style="{StaticResource MetroButtonStyle}" Margin="1,0"/>
+                <Button Content="选择图片文件(_i)" Style="{StaticResource MetroButtonStyle}" Margin="1,0" Command="w:WeiZhiCommands.SelectImage"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <Button Content="&#xE088; 发布微博" Command="{Binding submit,Mode=OneWay}" IsDefault="True" ToolTip="Enter"

@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,6 +11,7 @@ using System.Windows.Interactivity;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight.Threading;
 using WeiZhi3.Native;
 
 namespace WeiZhi3.Behaviours
@@ -22,7 +25,7 @@ namespace WeiZhi3.Behaviours
         #region ImageLocalFilePath (Attached DependencyProperty)
 
         public static readonly DependencyProperty ImageLocalFilePathProperty =
-            DependencyProperty.RegisterAttached("ImageLocalFilePath", typeof(string), typeof(ClipboardMonitorBehavior), new PropertyMetadata(new PropertyChangedCallback(OnImageLocalFilePathChanged)));
+            DependencyProperty.RegisterAttached("ImageLocalFilePath", typeof(string), typeof(ClipboardMonitorBehavior), new PropertyMetadata(OnImageLocalFilePathChanged));
 
         public static void SetImageLocalFilePath(DependencyObject o, string value)
         {
@@ -44,7 +47,7 @@ namespace WeiZhi3.Behaviours
         #endregion
         private bool _is_viewing;
         private IntPtr _next_viewer;
-        private int _seed;
+        private static int _seed;
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -62,6 +65,7 @@ namespace WeiZhi3.Behaviours
             Debug.Assert(hs != null, "hs != null");
             hs.AddHook(WinProc);
             _next_viewer = Win32.SetClipboardViewer(helper.Handle);
+            Debug.Assert(_next_viewer != helper.Handle);
             _is_viewing = true;
         }
 
@@ -83,8 +87,8 @@ namespace WeiZhi3.Behaviours
             if (imgc == null)
                 return false;
 
-            var temp = System.IO.Path.GetTempPath();
-            var filepath = System.IO.Path.Combine(temp, "iweizhi_ed" + (++_seed) + ".jpg");
+            var temp = Path.GetTempPath();
+            var filepath = Path.Combine(temp, "iweizhi_ed" + (++_seed) + ".jpg");
             using (var stream = new FileStream(filepath, FileMode.Create))
             {
                 var je = new JpegBitmapEncoder();
@@ -105,7 +109,7 @@ namespace WeiZhi3.Behaviours
             {
                 foreach (var file in fdl)
                 {
-                    var ext = System.IO.Path.GetExtension(file);
+                    var ext = Path.GetExtension(file);
                     if (string.IsNullOrEmpty(ext))
                         continue;
                     if (!ext.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase) &&
@@ -116,10 +120,10 @@ namespace WeiZhi3.Behaviours
 
                     Debug.WriteLine(file);
 
-                    var tmp = System.IO.Path.GetTempPath();
-                    var filepath = System.IO.Path.Combine(tmp, "iweizhi-ed" + (++_seed) + System.IO.Path.GetExtension(file));
+                    var tmp = Path.GetTempPath();
+                    var filepath = Path.Combine(tmp, "iweizhi-ed" + (++_seed) + Path.GetExtension(file));
                     File.Copy(file, filepath, true);
-                    AssociatedObject.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
+                    DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
                                                             (Action)(() => SetImageLocalFilePath(AssociatedObject, filepath)));
                     return true;
                 }
@@ -144,17 +148,17 @@ namespace WeiZhi3.Behaviours
                 Debug.WriteLine(file);
                 if (!File.Exists(file))
                     return false;
-                var tmp = System.IO.Path.GetTempPath();
-                var filepath = System.IO.Path.Combine(tmp, "iweizhi-ed" + (++_seed) + System.IO.Path.GetExtension(file));
+                var tmp = Path.GetTempPath();
+                var filepath = Path.Combine(tmp, "iweizhi-ed" + (++_seed) + Path.GetExtension(file));
                 File.Copy(file, filepath, true);
-                AssociatedObject.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
+                DispatcherHelper.UIDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
                                                         (Action)(() => SetImageLocalFilePath(AssociatedObject, filepath)));
                 return true;
             });
         }
         static string ExtentionFromContentType(string mediatype)
         {
-            var fields = mediatype.ToLower().Split(new char[] { '/' });
+            var fields = mediatype.ToLower().Split(new[] { '/' });
             if (fields.Length != 2)
                 return string.Empty;
             var rtn = "." + fields[1];
@@ -221,17 +225,22 @@ namespace WeiZhi3.Behaviours
                 return false;
             var url = m.Groups[0].Value;
             Debug.WriteLine(url);
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler
             {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
+            {
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate")); 
                 var resp = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
                 if (!resp.IsSuccessStatusCode)
                     return false;
                 if (!resp.Content.Headers.ContentType.MediaType.Contains("image"))
                     return false;
 
-                var tmp = System.IO.Path.GetTempPath();
+                var tmp = Path.GetTempPath();
                 var ext = ExtentionFromContentType(resp.Content.Headers.ContentType.MediaType);
-                var filepath = System.IO.Path.Combine(tmp, "iweizhi-ed" + (++_seed) + ext);
+                var filepath = Path.Combine(tmp, "iweizhi-ed" + (++_seed) + ext);
                 using (var stream = File.Create(filepath))
                 {
                     await resp.Content.CopyToAsync(stream);
@@ -241,7 +250,6 @@ namespace WeiZhi3.Behaviours
                 return true;
             }
         }
-
         async void DrawContent()
         {
             var r = LoadFromClipboardImage();
@@ -250,7 +258,7 @@ namespace WeiZhi3.Behaviours
             if (!r)
                 r = await LoadFromClipboardLocalFilePath();
             if (!r)
-                r = await LoadFromClipboardHyperlink();
+                await LoadFromClipboardHyperlink();
         }
         public void CloseClipboardMonitor()
         {
@@ -258,11 +266,11 @@ namespace WeiZhi3.Behaviours
                 return;
             var helper = new WindowInteropHelper(AssociatedObject);
             var hs = HwndSource.FromHwnd(helper.Handle);
-
+            Debug.Assert(hs != null);
+            hs.RemoveHook(WinProc);
             Win32.ChangeClipboardChain(helper.Handle, _next_viewer);
             _next_viewer = IntPtr.Zero;
             Debug.Assert(hs != null, "hs != null");
-            hs.RemoveHook(WinProc);
             _is_viewing = false;
         }
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -274,6 +282,7 @@ namespace WeiZhi3.Behaviours
                 {
                     // clipboard viewer chain changed, need to fix it.
                     _next_viewer = lParam;
+                    Debug.Assert(_next_viewer != hwnd);
                 }
                 else if (_next_viewer != IntPtr.Zero)
                 {
@@ -285,8 +294,8 @@ namespace WeiZhi3.Behaviours
             case Win32.WM_DRAWCLIPBOARD:
                 // clipboard content changed
                 DrawContent();
-                // pass the message to the next viewer.
-                Win32.SendMessage(_next_viewer, msg, wParam, lParam);
+                // pass the message to the next viewer.,不知道为什么会导致反复不断的触发drawclipboard消息，所以去掉了下面一句
+                //Win32.SendMessage(_next_viewer, msg, wParam, lParam);
                 break;
             }
 

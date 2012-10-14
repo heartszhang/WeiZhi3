@@ -21,7 +21,7 @@ namespace WeiZhi3.Parts
             set { SetValue(IsUnemptyProperty, value); }
         }
         public static DependencyProperty IsUnemptyProperty = DependencyProperty.Register("IsUnempty", typeof(bool), typeof(EmbedVideoPlayerControl), null);
-        
+
         private const string empty_content = @"<!DOCTYPE html><html scroll='no'><body scroll='no' style='color:white' bgcolor='black' ></body></html>";
         private WebBrowser _wb;
         public static DependencyProperty UrlProperty = DependencyProperty.Register("Url", typeof (string), typeof (EmbedVideoPlayerControl), new PropertyMetadata(OnUrlChanged));

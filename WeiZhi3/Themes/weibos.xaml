@@ -238,8 +238,8 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </Grid.RenderTransform>
-                            <Ellipse Width="100" Height="100" StrokeThickness="3" Stroke="{TemplateBinding Foreground}" x:Name="_circle"/>
-                            <TextBlock Foreground="{TemplateBinding Foreground}" Text="&#xE102;" FontFamily="Segoe UI Symbol" FontSize="56" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Ellipse Width="80" Height="80" StrokeThickness="3" Stroke="{TemplateBinding Foreground}" x:Name="_circle"/>
+                            <TextBlock Foreground="{TemplateBinding Foreground}" Text="&#xE102;" FontFamily="Segoe UI Symbol" FontSize="48" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
 

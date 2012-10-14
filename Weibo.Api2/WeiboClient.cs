@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,8 +18,13 @@ namespace Weibo.Api2
             Debug.WriteLine(url);
             var rtn = new WeiboResponseGeneric<TResult>();
 
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler()
             {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
+            {
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate")); 
                 try
                 {
                     for (var r = 0; r < handler.RetryTimes; ++r)
@@ -55,8 +61,13 @@ namespace Weibo.Api2
             Debug.WriteLine(url);
             var rtn = new WeiboResponse();
 
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler()
             {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
+            {
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate")); 
                 try
                 {
                     for (var r = 0; r < handler.RetryTimes; ++r)

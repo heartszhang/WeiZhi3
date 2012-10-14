@@ -7,8 +7,10 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid x:Name="_container">
         <TextBlock >
-            <Run Text="{Binding ReasonPhrase,Mode=OneWay,ElementName=_this}"/>
-            <Hyperlink Command="w:WeiZhiCommands.NavigateUrl" CommandParameter="{Binding Url,ElementName=_this,Mode=OneWay}"><Run Text="{Binding Url,ElementName=_this,Mode=OneWay}"/></Hyperlink>
+            <Run Text="{Binding ReasonPhrase,Mode=OneWay,ElementName=_this}" FontSize="11pt" FontFamily="{StaticResource UniversalFonts}" Foreground="Gray"/>
+            <Hyperlink Command="w:WeiZhiCommands.NavigateUrl"
+                        FontSize="11pt" FontFamily="{StaticResource UniversalFonts}"  Foreground="Gray" FontWeight="SemiBold"
+                       CommandParameter="{Binding Url,ElementName=_this,Mode=OneWay}"><Run Text="{Binding Url,ElementName=_this,Mode=OneWay}"/></Hyperlink>
         </TextBlock>
     </Grid>
 </UserControl>

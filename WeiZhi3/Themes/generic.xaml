@@ -5,7 +5,7 @@
     <SolidColorBrush Color="{StaticResource MetroColorFeature}" x:Key="MetroColorFeatureBrush"/>
     <SolidColorBrush Color="{StaticResource MetroColorFeatureContrast}" x:Key="MetroColorFeatureContrastBrush"/>
     <SolidColorBrush Color="{StaticResource MetroColorText}" x:Key="MetroColorTextBrush"/>
-
+    
     <Color x:Key="MetroColorFadeTextColor" >#FF666666</Color>
     <SolidColorBrush x:Key="MetroColorFadeTextBrush" Color="{StaticResource MetroColorFadeTextColor}"/>
     <SolidColorBrush x:Key="MetroColorTextLightBrush" Color="{StaticResource MetroColorTextLight}"  />

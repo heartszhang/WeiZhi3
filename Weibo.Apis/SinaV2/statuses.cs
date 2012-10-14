@@ -4,7 +4,9 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Weibo.Apis.Net;
@@ -117,8 +119,13 @@ namespace Weibo.Apis.SinaV2
         {
             string path = string.Format("statuses/upload.json?access_token={0}", access_token);
             var rtn = new RestResult<Status>();
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(new HttpClientHandler()
             {
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+            }))
+            {
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate"));
                 var filec = new StreamContent(File.OpenRead(filepath));
                 var form = new MultipartFormDataContent
                     {

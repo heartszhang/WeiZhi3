@@ -94,19 +94,19 @@ namespace WeiZhi3.Attached
         
         public static readonly TabCompletionService Service = new TabCompletionService();
 
-        public new string Prefix(string prefix)
+        public new string Suffix(string prefix)
         {
-            return _entries.ContainsKey(prefix) ? _entries[prefix].First() : Service.Prefix(prefix);
+            return _entries.ContainsKey(prefix) ? _entries[prefix].First() : Service.Suffix(prefix);
         }
 
-        public string PrefixNext(string prefix, string sufix)
+        public string SuffixNext(string prefix, string sufix)
         {
-            var rtn = PrefixNext(prefix, sufix, false);
+            var rtn = SuffixNext(prefix, sufix, false);
             if (!string.IsNullOrEmpty(rtn))
                 return rtn;
-            rtn= Service.PrefixNext(prefix, sufix,false);
+            rtn= Service.SuffixNext(prefix, sufix,false);
             if (string.IsNullOrEmpty(rtn))
-                rtn = Prefix(prefix);
+                rtn = Suffix(prefix);
             if (rtn == sufix)
                 rtn = string.Empty;
             return rtn;
@@ -133,7 +133,7 @@ namespace WeiZhi3.Attached
             var box = (TextBox) sender;
             var suf = box.SelectedText;
             var prefix = GetPrefix((TextBox) sender);
-            var next = PrefixNext(prefix, suf);
+            var next = SuffixNext(prefix, suf);
             if(string.IsNullOrEmpty(next))
             {
                 box.SelectionStart = box.Text.Length;
@@ -162,7 +162,7 @@ namespace WeiZhi3.Attached
                 return;
             }
             var pre = GetPrefix(box);
-            var suffix = Prefix(pre);
+            var suffix = Suffix(pre);
             if (!string.IsNullOrEmpty(suffix))
                 box.SelectedText = suffix;
         }

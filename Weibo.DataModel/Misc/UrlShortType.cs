@@ -49,5 +49,13 @@ namespace Weibo.DataModel.Misc
         [Description("媒体")]
         [EnumMember]
         Media = 27,
+
+        [Description("位置")]
+        [EnumMember]
+        Location = 128,
+
+        [Description("微博达人")]
+        [EnumMember]
+        NewClub = 129,
     }
 }

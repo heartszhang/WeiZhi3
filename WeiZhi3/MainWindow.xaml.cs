@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Runtime.Caching;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using WeiZhi3.ViewModel;
@@ -90,7 +79,8 @@ namespace WeiZhi3
             var r = ExtractAccessToken(msg.Content);
             if (r.Id == 0) //application error or user denied
             {
-                rlt = DialogMessageBox.Show(string.Format("原因 {0} : {1}. {2}\r\n是：重新请求授权；否：返回", r.ErrorCode, r.Error, r.ErrorDescription), "重新尝试一次？", MessageBoxButton.YesNo, MessageBoxResult.No);
+
+                rlt = DialogMessageBox.Show(string.Format(Properties.Resources.AuthorizingFailedPrompt, r.ErrorCode, r.Error, r.ErrorDescription), Properties.Resources.AuthorizingFailedTitle, MessageBoxButton.YesNo, MessageBoxResult.No);
                 if (rlt != MessageBoxResult.Yes)
                 {
                     if (CanGoBack)
@@ -228,7 +218,7 @@ namespace WeiZhi3
         private void ExecuteWeiZhiCommandsViewUserViaWeb(object sender, ExecutedRoutedEventArgs e)
         {
             var user = (UserExt) e.Parameter;
-            var url = "http://weibo.com/u/" + user.id;
+            var url = Properties.Resources.UserHomePrefix + user.id;
             var psi = new ProcessStartInfo(url) { UseShellExecute = true };
             using (Process.Start(psi))
             {
@@ -239,7 +229,7 @@ namespace WeiZhi3
         private async void ExecuteWeiZhiCommandsUnfollow(UserExt user, string token)
         {
             var resp = await WeiboClient.friendships_destroy_async(user.id, token);
-            var caption = string.Format("取消关注 @{0}", user.screen_name);
+            var caption = string.Format(Properties.Resources.UnfollowPrompt, user.screen_name);
             DialogMessageBox.Show(resp.Failed() ? resp.Reason : "成功", caption, MessageBoxButton.OK, MessageBoxResult.OK);
             if (!resp.Failed())
                 user.following = false;
@@ -248,7 +238,7 @@ namespace WeiZhi3
         private async void ExecuteWeiZhiCommandsFollow(UserExt user, string token)
         {
             var resp = await WeiboClient.friendships_create_async(user.id, token);
-            var caption = string.Format("关注 @{0}", user.screen_name);
+            var caption = string.Format(Properties.Resources.FollowPrompt, user.screen_name);
             DialogMessageBox.Show(resp.Failed() ? resp.Reason : "成功", caption, MessageBoxButton.OK, MessageBoxResult.OK);
             if (!resp.Failed())
                 user.following = true;
@@ -277,12 +267,19 @@ namespace WeiZhi3
                                                          WeiboClient.StatusesRepostIsCommentFlag.NoComment,
                                                          Token().get());
             if (resp.Failed())
-                DialogMessageBox.Show(resp.Reason, string.Format("转发 @{0} 的微博", ws.user.screen_name),
+                DialogMessageBox.Show(resp.Reason, string.Format(Properties.Resources.RetweetFailedPrompt, ws.user.screen_name),
                                       MessageBoxButton.OK, MessageBoxResult.OK);
             else
             {
-                Messenger.Default.Send(new NotificationMessage(string.Format("已经转发 @{0} 的微博", ws.user.screen_name)), "noti");
+                Messenger.Default.Send(new NotificationMessage(string.Format(Properties.Resources.RetweetPrompt, ws.user.screen_name)), "noti");
             }
+        }
+
+        private async void ExecuteWeiZhiCommandsDestroyStatus(object sender, ExecutedRoutedEventArgs e)
+        {
+            var ws = (WeiboStatus) e.Parameter;
+            var resp = await WeiboClient.statuses_destroy_async(ws.id, Token().get());
+            DialogMessageBox.Show(resp.Reason, "刪除微博", MessageBoxButton.OK, MessageBoxResult.OK);
         }
     }
 }

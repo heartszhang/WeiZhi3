@@ -6,14 +6,16 @@ namespace WeiZhi3.Attached
     class TabCompletionService
     {
         protected readonly Dictionary<string, HashSet<string>> _entries = new Dictionary<string, HashSet<string>>();
-        public string Prefix(string prefix)
+        public string Suffix(string prefix)
         {
             if (_entries.ContainsKey(prefix))
                 return _entries[prefix].First();
             return string.Empty;
         }
-        public string PrefixNext(string prefix, string sufix, bool cycling)
+        public string SuffixNext(string prefix, string sufix, bool cycling)
         {
+            if (string.IsNullOrEmpty(prefix))
+                return Suffix(prefix);
             if (!_entries.ContainsKey(prefix))
                 return string.Empty;
             var vals = _entries[prefix];

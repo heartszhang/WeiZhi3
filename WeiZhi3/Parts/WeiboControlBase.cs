@@ -130,7 +130,7 @@ namespace WeiZhi3.Parts
             var l = (ViewModelLocator)FindResource("Locator");
             var cid = l.AccessToken.id();
             if (cid == ws.user.id)
-                cm.Items.Add(new MenuItem { Header = "删除", Command = WeiZhiCommands.DeleteTweet, CommandParameter = ws });
+                cm.Items.Add(new MenuItem { Header = "删除", Command = WeiZhiCommands.DestroyStatus, CommandParameter = ws });
             if (ws.has_rt)
             {
                 cm.Items.Add(new MenuItem

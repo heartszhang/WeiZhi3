@@ -54,11 +54,12 @@
                 <ColumnDefinition Width="43"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Width="28" HorizontalAlignment="Left" 
+            <Image Width="28" HorizontalAlignment="Left" ToolTip="{Binding user.description,Mode=OneWay}"
                    a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" VerticalAlignment="Top"/>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="_body" Margin="0,-2,0,0" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap" Background="Transparent" MouseLeftButtonUp="CommentContainerMouseLeftButtonUp">
-                            <Run Foreground="{StaticResource MetroColorTextLightBrush}" Text="{Binding user.screen_name, StringFormat=\{0\}：}"/><Run Text=" "/><Run Text="{Binding text}"/><Run Foreground="{StaticResource MetroColorTextLightBrush}" FontSize="10pt" Text="{Binding created_at, StringFormat='   \{0\}&#x09;',Converter={StaticResource ftc}}"/>
+                            <Run Foreground="{StaticResource MetroColorTextLightBrush}" 
+                                 Text="{Binding user.screen_name, StringFormat=\{0\}：}"/><Run Text=" "/><Run Text="{Binding text}"/><Run Foreground="{StaticResource MetroColorTextLightBrush}" FontSize="10pt" Text="{Binding created_at, StringFormat='   \{0\}&#x09;',Converter={StaticResource ftc}}"/>
                 </TextBlock>
                 <Border x:Name="_reply_container" Margin="0,6" BorderBrush="WhiteSmoke" BorderThickness="1" Visibility="{Binding IsExpanded,ElementName=_this,Mode=OneWay,Converter={StaticResource b2v},FallbackValue=Collapsed}">
                     <ContentPresenter Content="{Binding replier,Mode=OneWay}"/>

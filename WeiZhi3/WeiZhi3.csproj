@@ -131,6 +131,7 @@
     <Compile Include="Converters\IntZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\ImageUrlConverter.cs" />
     <Compile Include="Converters\NotNullToVisibilityConverter.cs" />
+    <Compile Include="Converters\RandomSolidColorBrushConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibiltyConverter.cs" />
     <Compile Include="Converters\StringToWeiboLengthLeftConverter.cs" />

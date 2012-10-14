@@ -46,11 +46,18 @@ namespace Weibo.Apis.Net
             var fp = uid + '.' + Seed.Next();
             try
             {
-                using (var client = new HttpClient())
+                using (var client = new HttpClient(new HttpClientHandler()
                 {
+                    AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+                }))
+                {
+                    client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                    client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate"));
                     var resp = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
                     if (!resp.IsSuccessStatusCode)
+                    {
                         return null;
+                    }
                     if (!string.IsNullOrEmpty(mediatype) && resp.Content.Headers.ContentType.MediaType != mediatype)
                     {
                         return null;
@@ -89,8 +96,13 @@ namespace Weibo.Apis.Net
             var fp = uid + '.' + Seed.Next();
             try
             {
-                using (var client = new HttpClient())
+                using (var client = new HttpClient(new HttpClientHandler()
                 {
+                    AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+                }))
+                {
+                    client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+                    client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate")); 
                     var resp = await client.GetAsync(url);
                     if (!resp.IsSuccessStatusCode)
                         return null;

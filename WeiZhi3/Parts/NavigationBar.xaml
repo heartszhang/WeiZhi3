@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:p="clr-namespace:WeiZhi3.Parts"
-             xmlns:ds="clr-namespace:WeiZhi3.Design" mc:Ignorable="d" VerticalAlignment="Stretch" Background="Black"
+             xmlns:ds="clr-namespace:WeiZhi3.Design" xmlns:c="clr-namespace:WeiZhi3.Converters"
+             mc:Ignorable="d" VerticalAlignment="Stretch" Background="WhiteSmoke"
              d:DesignHeight="800" d:DesignWidth="300" d:DataContext="{d:DesignInstance ds:MockPageHomeViewModel,IsDesignTimeCreatable=True}">
 
     <StackPanel TextElement.FontFamily="{StaticResource UniversalFonts}" TextElement.FontSize="20pt" VerticalAlignment="Top">
@@ -13,9 +14,10 @@
                 <Setter Property="Margin" Value="0"/>
             </Style>
             <Style TargetType="Button" BasedOn="{StaticResource MetroButtonNaviStyle}"/>
+            <c:RandomSolidColorBrushConverter x:Key="bsb"/>
         </StackPanel.Resources>
 
-        <Grid Style="{StaticResource WrapGridStyle}"  Background="#30FFFFFF">
+        <Grid Style="{StaticResource WrapGridStyle}" Background="{Binding Converter={StaticResource bsb},Mode=OneWay}">
             <Button Command="{Binding ShowHomeTimeline,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}">
                 <Grid DataContext="{Binding HomeTimelineItem,Mode=OneWay}">
                     <TextBlock Text="{Binding tag,Mode=OneWay}"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40pt"/>
@@ -23,12 +25,13 @@
                 </Grid>
             </Button>
         </Grid>
-        <Grid  Style="{StaticResource WrapGridStyle}" Background="#40FFFFFF">
+        <Grid  Style="{StaticResource WrapGridStyle}"  Background="{Binding Converter={StaticResource bsb},Mode=OneWay}">
             <p:NavigationItemControl DataContext="{Binding CommentsTimelineItem,Mode=OneWay}"
                                      Foreground="WhiteSmoke"/>
         </Grid>
-        <Grid  Style="{StaticResource WrapGridStyle}" Background="#30FFFFFF">
-            <Button Command="{Binding ShowCommentsTimeline,Mode=OneWay}" CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}">
+        <Grid  Style="{StaticResource WrapGridStyle}" Background="{Binding Converter={StaticResource bsb},Mode=OneWay}">
+            <Button Command="{Binding ShowCommentsTimeline,Mode=OneWay}"
+                    CommandParameter="{Binding AccessToken,Source={StaticResource Locator},Mode=OneWay}">
                 <p:NavigationItemControl DataContext="{Binding CommentsTimelineItem,Mode=OneWay}"
                                      Foreground="WhiteSmoke" IsHitTestVisible="False" />
             </Button>

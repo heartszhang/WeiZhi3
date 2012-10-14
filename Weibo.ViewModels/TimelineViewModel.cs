@@ -12,6 +12,7 @@ using GalaSoft.MvvmLight.Threading;
 using Weibo.Apis;
 using Weibo.Apis.SinaV2;
 using Weibo.DataModel;
+using Weibo.DataModel.Misc;
 
 namespace Weibo.ViewModels
 {
@@ -101,6 +102,11 @@ namespace Weibo.ViewModels
             var mem = MemoryCache.Default;
             foreach (var url in rlt.Value.urls)
             {
+                //m.weibo.cn location
+                if (url.url_long.StartsWith("http://m.weibo.cn/", StringComparison.InvariantCultureIgnoreCase))
+                    url.type = UrlType.Location;
+                else if (url.url_long.StartsWith("http://new.club.weibo.com", StringComparison.InvariantCultureIgnoreCase))
+                    url.type = UrlType.NewClub;
                 mem.Set(url.url_short, url, DateTimeOffset.Now.AddHours(2.0));
                 Debug.WriteLine("url-cache {3} - {0} : {1} - {2}, {4}", url.type, url.topic(), url.url_long, url.url_short
                     ,url.description);

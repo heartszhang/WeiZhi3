@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -32,8 +33,17 @@ namespace Weibo.ViewModels
         private async void ExecuteSubmit(IWeiboAccessToken at)
         {
             is_busying = true;
-            var resp = await WeiboClient.statuses_update_async(at.get(), _body);
-            reason = resp.Reason;
+            if (string.IsNullOrEmpty(image))
+            {
+                var resp = await WeiboClient.statuses_update_async(at.get(), _body);
+                reason = resp.Reason;
+            }else
+            {
+                if (!File.Exists(image))
+                    reason = "图片文件不存在";
+                var resp = await WeiboClient.statuses_upload_async(image, _body, at.get());
+                reason = resp.Reason;
+            }
             await Task.Delay(5000);
             is_busying = false;
         }

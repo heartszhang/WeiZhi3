@@ -34,7 +34,8 @@
         </Grid.ColumnDefinitions>
         <StackPanel >
             <Image  Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Center" 
-                     a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" />
+                    ToolTip="{Binding user.description,Mode=OneWay}"
+                    a:ImageLocalCache.Url="{Binding user.profile_image_url,Mode=OneWay}" />
         </StackPanel>
         <StackPanel Margin="0,0,31,0" Grid.Column="1">
             <Grid x:Name="_headernote" Margin="0,-3,0,0">
@@ -42,7 +43,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" Style="{StaticResource NowrapTextStyle}"/>
+                <TextBlock  ToolTip="{Binding user.description,Mode=OneWay}" Text="{Binding user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" Style="{StaticResource NowrapTextStyle}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource NowrapTextStyle}">

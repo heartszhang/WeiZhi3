@@ -59,11 +59,11 @@ namespace WeiZhi3.Parts
             var u = (string)e.NewValue;
             if (string.IsNullOrEmpty(u))
                 return;
-            UiInvoke(() => ReasonPhrase = "下载");
+            UiInvoke(() => ReasonPhrase = Properties.Resources.DownloadinPrompt);
             var fp = await HttpDownloadToLocalFile.DownloadAsync(u, "html", ".htm","text/html", 1*1024* 1024);
             if(string.IsNullOrEmpty(fp) || !File.Exists(fp))
             {
-                UiInvoke(()=>ReasonPhrase = "Download file failed");
+                UiInvoke(() => ReasonPhrase = Properties.Resources.DownloadFailedPrompt);
                 return;
             }
             var fdocn = fp + ".xaml";
@@ -73,18 +73,26 @@ namespace WeiZhi3.Parts
                 if(string.IsNullOrEmpty(charset))
                 {
                     charset = DetectEncoding(fp);
+                }//zh-cn 不能被getencoding识别
+                if("zh-cn".Equals(charset,StringComparison.InvariantCultureIgnoreCase))
+                {
+                    charset = "gb2312";
                 }
                 var enc = string.IsNullOrEmpty(charset) ? Encoding.GetEncoding(936) : Encoding.GetEncoding(charset);
 
-                UiInvoke(()=>ReasonPhrase = "格式化...");
-                var result = new NReadabilityTranscoder().Transcode(new TranscodingInput(File.ReadAllText(fp,enc)) { Url = u });
+                UiInvoke(()=>ReasonPhrase = Properties.Resources.FormattingPrompt);
+                var result = new NReadabilityTranscoder().Transcode(new TranscodingInput(File.ReadAllText(fp,enc))
+                {
+                    Url = u,
+                    BackupFilePath = fp,
+                });
                 if(result.ContentExtracted)
                 {
                     File.WriteAllText(fdocn,result.ExtractedContent);
-                    UiInvoke(()=>ReasonPhrase = "ready");
+                    UiInvoke(()=>ReasonPhrase = Properties.Resources.ReadyPrompt);
                 }else
                 {
-                    UiInvoke(()=>ReasonPhrase = "转换失败，请直接浏览原始网页");
+                    UiInvoke(()=>ReasonPhrase = Properties.Resources.ConvertingFailedPrompt);
                     return;
                 }
 
@@ -94,7 +102,7 @@ namespace WeiZhi3.Parts
                 var fdoc = (FlowDocument)XamlReader.Load(File.OpenRead(fdocn));
                 if (fdoc == null)
                 {
-                    ReasonPhrase = "convert html to readability flow document failed";
+                    ReasonPhrase = Properties.Resources.ConvertingFailedPrompt;
                     return;
                 }
                 _container.Children.Clear();

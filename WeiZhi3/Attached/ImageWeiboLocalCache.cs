@@ -159,12 +159,12 @@ namespace WeiZhi3.Attached
                 img.MouseLeftButtonDown += ImgMouseLeftButtonDown;
             }
 
-            var sz = await Utils.FetchImageSizeAsync(i.thumbnail_pic);
-            if (sz.Height * sz.Width == 0)
-                return;
-
             try
             {
+                var sz = await Utils.FetchImageSizeAsync(i.thumbnail_pic);
+                if (sz.Height * sz.Width == 0)
+                    return;
+
                 string url;
                 if (sz.Height >= sz.Width) //方形的图片最好也显示小图，音乐图片都是方形的
                 {

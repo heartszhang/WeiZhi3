@@ -44,6 +44,8 @@ namespace Weibo.ViewModels
                 if (MinId > s.id)
                     MinId = s.id;
             }
+            var mem = MemoryCache.Default;
+            mem.Set("hometimeline_since_id",MaxId, DateTimeOffset.Now.AddMinutes(30));
         }
         public override void NextPage(IWeiboAccessToken token)
         {

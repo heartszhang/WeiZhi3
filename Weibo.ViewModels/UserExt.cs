@@ -95,13 +95,24 @@ status             */
             friends_count = data.friends_count;
             statuses_count = data.statuses_count;
             favourites_count = data.favourites_count;
-            description = data.description;
+
+            description = verified_reason;
+            if(!string.IsNullOrEmpty(data.description))
+            {
+                if (!string.IsNullOrEmpty(description))
+                    description += "\r\n";
+                description += data.description;
+            }
+            if (string.IsNullOrEmpty(description))
+                description = data.screen_name;
+            //description = data.description;
             id = data.id;
             screen_name = data.screen_name;
             name = data.name;
             province = data.province;
             city = data.city;
             location = data.location;
+
 
         }
     }

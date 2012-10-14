@@ -50,6 +50,7 @@ namespace Weibo.ViewModels
         public string text { get; set; }
         public long id { get; set; }
         public long mid { get; set; }
+        public Geo geo { get; set; }
 
         public string thumbnail_pic
         {
@@ -178,9 +179,15 @@ namespace Weibo.ViewModels
             comments_count = data.comments_count;
             user = new UserExt();
             user.assign_sina(data.user);
-            
+            geo = data.geo;
+
             has_pic = !string.IsNullOrEmpty(bmiddle_pic);            
             reposts_comments_count = comments_count + reposts_count;
+
+            if(geo != null)
+            {
+                Debug.WriteLine("{0}, {1}:{2}",geo.type,geo.coordinates[0],geo.coordinates[1]);
+            }
         }
         public void assign_sina(Status data)
         {
@@ -297,7 +304,12 @@ namespace Weibo.ViewModels
             var ui = (UrlInfo) mem.Get(uri);
             if (ui == null)
                 return;
+            //微博有图片，但是url中没有图片
             url.assign(ui);
+            if(url.has_media && string.IsNullOrEmpty(url.pic) && has_pic)
+            {
+                ui.annotations[0].pic = thumbnail_pic;
+            }
             var tpc = url.topic;
             if (!string.IsNullOrEmpty(tpc) && !tpc.Contains("..."))//标题可能被urlshort截断
             {
@@ -309,10 +321,6 @@ namespace Weibo.ViewModels
                 bmiddle_pic = url.pic;
                 thumbnail_pic = url.pic;
                 has_pic = true;
-            }
-            //微博有图片，但是url中没有图片
-            if(string.IsNullOrEmpty(url.pic) && has_pic)
-            {
             }
         }
         protected  class InitializeParam

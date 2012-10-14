@@ -199,10 +199,10 @@ namespace WeiZhi3.Attached
             if (ut.Length != token.text.Length)
                 textblock.Add(new Run(" "));
 
-            var run = ut.Replace("http://t.cn/", string.Empty);
+            var run = ut.Replace(Properties.Resources.ShortUrlPrefix, string.Empty);
 
             //create hyperlink 
-            var h = new Hyperlink(new Run(run))
+            var h = new Hyperlink(new Run(run){FontWeight = FontWeights.SemiBold})
             {
              //   NavigateUri = new Uri(ut,UriKind.Absolute),使用这个会直接调用到navigationservice中
                 Command = WeiZhiCommands.Navigate,                

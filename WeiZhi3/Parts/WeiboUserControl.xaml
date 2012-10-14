@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <c:ImageUrlConverter x:Key="iuc"/>
         <c:IntFriendlyConverter x:Key="ifc"/>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,7 +26,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="1" Text="v" Foreground="Red" ToolTip="{Binding verified_reason,Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1" Text="v" Foreground="Red" ToolTip="{Binding verified_reason,Mode=OneWay}" Visibility="{Binding verified,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource b2v}}"/>
                     <TextBlock ToolTip="{Binding url,Mode=OneWay, TargetNullValue='没有'}" Margin="16,0" VerticalAlignment="Center"  Grid.Column="2"><Hyperlink CommandParameter="{Binding url, Mode=OneWay}" ><Run Text="主页"/></Hyperlink></TextBlock>
                     <TextBlock x:Name="name" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" FontSize="26.667" FontFamily="{StaticResource UniversalFonts}" Text="{Binding screen_name, FallbackValue=name, Mode=OneWay}"/>
                 </Grid>

@@ -6,7 +6,8 @@
              xmlns:c="clr-namespace:WeiZhi3.Converters"
              xmlns:v="clr-namespace:Weibo.ViewModels;assembly=Weibo.ViewModels" mc:Ignorable="d" 
              TextElement.FontFamily="{StaticResource UniversalFonts}" TextElement.FontSize="11pt" 
-             d:DesignHeight="120" d:DesignWidth="300" TextElement.Foreground="{Binding Foreground,RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="120" d:DesignWidth="300" 
+             TextElement.Foreground="{Binding Foreground,RelativeSource={RelativeSource Self}}"
              d:DataContext="{d:DesignInstance ds:MockNavigationItem,IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <c:ImageUrlConverter x:Key="iuc"/>

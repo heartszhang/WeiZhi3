@@ -30,7 +30,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <StackPanel >
-            <Image  Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Center" 
+            <Image  Stretch="Uniform" Width="50" Height="50" HorizontalAlignment="Center"  ToolTip="{Binding retweeted_status.user.description,Mode=OneWay}"
                     Source="{Binding retweeted_status.user.profile_image_url,Mode=OneWay,IsAsync=true,Converter={StaticResource iuc}}" />
         </StackPanel>
         <StackPanel Margin="0,0,31,0" Grid.Column="1">
@@ -39,7 +39,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Style="{StaticResource NowrapTextStyle}">
+                <TextBlock Style="{StaticResource NowrapTextStyle}"  ToolTip="{Binding retweeted_status.user.description,Mode=OneWay}">
                     <Run Text="{Binding retweeted_status.user.screen_name,Mode=OneWay, StringFormat='@\{0\}'}" /><Run  Text="{Binding user.screen_name,Mode=OneWay,StringFormat='  由@\{0\} 转发'}" Foreground="{StaticResource MetroColorTextLightBrush}"/>
                 </TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" DataContext="{Binding retweeted_status,Mode=OneWay}">
